@@ -1,0 +1,157 @@
+---
+import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
+---
+
+<div class="top-banner">
+    <div class="top-banner-inner">
+        <!-- Emergency Info -->
+        <div >
+            <a href="tel:5551234567" class="emergency-box" >
+
+                <CircleAlert />
+    
+                <span class="emergency-text">24/7 EMERGENCY REPAIR</span>
+            </a>
+        </div>
+
+        <!-- Right Side Links -->
+        <div class="right-links">
+            <a
+                href="https://wa.me/15551234567"
+                target="_blank"
+                class="whatsapp-link"
+            >
+                <MessageCircleMore class="whatsapp-icon" />
+                Chat on WhatsApp
+            </a>
+
+            <a href="tel:5551234567" class="call-button">
+                <span class="call-label"> <Phone />CALL NOW:</span> (555) 123-4567
+            </a>
+        </div>
+    </div>
+</div>
+<style>
+    /* --- Container Banner --- */
+    .top-banner {
+        background-color: #e8a900; /* brand gold */
+        color: #001f3f; /* brand navy */
+        font-size: 0.9rem;
+        padding: 12px 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        display: none; /* hidden by default: matches sm:block */
+    }
+
+    @media (min-width: 640px) {
+        .top-banner {
+            display: block;
+        }
+    }
+
+    /* Inner container */
+    .top-banner-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* --- Emergency Box --- */
+    .emergency-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        background: rgba(185, 28, 28, 0.95);
+        color: white;
+        font-family: "Montserrat-ExtraBold", sans-serif;
+         text-decoration: none;
+        border-radius: 6px;
+        animation: pulse 1.8s infinite;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .emergency-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .emergency-text {
+        text-transform: uppercase;
+       
+        letter-spacing: 1px;
+    }
+
+    /* Pulse animation */
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.65;
+        }
+    }
+
+    /* --- Right Links --- */
+    .right-links {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    /* WhatsApp Link */
+    .whatsapp-link {
+        display: flex;
+        align-items: center;
+        font-family: "Montserrat-SemiBold", sans-serif;
+        color: #001f3f;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .whatsapp-link:hover {
+        color: white;
+    }
+
+    .whatsapp-icon {
+        width: 22px;
+        height: 22px;
+        margin-right: 6px;
+        color: #0f8c3c;
+    }
+
+    /* Call Button */
+    .call-button {
+        background-color: #001f3f; /* navy */
+        color: #e8a900; /* gold */
+        font-family: "Montserrat-Bold", sans-serif;
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+        transition: 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .call-button:hover {
+        background-color: #333;
+        transform: scale(1.05);
+    }
+
+    .call-label {
+        display: none;
+    }
+
+    @media (min-width: 1024px) {
+        .call-label {
+            /* display: inline; */
+            margin-right: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+</style>

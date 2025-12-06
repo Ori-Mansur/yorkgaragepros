@@ -1,0 +1,135 @@
+---
+import Logo from "../assets/logoonly.png";
+---
+
+<header>
+    <div class="header-container">
+        <!-- Logo/Identity -->
+        <div class="logo">
+            <img
+                src={Logo.src}
+                alt="York Garage Pros Logo"
+                onerror="this.onerror=null; this.src='https://placehold.co/40x40/B8860B/172A4E?text=Logo';"
+            />
+            <span>YORK GARAGE PROS</span>
+        </div>
+
+        <!-- Primary Navigation Links -->
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/services">Services</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact Us</a>
+            <a href="/#roi-analysis">Why Renovate?</a>
+            <a href="/#estimator">Estimator</a>
+        </div>
+
+        <!-- CTA Button -->
+        <a href="/booking">
+            <button id="ctaButton">Get Quote</button>
+        </a>
+    </div>
+</header>
+<script type="module">
+    function setupHeaderListeners() {
+        document.getElementById("ctaButton").addEventListener("click", () => {
+            document
+                .getElementById("estimator")
+                .scrollIntoView({ behavior: "smooth" });
+        });
+    }
+    setupHeaderListeners();
+</script>
+
+<style>
+    /* Header */
+    header {
+        background-color: #1C2A44; /* bg-primary */
+        color: #ffffff; /* text-white */
+        box-shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        position: sticky;
+        top: 0;
+        z-index: 50;
+    }
+
+    /* Container */
+    .header-container {
+        max-width: 80rem; /* container mx-auto max-w-5xl equivalent */
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem; /* px-4 */
+        padding-right: 1rem;
+        padding-top: 0.75rem; /* py-3 */
+        padding-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Logo/Identity */
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem; /* gap-2 */
+    }
+
+    .logo img {
+        height: 2rem; /* h-8 */
+        width: 2rem; /* w-8 */
+        border-radius: 9999px; /* rounded-full */
+        background-color: #ffffff; /* bg-white */
+        padding: 0.25rem; /* p-1 */
+    }
+
+    .logo span {
+        font-family: "Helvetica Neue", sans-serif; /* font-heading */
+        font-weight: 800; /* font-extrabold */
+        font-size: 1.125rem; /* text-lg */
+        letter-spacing: 0.05em; /* tracking-wide */
+    }
+
+    /* Navigation */
+    .nav-links {
+        display: none; /* hidden by default */
+        gap: 1.5rem; /* gap-6 */
+        font-size: 0.875rem; /* text-sm */
+        font-family: "Montserrat-SemiBold";
+    }
+
+    .nav-links a {
+        color: #ffffff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: #E8A900; /* hover:text-accent */
+    }
+
+    /* Responsive Navigation */
+    @media (min-width: 768px) {
+        .nav-links {
+            display: flex;
+        }
+    }
+
+    /* CTA Button */
+    #ctaButton {
+        background-color: #f59e0b; /* bg-accent */
+        color: #1C2A44; /* text-primary */
+        font-family: "Helvetica Neue", sans-serif; /* font-heading */
+        font-weight: 700; /* font-bold */
+        font-size: 0.875rem; /* text-sm */
+        padding: 0.5rem 1rem; /* px-4 py-2 */
+        border-radius: 0.5rem; /* rounded */
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #ctaButton:hover {
+        background-color: #d97706; /* hover:bg-yellow-600 */
+    }
+</style>

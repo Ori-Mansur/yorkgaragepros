@@ -1,0 +1,95 @@
+---
+export interface Props {
+    title?: string;
+    description?: string;
+    url?: string;
+    image?: string;
+}
+
+const business = {
+    name: "York Garage Pros",
+    domain: "https://yorkgaragepros.com",
+    defaultImage: "https://yorkgaragepros.com/og-image.jpg",
+};
+
+const {
+    title = "York Garage Pros | Garage Door Repair & Installation",
+    description = "Professional garage door repair, installation, and maintenance serving Newmarket, Ontario and surrounding areas within a 50 km radius.",
+    url = business.domain,
+    image = business.defaultImage,
+} = Astro.props;
+---
+
+<head>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={url} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={image} />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "York Garage Pros",
+            "url": "https://yorkgaragepros.com",
+            "image": "https://yorkgaragepros.com/logo.jpg",
+            "telephone": "+1-555-555-5555",
+            "priceRange": "$$",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Newmarket",
+                "addressRegion": "ON",
+                "addressCountry": "CA"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 44.0592,
+                "longitude": -79.4613
+            },
+            "areaServed": [
+                {
+                    "@type": "City",
+                    "name": "Newmarket"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "York Region"
+                }
+            ],
+            "serviceArea": {
+                "@type": "GeoCircle",
+                "geoMidpoint": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 44.0592,
+                    "longitude": -79.4613
+                },
+                "geoRadius": 50000
+            },
+            "servesCuisine": "N/A",
+            "description": "Professional garage door repair and installation services serving Newmarket and surrounding areas within 50 km."
+        }
+    </script>
+</head>

@@ -1,0 +1,149 @@
+---
+import Chart from "chart.js/auto";
+---
+
+<section id="roi-analysis">
+    <div class="roi-container">
+        <div class="roi-header">
+            <h2>Why the Garage Matters</h2>
+            <p>
+                Comparative Return on Investment (ROI) for common home projects
+                in the Mid-Atlantic region.
+            </p>
+        </div>
+
+        <div class="roi-card">
+            <!-- Chart Container -->
+            <div class="chart-container">
+                <canvas id="roiChart"></canvas>
+            </div>
+            <div class="roi-source">
+                Source: Cost vs. Value Report (National Averages)
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    import Chart from "chart.js/auto";
+
+    const ctx = document.getElementById("roiChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: [
+                "Garage Door Replacement",
+                "Manufactured Stone Veneer",
+                "Wood Deck Addition",
+                "Minor Kitchen Remodel",
+                "Bath Remodel",
+            ],
+            datasets: [
+                {
+                    label: "Cost Recouped at Resale (%)",
+                    data: [93.8, 91.4, 65.8, 72.2, 60.1],
+                    backgroundColor: [
+                        "#E8A900", // Accent color for Garage Doors
+                        "#E5E7EB",
+                        "#E5E7EB",
+                        "#E5E7EB",
+                        "#E5E7EB",
+                    ],
+                    borderRadius: 4,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return context.raw + "% ROI";
+                        },
+                    },
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    grid: { color: "#f3f4f6" },
+                    title: { display: true, text: "Return on Investment (%)" },
+                },
+                x: {
+                    grid: { display: false },
+                },
+            },
+        },
+    });
+</script>
+
+<style>
+    /* ROI Analysis Section */
+    #roi-analysis {
+        background-color: #f3f4f6; /* bg-gray-100 */
+        padding-top: 4rem; /* py-16 */
+        padding-bottom: 4rem;
+        padding-left: 1rem; /* px-4 */
+        padding-right: 1rem;
+    }
+
+    /* Container */
+    .roi-container {
+        max-width: 80rem; /* max-w-5xl */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Section Header */
+    .roi-header {
+        margin-bottom: 2.5rem; /* mb-10 */
+        text-align: center;
+    }
+
+    @media (min-width: 768px) {
+        .roi-header {
+            text-align: left; /* md:text-left */
+        }
+    }
+
+    .roi-header h2 {
+        font-family: 'Montserrat-Bold';
+        font-size: 1.875rem; /* text-3xl */
+        color: #1C2A44; /* text-primary */
+        margin-bottom: 0.75rem; /* mb-3 */
+    }
+
+    .roi-header p {
+        color: #4b5563; /* text-gray-600 */
+    }
+
+    /* Card */
+    .roi-card {
+        background-color: #ffffff; /* bg-white */
+        padding: 1.5rem; /* p-6 */
+        border-radius: 1rem; /* rounded-xl */
+        box-shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.1),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    }
+
+    /* Chart Container */
+    .chart-container {
+        width: 100%;
+        height: 400px; /* Adjust height as needed */
+    }
+
+    /* Source text */
+    .roi-source {
+        margin-top: 1.5rem; /* mt-6 */
+        text-align: center;
+        font-size: 0.875rem; /* text-sm */
+        color: #6b7280; /* text-gray-500 */
+        font-style: italic;
+    }
+</style>

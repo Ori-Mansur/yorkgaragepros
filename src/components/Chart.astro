@@ -1,0 +1,174 @@
+---
+/* No server imports needed */
+---
+
+<style>
+/* =========================================
+   COLORS (tailwind → custom vars)
+========================================= */
+:root {
+  --primary: #172A4E;
+  --accent: #B8860B;
+  --gray-50: #F9FAFB;
+  --gray-100: #F3F4F6;
+  --gray-200: #E5E7EB;
+  --gray-300: #D1D5DB;
+  --gray-500: #6B7280;
+}
+
+/* =========================================
+   SECTION WRAPPER
+========================================= */
+#roi-analysis {
+  background-color: var(--gray-100);
+  padding: 4rem 1rem;
+}
+
+#roi-analysis .container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* =========================================
+   HEADER TEXT
+========================================= */
+#roi-analysis h2 {
+  font-size: 1.875rem;
+
+  font-family: "Montserrat-Bold", sans-serif;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  #roi-analysis h2 {
+    text-align: left;
+  }
+}
+
+#roi-analysis p {
+  color: var(--gray-500);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  #roi-analysis p {
+    text-align: left;
+  }
+}
+
+/* =========================================
+   CARD BOX
+========================================= */
+#roi-analysis .box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* =========================================
+   CHART CONTAINER
+========================================= */
+.chart-container {
+  width: 100%;
+  height: 350px;
+  position: relative;
+}
+
+/* =========================================
+   Source text
+========================================= */
+#roi-analysis .source {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--gray-500);
+  font-style: italic;
+}
+</style>
+
+<section id="roi-analysis">
+    <div class="container">
+        <div class="mb-10 text-center md:text-left">
+            <h2>Why the Garage Matters</h2>
+            <p>Comparative Return on Investment (ROI) for common home projects in the Mid-Atlantic region.</p>
+        </div>
+
+        <div class="box">
+            <div class="chart-container">
+                <canvas id="roiChart"></canvas>
+            </div>
+
+            <div class="source">
+                Source: Cost vs. Value Report (National Averages)
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =====================================
+     Chart Logic (Client Side Only)
+===================================== -->
+<script>
+  // Use ESM CDN import so Astro SSR won't crash
+  import('https://cdn.jsdelivr.net/npm/chart.js').then(({ default: Chart }) => {
+
+    const ctx = document.getElementById('roiChart');
+
+    if (!ctx) return;
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [
+          'Garage Door Replacement',
+          'Manufactured Stone Veneer',
+          'Wood Deck Addition',
+          'Minor Kitchen Remodel',
+          'Bath Remodel'
+        ],
+        datasets: [{
+          label: 'Cost Recouped at Resale (%)',
+          data: [93.8, 91.4, 65.8, 72.2, 60.1],
+          backgroundColor: [
+            '#B8860B',
+            '#E5E7EB',
+            '#E5E7EB',
+            '#E5E7EB',
+            '#E5E7EB'
+          ],
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.raw + '% ROI';
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100,
+            grid: { color: '#f3f4f6' },
+            title: { display: true, text: 'Return on Investment (%)' }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+
+  });
+</script>

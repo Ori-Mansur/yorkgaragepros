@@ -1,0 +1,264 @@
+---
+import "../styles/global.css";
+import UtilityNav from "../components/UtilityNav.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { MapPin, Phone, Mail, Calendar } from "@lucide/astro";
+---
+
+<body>
+    <UtilityNav />
+    <Header />
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Get In Touch</h1>
+        <p>
+            For routine inquiries, use the form below. For immediate garage door
+            emergencies, call our 24/7 line!
+        </p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section container">
+        <!-- Details -->
+        <div class="details">
+            <h2>Our Details</h2>
+
+            <div class="contact-details emergency-time">
+                <Phone />
+                <div>
+                    <p>24/7 Emergency Line</p>
+                    <a href="tel:9055554321">(905) 555-4321</a>
+                </div>
+            </div>
+
+            <div class="contact-details">
+                <Mail />
+                <div>
+                    <p>General Inquiries</p>
+                    <a href="mailto:info@yorkgaragepros.ca"
+                        >info@yorkgaragepros.ca</a
+                    >
+                </div>
+            </div>
+
+            <div class="contact-details">
+                <MapPin />
+                <div>
+                    <p>Office Location</p>
+                    <address>456 Commerce St, Newmarket, ON L3Y 1A1</address>
+                </div>
+            </div>
+            <div>
+                <div class="business">
+                    <Calendar />
+                    <h3>Business Hours</h3>
+                </div>
+                <table>
+                    <tbody>
+                        <tr
+                            ><td>Monday - Friday:</td><td
+                                style="text-align:right;">8:00 AM - 5:00 PM</td
+                            ></tr
+                        >
+                        <tr
+                            ><td>Saturday:</td><td style="text-align:right;"
+                                >9:00 AM - 1:00 PM</td
+                            ></tr
+                        >
+                        <tr class="emergency-time"
+                            ><td>Emergency Service:</td><td
+                                style="text-align:right;">24 Hours</td
+                            ></tr
+                        >
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <ContactForm />
+    </section>
+
+    <!-- Map -->
+    <section class="container center" style="padding:32px 16px;">
+        <h2>Find Our Service Area</h2>
+        <div class="map-container">
+            <iframe
+                src="https://maps.google.com/maps?q=456%20Commerce%20St,%20Newmarket,%20ON%20L3Y%201A1&t=&z=10&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"></iframe>
+        </div>
+        <p style="color: var(--muted); margin-top:8px;">
+            We proudly serve the entire York Region from our Newmarket
+            headquarters.
+        </p>
+    </section>
+
+    <Footer />
+    <style>
+        /* ========== Root Colors ========== */
+        :root {
+            --navy: #1c2a44;
+            --gold: #e8a900;
+            --neutral-bg: #f7f8fc;
+            --text: #343d46;
+            --muted: #6b7280;
+            --white: #fff;
+            --shadow-trust: 0 10px 25px rgba(28, 42, 68, 0.1);
+        }
+
+        /* ========== Base ========== */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            color: var(--text);
+            background: var(--neutral-bg);
+            line-height: 1.5;
+        }
+        h1,
+        h2,
+        h3 {
+            font-family: "Montserrat-Bold", sans-serif;
+            color: var(--navy);
+            margin: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+
+        /* ========== Utilities ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        .center {
+            text-align: center;
+        }
+        .shadow {
+            box-shadow: var(--shadow-trust);
+        }
+        .rounded {
+            border-radius: 12px;
+        }
+
+        /* ========== Hero ========== */
+        .hero {
+            text-align: center;
+            padding: 64px 16px 32px;
+            background: #fff;
+        }
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ========== Contact Section ========== */
+
+        .contact-section {
+            padding: 32px 16px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+        .details h2 {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 8px;
+        }
+        .contact-card {
+            background: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-trust);
+        }
+        .contact-card h2 {
+            margin-bottom: 16px;
+            color: var(--navy);
+            font-size: 1.25rem;
+        }
+        .contact-details {
+            margin-top: 32px;
+            margin-bottom: calc(2rem * var(--tw-space-y-reverse));
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .contact-details p {
+            margin: 0;
+        }
+        .contact-details div {
+            margin-bottom: 10px;
+        }
+        .contact-details svg {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            color: var(--gold);
+            margin-top: 2px;
+        }
+        .contact-details a {
+            color: var(--text);
+            font-family: "Montserrat-SemiBold";
+            transition: 0.2s;
+        }
+        .contact-details a:hover {
+            color: var(--gold);
+        }
+        .business {
+            margin-top: 32px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        td {
+            padding: 4px 0;
+        }
+        td:first-child {
+            font-weight: 500;
+        }
+        .emergency-time {
+            font-family: "Montserrat-Bold";
+            color: rgba(185, 28, 28, 0.95);
+        }
+
+        /* ========== Map ========== */
+        .map-container {
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-trust);
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        /* ========== Responsive ========== */
+        @media (min-width: 768px) {
+            .contact-section {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+    </style>
+</body>

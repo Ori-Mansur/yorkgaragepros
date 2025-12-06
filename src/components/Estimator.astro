@@ -1,0 +1,414 @@
+---
+/* No imports — fully client-side */
+---
+
+<section id="estimator" class="estimator-section">
+    <div class="estimator-container">
+        <h2 class="estimator-title">Project Estimator</h2>
+        <p class="estimator-subtitle">
+            Configure your needs to get a rough project range estimate.
+        </p>
+
+        <!-- Estimator Card -->
+        <div class="estimator-card">
+            <form id="estimatorForm" class="estimator-form">
+                <!-- Garage Size -->
+                <section class="form-container">
+                    <div>
+                        <div class="form-group">
+                            <label for="garageSizeEst" class="form-label"
+                                >Garage Size</label
+                            >
+                            <select id="garageSizeEst" class="form-select">
+                                <option value="2"
+                                    >2 Car (Standard Double)</option
+                                >
+                                <option value="1">1 Car (Single Door)</option>
+                                <option value="3">3+ Car / Custom</option>
+                            </select>
+                        </div>
+
+                        <!-- Services -->
+                        <div class="form-group">
+                            <label class="form-label">Services Needed</label>
+
+                            <div class="checkbox-row">
+                                <input
+                                    id="doorService"
+                                    type="checkbox"
+                                    checked
+                                    class="checkbox"
+                                />
+                                <label for="doorService" class="checkbox-label"
+                                    >Door Installation (Standard Steel)</label
+                                >
+                            </div>
+
+                            <div class="checkbox-row">
+                                <input
+                                    id="openerService"
+                                    type="checkbox"
+                                    class="checkbox"
+                                />
+                                <label
+                                    for="openerService"
+                                    class="checkbox-label"
+                                    >Opener Installation/Replacement</label
+                                >
+                            </div>
+
+                            <div class="checkbox-row">
+                                <input
+                                    id="epoxyService"
+                                    type="checkbox"
+                                    class="checkbox"
+                                />
+                                <label for="epoxyService" class="checkbox-label"
+                                    >Epoxy Floor Coating</label
+                                >
+                            </div>
+
+                            <div class="checkbox-row">
+                                <input
+                                    id="repairService"
+                                    type="checkbox"
+                                    class="checkbox"
+                                />
+                                <label
+                                    for="repairService"
+                                    class="checkbox-label"
+                                    >Emergency Repair (Springs, Cables, etc.)</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Estimated Range -->
+                    <div class="estimate-box">
+                        <h3 class="estimate-label">ESTIMATED RANGE</h3>
+                        <p id="priceRange" class="estimate-price">$0 - $0</p>
+                        <p id="timeRange" class="estimate-time">
+                            Project Duration: 0 Days
+                        </p>
+                        <p class="estimate-note">
+                            *Range is highly variable. Select services for an
+                            instant estimate.
+                        </p>
+                    </div>
+                </section>
+                <a href="/booking">
+                    <button type="button" class="cta-button">
+                        SCHEDULE OFFICIAL CONSULTATION
+                    </button>
+                </a>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script type="module">
+    // --- Pricing Constants for Estimator (Base Price for 1-Car Equivalent) ---
+    const PRICING = {
+        // Door Installation: standard insulated steel door + installation cost (Base value: $1,800)
+        door: { base: 1800, minMultiplier: 1.0, maxMultiplier: 1.5, days: 1 },
+
+        // Opener Installation: standard belt-drive opener + installation cost (Base value: $600)
+        opener: {
+            base: 600,
+            minMultiplier: 1.0,
+            maxMultiplier: 1.6,
+            days: 0.5,
+        },
+
+        // Epoxy Coating: cost per standard car bay (roughly 200 sq ft) (Base value: $1,500)
+        epoxy: { base: 1500, minMultiplier: 1.0, maxMultiplier: 2.0, days: 2 },
+
+        // Repair Estimate: Base cost for common repair (e.g., spring replacement). Does NOT scale by size.
+        repair: {
+            base: 350,
+            minMultiplier: 1.0,
+            maxMultiplier: 2.5,
+            days: 0.5,
+        },
+    };
+
+    function calculateEstimate() {
+        // Get inputs
+        const sizeSelect = document.getElementById("garageSizeEst");
+        const size = parseFloat(sizeSelect.value); // 1, 2, or 3
+
+        const doorChecked = document.getElementById("doorService").checked;
+        const openerChecked = document.getElementById("openerService").checked;
+        const epoxyChecked = document.getElementById("epoxyService").checked;
+        const repairChecked = document.getElementById("repairService").checked; // NEW INPUT
+
+        let minPrice = 0;
+        let maxPrice = 0;
+        let totalDays = 0;
+
+        // --- Door Installation Calculation (Scales with size) ---
+        if (doorChecked) {
+            const p = PRICING.door;
+            minPrice += p.base * p.minMultiplier * size;
+            maxPrice += p.base * p.maxMultiplier * size;
+            totalDays += p.days;
+        }
+
+        // --- Opener Installation Calculation (Scales with size) ---
+        if (openerChecked) {
+            const p = PRICING.opener;
+            minPrice += p.base * p.minMultiplier * size;
+            maxPrice += p.base * p.maxMultiplier * size;
+            totalDays += p.days;
+        }
+
+        // --- Epoxy Coating Calculation (Scales with size) ---
+        if (epoxyChecked) {
+            const p = PRICING.epoxy;
+            minPrice += p.base * p.minMultiplier * size;
+            maxPrice += p.base * p.maxMultiplier * size;
+            totalDays += p.days;
+        }
+
+        // --- Repair Calculation (Fixed cost, does NOT scale with size) ---
+        if (repairChecked) {
+            const p = PRICING.repair;
+            // Use min and max multipliers as defined, but apply only the base cost once.
+            minPrice += p.base * p.minMultiplier;
+            maxPrice += p.base * p.maxMultiplier;
+            totalDays += p.days;
+        }
+
+        // --- Update UI ---
+        const priceRangeElement = document.getElementById("priceRange");
+        const timeRangeElement = document.getElementById("timeRange");
+
+        if (minPrice === 0 && maxPrice === 0) {
+            priceRangeElement.textContent = "$0 - $0";
+            timeRangeElement.textContent = "Project Duration: 0 Days";
+        } else {
+            // Format prices with commas and dollar sign
+            const formattedMin = Math.round(minPrice).toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+            });
+            const formattedMax = Math.round(maxPrice).toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 0,
+            });
+
+            priceRangeElement.textContent = `${formattedMin} - ${formattedMax}`;
+
+            // Format time
+            let timeText;
+            if (totalDays < 1) {
+                timeText = "Less than 1 Day";
+            } else {
+                timeText = `${totalDays} Day${totalDays > 1 ? "s" : ""}`;
+            }
+
+            timeRangeElement.textContent = `Project Duration: ${timeText}`;
+        }
+    }
+
+    // Attach event listeners to trigger calculation on change
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("estimatorForm");
+        if (form) {
+            // Listen for changes on all form elements
+            form.addEventListener("change", calculateEstimate);
+        }
+        // Run on initial load
+        calculateEstimate();
+    });
+</script>
+<style>
+    /* ===============================
+   COLOR PALETTE
+=============================== */
+
+    /* Branding */
+    :root {
+        /* --brand-navy: #172a4e; */
+        --brand-navy: #1c2a44;
+        --brand-gold: #e8a900;
+        --sec-bg: #f3f4f6;
+    }
+    input,
+    label {
+        cursor: pointer;
+    }
+
+    /* Section */
+    .estimator-section {
+        background: var(--sec-bg);
+        padding: 4rem 0;
+    }
+
+    @media (min-width: 768px) {
+        .estimator-section {
+            padding: 6rem 0;
+        }
+    }
+
+    /* Container */
+    .estimator-container {
+        max-width: 1120px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 0 1.5rem;
+    }
+
+    /* Headers */
+    .estimator-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        font-family: "Montserrat-ExtraBold", sans-serif;
+    }
+    .form-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    @media (min-width: 768px) {
+        .estimator-title {
+            font-size: 2.5rem;
+        }
+    }
+
+    .estimator-subtitle {
+        color: var(--text-color);
+        max-width: 600px;
+        margin: 0 auto 2.5rem;
+    }
+
+    /* Card */
+    .estimator-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 14px;
+        /* max-width: 480px; */
+        margin: 0 auto;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (min-width: 640px) {
+        .estimator-card {
+            padding: 2.5rem;
+        }
+    }
+
+    .estimator-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: left;
+    }
+
+    /* Form elements */
+    .form-label {
+        display: block;
+        font-size: 0.9rem;
+        font-family: "Montserrat-SemiBold", sans-serif;
+        font-family: "Montserrat-ExtraBold", sans-serif;
+        margin-bottom: 0.3rem;
+        color: #4b5563;
+    }
+
+    .form-select {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.2s;
+    }
+
+    .form-select:focus {
+        border-color: var(--brand-gold);
+        box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+    }
+
+    /* Checkbox rows */
+    .checkbox-row {
+        display: flex;
+        align-items: center;
+        margin-top: 0.25rem;
+    }
+
+    .checkbox {
+        width: 18px;
+        height: 18px;
+    }
+
+    .checkbox-label {
+        margin-left: 0.6rem;
+        font-size: 0.9rem;
+        color: #4b5563;
+    }
+
+    /* Estimate box */
+    .estimate-box {
+        border: 1px solid #e5e7eb;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+    }
+    .form-group {
+        padding-bottom: 1.5rem;
+    }
+
+    .estimate-label {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        /* font-family: "Montserrat-SemiBold", sans-serif; */
+        font-family: "Montserrat-ExtraBold", sans-serif;
+        color: #6b7280;
+        margin: 0;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .estimate-price {
+        font-size: 2.2rem;
+        font-weight: 900;
+        font-family: "Montserrat-ExtraBold", sans-serif;
+        color: var(--brand-navy);
+        margin-top: 1.5rem;
+    }
+
+    .estimate-time {
+        font-size: 1rem;
+        color: #374151;
+        margin-top: 0.3rem;
+    }
+
+    .estimate-note {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 0.4rem;
+    }
+
+    /* CTA Button */
+    .cta-button {
+        width: 100%;
+        background: var(--brand-gold);
+        color: white;
+        border: none;
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+        font-family: "Montserrat-SemiBold", sans-serif;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transition: 0.3s ease;
+    }
+
+    .cta-button:hover {
+        transform: scale(1.02);
+        background: #e8a900;
+    }
+</style>

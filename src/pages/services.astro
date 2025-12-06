@@ -1,0 +1,505 @@
+---
+import "../styles/global.css";
+import UtilityNav from "../components/UtilityNav.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Door from "../assets/newdoor.png";
+import Opener from "../assets/opener.png";
+import Epoxy from "../assets/epoxy.png";
+import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
+---
+
+<body>
+    <UtilityNav />
+    <Header />
+
+    <section>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-inner">
+                <h1>Our Complete Service Menu</h1>
+                <p>
+                    We specialize in high-impact installations and reliable
+                    emergency service for your garage, focusing on durability,
+                    aesthetics, and maximum home value return.
+                </p>
+            </div>
+        </section>
+
+        <!-- MAIN SERVICES -->
+        <section class="services-section">
+            <div class="services-inner">
+                <h2 class="section-title">
+                    Primary Installation & Renovation Services
+                </h2>
+
+                <div class="services-grid">
+                    <!-- CARD 1 -->
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src={Door.src} alt="Garage door" />
+                        </div>
+
+                        <div class="service-content">
+                            <div class="service-header">
+                                <DoorOpen class="icon-lg gold" />
+                                <h3>Premium Door Installation</h3>
+                            </div>
+
+                            <p>
+                                We partner with leading manufacturers to provide
+                                energy-efficient, beautiful garage doors built
+                                for Canadian winters.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Style:</strong> Custom wood, glass, insulated
+                                    steel.
+                                </li>
+                                <li>
+                                    <strong>Efficiency:</strong> R-18 insulated doors
+                                    reduce energy costs.
+                                </li>
+                                <li>
+                                    <strong>Value:</strong> 93% ROI for curb appeal
+                                    upgrades.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- CARD 2 -->
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src={Opener.src} alt="Garage opener" />
+                        </div>
+
+                        <div class="service-content">
+                            <div class="service-header">
+                                <Cog class="icon-lg gold" />
+                                <h3>Advanced Opener Systems</h3>
+                            </div>
+
+                            <p>
+                                Seamless integration of powerful, reliable
+                                openers for enhanced security.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Ultra-Quiet:</strong> Belt-drive systems.
+                                </li>
+                                <li>
+                                    <strong>Smart Home:</strong> Wi-Fi connectivity.
+                                </li>
+                                <li>
+                                    <strong>Heavy Duty:</strong> Chain & jackshaft
+                                    setups.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- CARD 3 -->
+                    <div class="service-card">
+                        <div class="service-image">
+                            <img src={Epoxy.src} alt="Epoxy floor" />
+                        </div>
+
+                        <div class="service-content">
+                            <div class="service-header">
+                                <Layers class="icon-lg gold" />
+                                <h3>Industrial Epoxy Coatings</h3>
+                            </div>
+
+                            <p>
+                                Polyaspartic and epoxy floor systems for
+                                permanent slab protection.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Protection:</strong> Salt, oil, chemical
+                                    resistance.
+                                </li>
+                                <li>
+                                    <strong>Prep:</strong> Diamond grinding, vapor
+                                    barrier.
+                                </li>
+                                <li>
+                                    <strong>Aesthetics:</strong> Many styles & finishes.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- REPAIR SECTION -->
+                <div class="repair-block">
+                    <h2 class="section-title">
+                        24/7 Emergency Repair & Maintenance
+                    </h2>
+
+                    <div class="repair-box">
+                        <div class="repair-header">
+                            <Wrench class="icon-xl gold" />
+                            <div>
+                                <p class="repair-title">
+                                    Rapid Response for Critical Failures
+                                </p>
+                                <p class="repair-text">
+                                    Certified technicians available 24/7 for
+                                    immediate repairs.
+                                </p>
+                            </div>
+                        </div>
+
+                        <ul class="repair-list">
+                            <li>
+                                <strong>Broken Springs:</strong> Torsion & extension.
+                            </li>
+                            <li>
+                                <strong>Cables & Rollers:</strong> Frayed or seized
+                                replacements.
+                            </li>
+                            <li>
+                                <strong>Opener Malfunction:</strong> Electrical,
+                                sensors, remotes.
+                            </li>
+                            <li>
+                                <strong>Track Alignment:</strong> Fix bent or misaligned
+                                tracks.
+                            </li>
+                        </ul>
+
+                        <div class="repair-cta">
+                            <a href="tel:5551234567" class="btn-red"
+                                >CALL EMERGENCY REPAIR: (555) 123-4567</a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2>Ready to Start Your Project?</h2>
+            <p>
+                Use our online estimator for an instant budget or book a free
+                consultation.
+            </p>
+            <div class="cta-buttons">
+                <a href="/#estimator" class="btn-gold"
+                    >Use Estimator Tool</a
+                >
+                <a href="/booking">
+                    <button class="btn-navy">Book Consultation</button>
+                </a>
+            </div>
+        </section>
+    </section>
+
+    <Footer />
+    <style>
+        /* -----------------------------------
+   GLOBAL STYLES
+----------------------------------- */
+        :root {
+            --color-primary: #1C2A44; /* Navy */
+            --color-secondary: #e8a900; /* Gold */
+            --color-neutral-bg: #f7f8fc;
+            --color-text: #343d46;
+            --color-light-gray: #f0f0f0;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #ffffff;
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Montserrat-Bold';
+            color: var(--color-primary);
+            margin: 0;
+        }
+
+        img,
+        svg {
+            display: block;
+        }
+
+        /* Utility Buttons */
+        .btn-gold {
+            background: var(--color-secondary);
+            color: var(--color-primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+
+            font-family: "Montserrat-Bold";
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background: #c89200;
+        }
+
+        .btn-navy {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-family: "Montserrat-Bold";
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn-navy:hover {
+            background: #11182a;
+        }
+
+        .btn-red {
+            background: #cc0000;
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 8px;
+            display: inline-block;
+            text-decoration: none;
+            font-family: "Montserrat-Bold";
+            transition: 0.3s ease;
+        }
+
+        .btn-red:hover {
+            background: #a60000;
+        }
+
+        /* Icons */
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .icon-lg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .icon-xl {
+            width: 48px;
+            height: 48px;
+        }
+
+        .gold {
+            color: var(--color-secondary);
+        }
+
+        /* -----------------------------------
+   HERO SECTION
+----------------------------------- */
+        .hero {
+            background: var(--color-neutral-bg);
+            padding: 60px 20px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .hero-inner {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* -----------------------------------
+   SERVICES GRID
+----------------------------------- */
+        .services-section {
+            padding: 60px 20px;
+        }
+
+        .services-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-family: "Montserrat-ExtraBold";
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        /* Large Screens */
+        @media (min-width: 1000px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            border-top: 4px solid var(--color-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        .service-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+        }
+        .service-image img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .service-content ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .service-content ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Header inside card */
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .service-header h3 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        /* Divider */
+        .section-divider {
+            height: 1px;
+            background: #ddd;
+            margin: 60px 0;
+        }
+
+        /* -----------------------------------
+   REPAIR BLOCK
+----------------------------------- */
+        .repair-block {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .repair-box {
+            background: var(--color-primary);
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 16px 28px rgba(0, 0, 0, 0.2);
+        }
+
+        .repair-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .repair-title {
+            color: var(--color-secondary);
+            font-size: 20px;
+            font-family: 'Montserrat-Bold';
+            margin-bottom: 8px;
+        }
+
+        .repair-text {
+            color: #e1e1e1;
+        }
+
+        .repair-list {
+            margin-top: 20px;
+            padding-left: 20px;
+            color: #dcdcdc;
+        }
+
+        .repair-list li {
+            margin-bottom: 8px;
+        }
+
+        .repair-cta {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* -----------------------------------
+   CTA SECTION
+----------------------------------- */
+        .cta-section {
+            background: var(--color-neutral-bg);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+    </style>
+</body>

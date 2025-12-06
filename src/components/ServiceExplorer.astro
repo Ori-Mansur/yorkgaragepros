@@ -1,0 +1,278 @@
+<style>
+    :root {
+        --primary: #172a4e;
+        --accent: #b8860b;
+        --gray-50: #fafafa;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-600: #4b5563;
+        --white: #ffffff;
+    }
+
+    #services {
+        padding: 4rem 1rem;
+    }
+
+    .container {
+        max-width: 72rem;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 1.875rem;
+
+        font-family: "Montserrat-Bold", sans-serif;
+        text-align: center;
+        color: var(--primary);
+        margin-bottom: 2.5rem;
+    }
+
+    /* Tabs */
+    .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .service-tab {
+        padding: 0.75rem 1.5rem;
+        border-radius: 9999px;
+        border: 2px solid var(--gray-200);
+        background: var(--white);
+        color: var(--gray-600);
+
+        font-family: "Montserrat-Bold", sans-serif;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .service-tab.active {
+        background: var(--primary);
+        color: var(--white);
+        border-color: var(--primary);
+    }
+
+    /* Content Box */
+    .service-content {
+        display: flex;
+        flex-direction: column;
+        background: var(--white);
+        border-radius: 1rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--gray-100);
+        overflow: hidden;
+        min-height: 400px;
+    }
+
+    @media (min-width: 768px) {
+        .service-content {
+            flex-direction: row;
+        }
+    }
+
+    /* Visual Panel */
+    .visual-panel {
+        width: 100%;
+        height: 16rem;
+        background: var(--gray-200);
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .visual-panel {
+            width: 50%;
+            height: auto;
+        }
+    }
+
+    #visualCanvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #visualOverlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(23, 42, 78, 0.8);
+        color: var(--white);
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+    }
+
+    /* Info Panel */
+    .info-panel {
+        width: 100%;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .info-panel {
+            width: 50%;
+            padding: 3rem;
+        }
+    }
+
+    .info-panel h3 {
+        font-size: 1.875rem;
+
+        font-family: "Montserrat-Bold", sans-serif;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .info-panel p {
+        color: var(--gray-600);
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .info-panel ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 2rem;
+    }
+
+    .info-panel li {
+        display: flex;
+        align-items: center;
+        font-size: 0.875rem;
+        color: var(--gray-600);
+        margin-bottom: 0.5rem;
+    }
+
+    .info-panel li i {
+        color: var(--accent);
+        margin-right: 0.5rem;
+    }
+
+    .cta-button {
+        background: var(--primary);
+        color: var(--white);
+        font-family: "Montserrat-Bold", sans-serif;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        align-self: flex-start;
+    }
+
+    .cta-button:hover {
+        background: rgba(23, 42, 78, 0.9);
+    }
+</style>
+
+<section id="services">
+    <div class="container">
+        <h2 class="section-title">Explore Our Solutions</h2>
+
+        <!-- Tabs -->
+        <div id="serviceTabs" class="tabs">
+            <button class="service-tab" data-target="doors">Garage Doors</button
+            >
+            <button class="service-tab" data-target="floors"
+                >Epoxy Flooring</button
+            >
+            <!-- <button class="service-tab" data-target="storage">Organization</button> -->
+        </div>
+
+        <!-- Dynamic Content -->
+        <div id="serviceContent" class="service-content">
+            <div class="visual-panel">
+                <div id="serviceCanvasWrapper">
+                    <canvas id="visualCanvas"></canvas>
+                    <div id="visualOverlay"></div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h3 id="serviceTitle"></h3>
+                <p id="serviceDesc"></p>
+                <ul id="serviceList"></ul>
+                <button class="cta-button">View Gallery</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="module">
+    const serviceData = {
+        doors: {
+            title: "Premium Garage Doors",
+            desc: "Your garage door can account for up to 40% of your home's facade. We install premium steel, wood-composite, and carriage house doors that boost efficiency.",
+            points: [
+                "R-18 Insulation Options",
+                "Custom Hardware Packages",
+                "Smart-Home Enabled",
+            ],
+            icon: "shield",
+        },
+        floors: {
+            title: "Epoxy Floor Coatings",
+            desc: "Say goodbye to dusty, cracked concrete. Our industrial-grade epoxy system creates a seamless, non-slip surface that resists oil, salt, and tire marks.",
+            points: [
+                "1-Day Installation Available",
+                "UV Stable (No Yellowing)",
+                "Custom Flake Colors",
+            ],
+            icon: "layers",
+        },
+        // storage: {
+        //   title: "Organization Systems",
+        //   desc: "Reclaim your floor space. Our heavy-duty cabinets and slatwall systems are custom-designed to fit your tools, bikes, and bins perfectly.",
+        //   points: ["75lb+ Weight Capacity per hook", "Steel-Backed Cabinets", "Modular & Adjustable"],
+        //   icon: "box"
+        // }
+    };
+
+    function initTabs() {
+        const tabs = document.querySelectorAll(".service-tab");
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", (e) => {
+                // Reset all tabs
+                tabs.forEach((t) => t.classList.remove("active"));
+
+                // Activate clicked tab
+                e.target.classList.add("active");
+
+                const key = e.target.dataset.target;
+                const data = serviceData[key];
+
+                // Update content
+                document.getElementById("serviceTitle").innerText = data.title;
+                document.getElementById("serviceDesc").innerText = data.desc;
+
+                const listContainer = document.getElementById("serviceList");
+                listContainer.innerHTML = "";
+                data.points.forEach((point) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<i data-lucide="check-circle"></i> ${point}`;
+                    listContainer.appendChild(li);
+                });
+                // lucide.createIcons();
+
+                const overlay = document.getElementById("visualOverlay");
+                overlay.innerHTML = `<div>
+            <${data.icon}" class="w-16 h-16 text-accent mb-4"/>
+            <h4 style="color:white; font-weight:bold; font-size:1.25rem;">${data.title}</h4>
+          </div>`;
+                // lucide.createIcons();
+            });
+        });
+
+        // Initialize first tab
+        tabs[0].click();
+    }
+
+    document.addEventListener("DOMContentLoaded", initTabs);
+</script>

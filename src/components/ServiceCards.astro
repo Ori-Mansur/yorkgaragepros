@@ -1,0 +1,143 @@
+---
+import { Shield, Layers, ArrowRight, Cog } from "@lucide/astro";
+import "../styles/global.css";
+---
+
+<section id="services-home-section" class="services-section">
+    <div class="services-container">
+        <h2 class="services-title">Quick Look: Our Core Services</h2>
+
+        <div class="services-grid">
+            <!-- Garage Doors -->
+            <div class="service-card">
+                <Shield class="service-icon" />
+                <h3 class="service-heading">Garage Doors</h3>
+                <p class="service-text">
+                    Full-service door solutions from high-end installations to
+                    24/7 emergency spring and cable repairs.
+                </p>
+                <a href="/services" data-page="services" class="service-link">
+                    View Door Services
+                      <ArrowRight class="link-icon" />
+                </a>
+            </div>
+            <!-- Door Openers -->
+            <div class="service-card">
+                <Cog class="service-icon" />
+                <h3 class="service-heading">Door Openers</h3>
+                <p class="service-text">
+                    Installation and repair of ultra-quiet belt-drive systems, smart openers (Wi-Fi), and heavy-duty commercial units.
+                </p>
+                <a href="/services" data-page="services" class="service-link">
+                    View Door Openers
+                      <ArrowRight class="link-icon" />
+                </a>
+            </div>
+
+            <!-- Epoxy Flooring -->
+            <div class="service-card">
+                <Layers class="service-icon" />
+                <h3 class="service-heading">Epoxy Flooring</h3>
+                <p class="service-text">
+                    Durable, stain-resistant industrial-grade epoxy coatings
+                    that protect your concrete against salt and oil.
+                </p>
+                <a href="/services" data-page="services" class="service-link">
+                    View Flooring Details
+                    <ArrowRight class="link-icon" />
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    /* Section Layout */
+    .services-section {
+        padding: 60px 20px;
+        /* background: #f8f9fc; */
+        background: #ffffff;
+    }
+
+    .services-container {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    /* Title */
+    .services-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        color: #1C2A44; /* primary */
+        margin-bottom: 40px;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Grid Layout */
+    .services-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    @media (min-width: 768px) {
+        .services-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* Card */
+    .service-card {
+        background: #ffffff;
+        padding: 32px;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(30, 58, 138, 0.2);
+        text-align: center;
+    }
+
+    /* Icon */
+    .service-icon {
+        width: 48px;
+        height: 48px;
+        /* color: #ff5722; */
+        color: #E8A900;
+        margin-bottom: 16px;
+    }
+
+    /* Headings */
+    .service-heading {
+        font-size: 26px;
+        color: #1C2A44;
+        margin-bottom: 12px;
+        font-family: 'Montserrat-Bold';
+    }
+
+    /* Text */
+    .service-text {
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    /* Link */
+    .service-link {
+        font-family: 'Montserrat-Bold';
+        text-decoration: none;
+        color: #E8A900;
+        transition: color 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .service-link:hover {
+        color: #1C2A44;
+    }
+
+    /* Arrow Icon */
+    .link-icon {
+        width: 16px;
+        height: 16px;
+        margin-left: 5px;
+    }
+</style>
