@@ -1,5 +1,6 @@
 ---
-import heroPic from "../assets/heropage.png";
+import { Picture } from "astro:assets";
+import heroPic from "../assets/heropage.webp";
 import "../styles/global.css";
 ---
 
@@ -17,8 +18,9 @@ import "../styles/global.css";
         </p>
 
         <div class="garage-image-container">
-            <img
-                src={heroPic.src}
+            <Picture
+                formats={["avif", "webp"]}
+                src={heroPic}
                 alt="A premium insulated dark wood garage door with a vintage red car parked outside."
             />
         </div>
@@ -127,7 +129,7 @@ import "../styles/global.css";
         /* Desktop only */
         @media (min-width: 640px) {
             .garage-image-container img {
-                object-position: 20% 55% ; /* move crop upward */
+                object-position: 20% 55%; /* move crop upward */
             }
         }
 

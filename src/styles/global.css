@@ -11,13 +11,42 @@
 		box-sizing: border-box
 	}
 
+	button {
+		/* Reset all properties to their initial or inherited values */
+		all: unset;
+
+		/* Or, manually reset common button styles for broader compatibility: */
+		background: none;
+		color: inherit;
+		/* Inherit text color from parent */
+		border: none;
+		padding: 0;
+		font: inherit;
+		/* Inherit font styles from parent */
+		cursor: pointer;
+		/* Restore pointer cursor */
+		outline: none;
+		/* Remove default focus outline */
+		appearance: none;
+		/* Remove browser-specific button styling */
+		text-decoration: none;
+		/* In case it's a link styled as a button */
+		box-shadow: none;
+		/* Remove any default box-shadow */
+	}
+
 	input,
 	select,
 	textarea {
 		font-family: 'Montserrat', 'Inter';
+		appearance: none
 	}
+
 	select {
 		cursor: pointer;
+	}
+	a{
+		text-decoration: none;
 	}
 
 	.hidden {

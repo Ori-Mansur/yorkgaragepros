@@ -1,18 +1,24 @@
 ---
-import Logo from "../assets/logoonly.png";
+import { Image, Picture } from "astro:assets";
+import { Menu } from "@lucide/astro";
+import Logo from "../assets/logoonly.webp";
+import MobileNav from "./MobileNav.astro";
 ---
 
 <header>
     <div class="header-container">
         <!-- Logo/Identity -->
-        <div class="logo">
-            <img
-                src={Logo.src}
-                alt="York Garage Pros Logo"
-                onerror="this.onerror=null; this.src='https://placehold.co/40x40/B8860B/172A4E?text=Logo';"
-            />
-            <span>YORK GARAGE PROS</span>
-        </div>
+        <a href="/">
+            <div class="logo">
+                <Picture
+                    formats={["avif", "webp"]}
+                    src={Logo}
+                    alt="York Garage Pros Logo"
+                    loading="lazy"
+                />
+                <span>YORK GARAGE PROS</span>
+            </div>
+        </a>
 
         <!-- Primary Navigation Links -->
         <div class="nav-links">
@@ -25,11 +31,17 @@ import Logo from "../assets/logoonly.png";
         </div>
 
         <!-- CTA Button -->
-        <a href="/booking">
+        <a href="/booking" class="booking-link">
             <button id="ctaButton">Get Quote</button>
         </a>
+        <div id="mobile-nav">
+            <button id="nav-btn">
+                <Menu />
+            </button>
+        </div>
     </div>
 </header>
+<MobileNav />
 <script type="module">
     function setupHeaderListeners() {
         document.getElementById("ctaButton").addEventListener("click", () => {
@@ -39,12 +51,33 @@ import Logo from "../assets/logoonly.png";
         });
     }
     setupHeaderListeners();
+    function openMobileMenu() {
+        const menu = document.getElementById("mobileMenu");
+        document
+            .getElementById("nav-btn")
+            .addEventListener("click", (event) => {
+                console.log(event.pageY);
+
+                if (menu.classList.contains("open")) {
+                    menu.classList.remove("open");
+                } else {
+                    menu.classList.add("open");
+                    menu.style.paddingTop = `${event.pageY + 20}px`;
+                }
+            });
+        document.querySelectorAll("[data-close]").forEach((link) => {
+            link.addEventListener("click", () => {
+                menu.classList.remove("open");
+            });
+        });
+    }
+    openMobileMenu();
 </script>
 
 <style>
     /* Header */
     header {
-        background-color: #1C2A44; /* bg-primary */
+        background-color: #1c2a44; /* bg-primary */
         color: #ffffff; /* text-white */
         box-shadow:
             0 10px 15px -3px rgba(0, 0, 0, 0.1),
@@ -89,6 +122,10 @@ import Logo from "../assets/logoonly.png";
         font-size: 1.125rem; /* text-lg */
         letter-spacing: 0.05em; /* tracking-wide */
     }
+    a {
+        text-decoration: none;
+        color: #ffffff;
+    }
 
     /* Navigation */
     .nav-links {
@@ -105,7 +142,7 @@ import Logo from "../assets/logoonly.png";
     }
 
     .nav-links a:hover {
-        color: #E8A900; /* hover:text-accent */
+        color: #e8a900; /* hover:text-accent */
     }
 
     /* Responsive Navigation */
@@ -114,13 +151,48 @@ import Logo from "../assets/logoonly.png";
             display: flex;
         }
     }
+    .booking-link {
+        display: none;
+    }
+
+    #nav-btn {
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        border: none;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease,
+            opacity 0.2s ease;
+    }
+    #nav-btn svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: var(--secondary-color);
+    }
+    #nav-btn:hover svg {
+        fill: var(--secondary-color);
+    }
+    #nav-btn:hover {
+        color: var(--secondary-color);
+        background-color: white;
+        opacity: 0.1; /* bg-opacity-10 */
+    }
+    @media (min-width: 768px) {
+        .booking-link {
+            display: block;
+        }
+        #nav-btn {
+            display: none;
+        }
+    }
 
     /* CTA Button */
     #ctaButton {
         background-color: #f59e0b; /* bg-accent */
-        color: #1C2A44; /* text-primary */
-        font-family: "Helvetica Neue", sans-serif; /* font-heading */
-        font-weight: 700; /* font-bold */
+        color: #1c2a44; /* text-primary */
+        font-family: "Montserrat-ExtraBold";
         font-size: 0.875rem; /* text-sm */
         padding: 0.5rem 1rem; /* px-4 py-2 */
         border-radius: 0.5rem; /* rounded */

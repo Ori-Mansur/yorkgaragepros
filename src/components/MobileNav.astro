@@ -1,0 +1,146 @@
+<div id="mobileMenu" class="mobile-menu">
+    <div class="mobile-menu-inner">
+
+        <div class="menu-header">
+            <span class="menu-title">Menu</span>
+
+            <button id="menuClose" class="menu-close">
+                <i data-lucide="x" class="menu-close-icon"></i>
+            </button>
+        </div>
+
+        <nav class="mobile-nav">
+             <a href="/" class="mobile-link" data-close>Home</a>
+            <a href="/services" class="mobile-link" data-close>Services</a>
+            <a href="/about" class="mobile-link" data-close>About</a>
+            <a href="/contact" class="mobile-link" data-close>Contact Us</a>
+            <a href="/#roi-analysis" class="mobile-link" data-close>Why Renovate?</a>
+            <a href="/#estimator" class="mobile-link" data-close>Estimator</a>
+
+            <a href="/booking" class="mobile-cta" data-close>
+                Get a Free Estimate
+            </a>
+        </nav>
+
+    </div>
+</div>
+<style>
+    /* ========== VARIABLES ========== */
+:root {
+    --primary: #1c2a44;      /* Navy */
+    --accent: #e8a900;       /* Gold */
+    --white: #ffffff;
+    --gray-border: #374151;
+}
+
+/* ========== MOBILE MENU BASE ========== */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 260px;
+    background: var(--primary);
+    z-index: 40;
+
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -12px 0 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ACTIVE STATE (add with JS) */
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+/* Hide on desktop */
+@media (min-width: 768px) {
+    .mobile-menu {
+        display: none;
+    }
+}
+
+/* ========== INNER WRAP ========== */
+.mobile-menu-inner {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* ========== HEADER ========== */
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.menu-title {
+    font-family: "Montserrat-ExtraBold", sans-serif;
+    font-size: 20px;
+    color: var(--accent);
+}
+
+.menu-close {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.menu-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.menu-close-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--white);
+}
+
+/* ========== NAV ITEMS ========== */
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mobile-link {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.mobile-link:hover {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+/* ========== CTA BUTTON ========== */
+.mobile-cta {
+    margin-top: 24px;
+    padding: 12px;
+    text-align: center;
+
+    background: var(--accent);
+    color: var(--primary);
+    font-weight: 800;
+    border-radius: 10px;
+    text-decoration: none;
+
+    border-top: 1px solid var(--gray-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mobile-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+</style>
