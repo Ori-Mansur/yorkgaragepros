@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Layout from "../layouts/ServiceLayout.astro";
 import UtilityNav from "../components/UtilityNav.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -9,7 +10,7 @@ import Epoxy from "../assets/epoxy.webp";
 import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
 ---
 
-<body>
+<Layout>
     <UtilityNav />
     <Header />
 
@@ -166,8 +167,8 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
                                 replacements.
                             </li>
                             <li>
-                                <strong>Opener Malfunction:</strong> Electrical,
-                                sensors, remotes.
+                                <strong>Opener Malfunction:</strong> Electrical, sensors,
+                                remotes.
                             </li>
                             <li>
                                 <strong>Track Alignment:</strong> Fix bent or misaligned
@@ -193,9 +194,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
                 consultation.
             </p>
             <div class="cta-buttons">
-                <a href="/#estimator" class="btn-gold"
-                    >Use Estimator Tool</a
-                >
+                <a href="/#estimator" class="btn-gold">Use Estimator Tool</a>
                 <a href="/booking">
                     <button class="btn-navy">Book Consultation</button>
                 </a>
@@ -209,7 +208,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
    GLOBAL STYLES
 ----------------------------------- */
         :root {
-            --color-primary: #1C2A44; /* Navy */
+            --color-primary: #1c2a44; /* Navy */
             --color-secondary: #e8a900; /* Gold */
             --color-neutral-bg: #f7f8fc;
             --color-text: #343d46;
@@ -228,7 +227,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
         h2,
         h3,
         h4 {
-            font-family: 'Montserrat-Bold';
+            font-family: "Montserrat-Bold";
             color: var(--color-primary);
             margin: 0;
         }
@@ -452,7 +451,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
         .repair-title {
             color: var(--color-secondary);
             font-size: 20px;
-            font-family: 'Montserrat-Bold';
+            font-family: "Montserrat-Bold";
             margin-bottom: 8px;
         }
 
@@ -502,4 +501,4 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
             flex-wrap: wrap;
         }
     </style>
-</body>
+</Layout>

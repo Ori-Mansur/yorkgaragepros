@@ -39,7 +39,6 @@
 	select,
 	textarea {
 		font-family: 'Montserrat', 'Inter';
-		appearance: none
 	}
 
 	select {

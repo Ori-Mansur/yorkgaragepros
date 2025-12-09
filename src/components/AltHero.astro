@@ -1,11 +1,16 @@
 ---
 import { Picture } from "astro:assets";
+import { MapPin } from "@lucide/astro";
 import heroPic from "../assets/heropage.webp";
 import "../styles/global.css";
 ---
 
 <section class="section-garage">
     <div class="container">
+        <div class="location-badge">
+            <MapPin /> YORK | PEEL | DURHAM | TORONTO & SIMCOE REGIONS GARAGE SPECIALISTS
+        </div>
+
         <h1>
             Transform Your Garage, Elevate Your
             <span class="highlight">Home's Value</span>
@@ -16,6 +21,11 @@ import "../styles/global.css";
             and durable Epoxy Flooring, to creating a clutter-free, high-ROI
             extension that enhances your home's curb appeal.
         </p>
+
+        <div class="cta-actions">
+            <a class="btn-gold" href="/booking">Get Quote</a>
+            <a class="btn-white" href="tel:5551234567">Call Us</a>
+        </div>
 
         <div class="garage-image-container">
             <Picture
@@ -30,7 +40,7 @@ import "../styles/global.css";
                 <div class="value-box-inner">
                     <p class="value">93% ROI</p>
                     <p class="desc">
-                        on garage door replacement (often topping other common
+                        On garage door replacement (often topping other common
                         home projects).
                     </p>
                 </div>
@@ -40,7 +50,7 @@ import "../styles/global.css";
                 <div class="value-box-inner">
                     <p class="value">20+ Years</p>
                     <p class="desc">
-                        of manufacturer maintenance-free performance on
+                        Of manufacturer maintenance-free performance on
                         high-grade epoxy floors.
                     </p>
                 </div>
@@ -58,9 +68,11 @@ import "../styles/global.css";
     </div>
     <style>
         /* ====== Layout & Spacing ====== */
+        /* ========== LOCATION BADGE ========== */
+
         .section-garage {
             background: #ffffff;
-            padding-top: 4rem; /* pt-16 */
+            padding-top: 2rem; /* pt-16 */
             padding-bottom: 3rem; /* pb-12 */
             text-align: center;
         }
@@ -84,6 +96,23 @@ import "../styles/global.css";
         }
 
         /* ====== Typography ====== */
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+
+            background-color: #dbeafe; /* light blue */
+            color: #1c2a44; /* primary navy */
+
+            padding: 6px 12px;
+            border-radius: 999px;
+
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+
+            /* margin-bottom: 16px; */
+        }
         .section-garage h1 {
             font-size: 2.25rem; /* text-4xl */
             font-family: "Montserrat-ExtraBold";
@@ -134,10 +163,36 @@ import "../styles/global.css";
         }
 
         /* Mobile: Make it taller */
+        .cta-actions {
+            display: none;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: "Montserrat-ExtraBold", sans-serif;
+        }
+        .btn-white {
+            background: var(--navy);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-family: "Montserrat-Bold", sans-serif;
+        }
         @media (max-width: 640px) {
             .garage-image-container {
                 aspect-ratio: 4 / 3; /* or 3/2, or even 1/1 for a bold square */
                 aspect-ratio: 1/1;
+            }
+            .cta-actions {
+                display: flex;
             }
         }
 

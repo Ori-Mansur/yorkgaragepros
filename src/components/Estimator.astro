@@ -235,6 +235,9 @@
         --brand-gold: #e8a900;
         --sec-bg: #f3f4f6;
     }
+    *{
+        box-sizing: border-box;
+    }
     input,
     label {
         cursor: pointer;
@@ -341,6 +344,8 @@
     }
 
     .checkbox {
+        border: 1px solid var(--brand-navy);
+        border-radius: 0.2rem;
         width: 18px;
         height: 18px;
     }
@@ -401,8 +406,9 @@
     /* CTA Button */
     .cta-button {
         width: 100%;
+        text-align: center;
         background: var(--brand-gold);
-        color: white;
+        color: var(--brand-navy);
         border: none;
         padding: 0.9rem 1.5rem;
         font-size: 1rem;
