@@ -1,5 +1,6 @@
 ---
 import BrandImage from "../assets/heropage.webp";
+import GoogleTagManager from '../components/GoogleTagManager.astro';
 export interface Props {
 	title?: string;
 	description?: string;
@@ -52,21 +53,9 @@ const {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 		<!--  Partytown config -->
+		<GoogleTagManager gtmId={"GTM-KQCW8CN6"} />
 
-		<script>
-			window.dataLayer = window.dataLayer || [];
-			window.partytown = { forward: ["dataLayer.push"] };
-		</script>
-
-		<script src="/~partytown/partytown.js" is:inline></script>
-
-		<script
-			type="text/partytown"
-			async
-			crossorigin="anonymous"
-			src="https://www.googletagmanager.com/gtm.js?id=GTM-KQCW8CN6"
-		></script>
-		<script type="module" async src="/scripts/firebase.js"></script>
+		<script type="module" src="/scripts/firebase.js"></script>
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
 			{
