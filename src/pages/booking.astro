@@ -1,20 +1,13 @@
 ---
 import "../styles/global.css";
 import "../styles/booking.css";
+import Layout from "../layouts/Layout.astro";
 // import "../";
 ---
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Service Booking Appointment</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-        rel="stylesheet"
-    />
-</head>
-
-<body>
+<Layout
+    title="York Garage Pros | Book Your Free Garage Renovation Estimate"
+    description="Schedule a consultation with our renovation specialists."
+>
     <!-- Booking Form Container -->
     <div class="booking-container">
         <!-- Left Side: Header/Visual -->
@@ -210,9 +203,7 @@ import "../styles/booking.css";
                     <button type="submit" class="submit-btn"
                         >Confirm Booking</button
                     >
-                    <a class="cancel" href="/">
-                        Cancel
-                    </a>
+                    <a class="cancel" href="/"> Cancel </a>
                 </div>
             </form>
         </div>
@@ -229,7 +220,7 @@ import "../styles/booking.css";
             >
         </div>
     </div>
-</body>
+</Layout>
 <script type="module">
     const maxFiles = 5;
     const maxFileSize = 5 * 1024 * 1024; // 5MB
@@ -320,11 +311,10 @@ import "../styles/booking.css";
     document
         .getElementById("bookingForm")
         .addEventListener("submit", function (e) {
-            console.log('unde');
-            
+            console.log("unde");
+
             e.preventDefault();
-            
-            
+
             const service = document.getElementById("service").value;
             if (!service)
                 return showMessage("Error", "Please select a service.");
