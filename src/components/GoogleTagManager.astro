@@ -1,6 +1,5 @@
 ---
 // Define the properties this component accepts
-
 interface Props {
     gtmId: string;
 }
@@ -10,21 +9,13 @@ const { gtmId } = Astro.props;
 
 // Ensure the GTM ID is available before rendering the script
 if (!gtmId) {
-    console.warn("GTM ID is required for GoogleTagManager component.");
-    return; // Do not render if the ID is missing
+    console.warn("GTM ID is required for TagManager component.");
+    return;
 }
 
-// The core GTM script needs to be injected into the Partytown sandbox. // Note: We use the standard GTM IIFE function snippet.
-const gtmScript = `(function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-    var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-    j.async = true;
-    j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-    f.parentNode.insertBefore(j, f);
-})(window, document, "script", "dataLayer", "${gtmId}")`;
+// CRITICAL: The GTM snippet must be a string literal (using backticks) // to prevent server-side execution errors.
+const gtmScript = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer', '${gtmId}');`;
 ---
 
+<!-- Google Tag Manager (GTM) - Head Snippet for Partytown -->
 <script type="text/partytown" set:html={gtmScript} />
