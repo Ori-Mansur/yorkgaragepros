@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import sanity from '@sanity/astro';
 
 import tailwindcss from '@tailwindcss/vite';
-import partytown from '@astrojs/partytown';
+
 
 
 
@@ -16,11 +16,7 @@ export default defineConfig({
     },
     integrations: [
         sitemap(),
-        partytown({
-            config: {
-                forward: ["dataLayer.push"],
-            }
-        }), sanity({
+        sanity({
             projectId: "xgztagdf",
             dataset: "production",
             useCdn: false, // for static builds
