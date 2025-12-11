@@ -51,19 +51,15 @@ const {
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<script type="module" src="/scripts/firebase.js"></script>
-		<!-- ✅ Partytown config -->
+		<!--  Partytown config -->
 
 		<script>
 			window.dataLayer = window.dataLayer || [];
-			window.partytown = {
-				forward: ["dataLayer.push"],
-			};
+			window.partytown = { forward: ["dataLayer.push"] };
 		</script>
 
-		<!-- ✅ Load Partytown runtime -->
 		<script src="/~partytown/partytown.js" is:inline></script>
 
-		<!-- ✅ Google Tag Manager (runs inside Partytown worker) -->
 		<script
 			type="text/partytown"
 			src="https://www.googletagmanager.com/gtm.js?id=GTM-KQCW8CN6"
