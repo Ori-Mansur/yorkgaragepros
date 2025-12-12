@@ -24,8 +24,10 @@ const {
 	image = business.defaultImage,
 	noIndex = false,
 	hasFirebase = false,
-	scripts,
 } = Astro.props;
+console.log('if fire',hasFirebase);
+console.log('if no index',noIndex);
+
 ---
 
 <!doctype html>
@@ -81,7 +83,7 @@ const {
 		</script>
 		<!-- End Google Tag Manager -->
 
-		{hasFirebase && <script src="../js/firebase.js" />}
+		{  hasFirebase && (<script type="module" src="src/js/firebase.js" />)}
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
 			{
