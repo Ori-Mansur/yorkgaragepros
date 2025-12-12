@@ -9,9 +9,10 @@
   ],
   "compilerOptions": {
     "types": [
-      "@sanity/astro/module"
+      "@sanity/astro/module",
+      "vue/jsx"
     ],
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsx": "preserve",
+    "jsxImportSource": "vue"
   }
 }

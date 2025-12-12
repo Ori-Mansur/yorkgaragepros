@@ -9,6 +9,9 @@ import { MapPin, Phone, Mail, Calendar } from "@lucide/astro";
 ---
 
 <Layout hasFirebase={true}>
+    <script type="module">
+        import fb from "../js/firebase.js";
+    </script>
     <UtilityNav />
     <Header />
 

@@ -28,7 +28,7 @@ console.log(import.meta.env);
 // Error check for configuration (optional, but good practice)
 if (!firebaseConfig.apiKey) {
     console.error("FIREBASE CONFIGURATION MISSING: Ensure all PUBLIC_FIREBASE environment variables are set.");
-    window.isAuthReady = true;
+    // window.isAuthReady = true;
 }
 
 // Set Firestore log level to debug for better console feedback
@@ -45,7 +45,7 @@ if (firebaseConfig.apiKey) {
     const analytics = getAnalytics(app);
     console.log(analytics);
     const db = getFirestore(app);
-    window.db = db;
+    // window.db = db;
     console.log(db);
 
     // window.appId = firebaseConfig.appId;
