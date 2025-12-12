@@ -2,6 +2,7 @@
 import { Picture } from "astro:assets";
 import { MapPin } from "@lucide/astro";
 import heroPic from "../assets/heropage.webp";
+import heroPicMobile from "../assets/heropagemobile.webp";
 import "../styles/global.css";
 ---
 
@@ -29,8 +30,15 @@ import "../styles/global.css";
 
         <div class="garage-image-container">
             <Picture
+                class={"desktop"}
                 formats={["avif", "webp"]}
                 src={heroPic}
+                alt="A premium insulated dark wood garage door with a vintage red car parked outside."
+            />
+            <Picture
+                class={"mobile"}
+                formats={["avif", "webp"]}
+                src={heroPicMobile}
                 alt="A premium insulated dark wood garage door with a vintage red car parked outside."
             />
         </div>
@@ -86,6 +94,9 @@ import "../styles/global.css";
         @media (min-width: 640px) {
             .section-garage .container {
                 padding: 0 1.5rem; /* sm:px-6 */
+            }
+            .mobile{
+                display: none;
             }
         }
 
@@ -193,6 +204,12 @@ import "../styles/global.css";
             }
             .cta-actions {
                 display: flex;
+            }
+            .desktop{
+                display: none;
+            }
+            .mobile{
+                display: block;
             }
         }
 
