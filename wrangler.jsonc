@@ -1,17 +1,22 @@
 {
-	"main": "dist/_worker.js/index.js",
-	"name": "yorkgaragepros",
+  "main": "dist/_worker.js/index.js",
+  "name": "yorkgaragepros",
+  "vars": {
+    "PUBLIC_FIREBASE_AUTH_DOMAIN": "york-garage-pros.firebaseapp.com",
+    "PUBLIC_FIREBASE_PROJECT_ID": "york-garage-pros",
+    "PUBLIC_FIREBASE_STORAGE_BUCKET": "york-garage-pros.firebasestorage.app"
+  },
   "compatibility_date": "2025-12-12",
   "compatibility_flags": [
     "nodejs_compat",
     "global_fetch_strictly_public"
   ],
-	"assets": {
-		"binding": "ASSETS",
-		"directory": "./dist",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
     "not_found_handling": "404-page"
-	},
-	"observability": {
+  },
+  "observability": {
     "enabled": true
   }
 }
