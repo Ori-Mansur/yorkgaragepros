@@ -9,6 +9,11 @@ import vue from '@astrojs/vue';
 
 
 
+import react from '@astrojs/react';
+
+
+
+
 export default defineConfig({
   site: 'https://yorkgaragepros.com',
 
@@ -20,7 +25,7 @@ export default defineConfig({
     projectId: "xgztagdf",
     dataset: "production",
     useCdn: false, // for static builds
-  }), vue()],
+  }), vue(), react()],
 
   output: "static",
   adapter: cloudflare(),

@@ -12,7 +12,7 @@
       "@sanity/astro/module",
       "vue/jsx"
     ],
-    "jsx": "preserve",
-    "jsxImportSource": "vue"
+    // "jsx": "preserve",
+    // "jsxImportSource": "vue"
   }
 }
