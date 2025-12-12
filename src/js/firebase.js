@@ -22,7 +22,7 @@ const firebaseConfig = {
     appId: import.meta.env.PUBLIC_FIREBASE_APP_ID,
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
-console.log(import.meta.env, env);
+console.log(import.meta.env);
 
 
 // Error check for configuration (optional, but good practice)
