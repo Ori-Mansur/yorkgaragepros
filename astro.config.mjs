@@ -9,17 +9,20 @@ import tailwindcss from '@tailwindcss/vite';
 
 
 
+import react from '@astrojs/react';
+
+
+
+
 export default defineConfig({
     site: 'https://yorkgaragepros.com',
     vite: {
         plugins: [tailwindcss()],
     },
-    integrations: [
-        sitemap(),
-        sanity({
-            projectId: "xgztagdf",
-            dataset: "production",
-            useCdn: false, // for static builds
-        })],
+    integrations: [sitemap(), sanity({
+        projectId: "xgztagdf",
+        dataset: "production",
+        useCdn: false, // for static builds
+    }), react()],
     output: "static",
 });

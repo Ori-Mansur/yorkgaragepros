@@ -1,8 +1,27 @@
 ---
-import Chart from "chart.js/auto";
+// Import the React component
+import ROIAnalysisChart from "./jsx/ROIAnalysisChart.jsx";
 ---
 
 <section id="roi-analysis">
+    <div class="roi-container">
+        <div class="roi-header">
+            <h2>Why the Garage Matters</h2>
+            <p>
+                Comparative Return on Investment (ROI) for common home projects in the Mid-Atlantic region.
+            </p>
+        </div>
+
+        <div class="roi-card">
+            <ROIAnalysisChart client:idle />
+
+            <div class="roi-source">
+                Source: Cost vs. Value Report (National Averages)
+            </div>
+        </div>
+    </div>
+</section>
+<!-- <section id="roi-analysis">
     <div class="roi-container">
         <div class="roi-header">
             <h2>Why the Garage Matters</h2>
@@ -13,7 +32,7 @@ import Chart from "chart.js/auto";
         </div>
 
         <div class="roi-card">
-            <!-- Chart Container -->
+          
             <div class="chart-container">
                 <canvas id="roiChart"></canvas>
             </div>
@@ -22,9 +41,9 @@ import Chart from "chart.js/auto";
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
-<script>
+<!-- <script>
     import Chart from "chart.js/auto";
 
     const ctx = document.getElementById("roiChart").getContext("2d");
@@ -80,7 +99,7 @@ import Chart from "chart.js/auto";
             },
         },
     });
-</script>
+</script> -->
 
 <style>
     /* ROI Analysis Section */
