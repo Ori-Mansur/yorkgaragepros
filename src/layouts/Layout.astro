@@ -1,12 +1,13 @@
 ---
 import BrandImage from "../assets/heropage.webp";
-// import GoogleTagManager from "../components/GoogleTagManager.astro";
 export interface Props {
 	title?: string;
 	description?: string;
 	url?: string;
 	image?: string;
 	noIndex?: boolean;
+	hasFirebase?: boolean;
+	scripts?: string[];
 }
 
 const business = {
@@ -20,7 +21,9 @@ const {
 	description = "Professional garage door repair, installation, and maintenance serving Newmarket, Ontario and surrounding areas within a 50 km radius.",
 	url = business.domain,
 	image = business.defaultImage,
-	noIndex = false
+	noIndex = false,
+	hasFirebase = false,
+	scripts
 } = Astro.props;
 ---
 
@@ -75,10 +78,14 @@ const {
 		</script>
 		<!-- End Google Tag Manager -->
 
-		<!--  Partytown config -->
-		<!-- <GoogleTagManager gtmId="GTM-KQCW8CN6" /> -->
 
-		<script src="../js/firebase.js" ></script>
+		{hasFirebase && (
+			<script src="../js/firebase.js" ></script>
+      
+                
+                
+      
+        )}
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
 			{
@@ -126,6 +133,8 @@ const {
 	</head>
 
 	<body>
+		
+		<slot />
 		<!-- ✅ GTM noscript fallback -->
 		<noscript>
 			<iframe
@@ -134,7 +143,5 @@ const {
 				width="0"
 				style="display:none;visibility:hidden"></iframe>
 		</noscript>
-
-		<slot />
 	</body>
 </html>

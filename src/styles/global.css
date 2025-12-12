@@ -44,7 +44,8 @@
 	select {
 		cursor: pointer;
 	}
-	a{
+
+	a {
 		text-decoration: none;
 	}
 
@@ -62,22 +63,26 @@
 		font-family: 'Montserrat';
 		/* A name for your custom font */
 		src: url('../fonts/static/Montserrat-Regular.ttf');
+		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'Montserrat-ExtraBold';
 		/* A name for your custom font */
 		src: url('../fonts/static/Montserrat-ExtraBold.ttf');
+		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'Montserrat-Bold';
 		/* A name for your custom font */
 		src: url('../fonts/static/Montserrat-Bold.ttf');
+		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'Montserrat-SemiBold';
 		/* A name for your custom font */
 		src: url('../fonts/static/Montserrat-SemiBold.ttf');
+		font-display: swap;
 	}

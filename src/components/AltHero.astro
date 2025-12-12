@@ -115,7 +115,7 @@ import "../styles/global.css";
         }
         .section-garage h1 {
             font-size: 2.25rem; /* text-4xl */
-            font-family: "Montserrat-ExtraBold";
+            font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
             margin-bottom: 1rem;
             line-height: 1.2;
             color: var(--primary-color);
@@ -176,7 +176,7 @@ import "../styles/global.css";
             padding: 12px 20px;
             border-radius: 10px;
             text-decoration: none;
-            font-family: "Montserrat-ExtraBold", sans-serif;
+            font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         }
         .btn-white {
             background: var(--navy);
@@ -184,7 +184,7 @@ import "../styles/global.css";
             padding: 12px 20px;
             border-radius: 10px;
             text-decoration: none;
-            font-family: "Montserrat-Bold", sans-serif;
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
         }
         @media (max-width: 640px) {
             .garage-image-container {
@@ -227,7 +227,7 @@ import "../styles/global.css";
 
         .value-box-inner p.value {
             font-size: 1.875rem; /* text-3xl */
-            font-family: "Montserrat-Bold";
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
             color: #1c2a44; /* brand navy */
         }
 
@@ -237,177 +237,3 @@ import "../styles/global.css";
         }
     </style>
 </section>
-<!-- <section>
-    <div class="container">
-        
-        <h1>Transform Your Garage. Elevate Your <span>Home's Value</span></h1>
-        <p>
-            We specialize in high-end garage door installation and epoxy
-            flooring, creating a durable, high-ROI extension that enhances your
-            home's curb appeal.
-        </p>
-
-        <div class="hero-image-wrapper">
-            <img
-                src={heroPic.src}
-                alt="Modern residential garage with a new door, clear epoxy floor, and organization systems installed by York Garage Pros."
-                
-            />
-        </div>
-
-        <div class="grid">
-            <div class="card card-accent">
-                <h3>93% ROI on Door Replacement</h3>
-                <p>
-                    On garage door replacements, offering one of the highest
-                    returns in home renovation.
-                </p>
-            </div>
-            <div class="card card-primary">
-                <h3>20+ Years of Maintenance-Free Performance</h3>
-                <p>
-                    Lifespan of our industrial-grade epoxy floor coatings
-                    against salt and oil.
-                </p>
-            </div>
-            <div class="card card-accent">
-                <h3>30% Space</h3>
-                <p>
-                    Average usable space reclaimed through our vertical slatwall
-                    storage systems.
-                </p>
-            </div>
-        </div>
-    </div>
-</section> -->
-
-<!-- <style>
-    /* Container */
-    .container {
-        max-width: 80rem; /* max-w-5xl */
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 1rem; /* px-4 */
-        padding-right: 1rem;
-        text-align: center;
-    }
-
-    /* Section Padding */
-    section {
-        background-color: #ffffff; /* bg-white */
-        padding-top: 3rem; /* pt-12 */
-        padding-bottom: 4rem; /* pb-16 */
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    /* Badge */
-    .badge {
-        display: inline-block;
-        background-color: #ebf8ff; /* bg-blue-100 */
-        color: #1c2a44; /* text-primary */
-        padding: 0.25rem 0.75rem; /* px-3 py-1 */
-        border-radius: 9999px; /* rounded-full */
-        font-size: 0.75rem; /* text-xs */
-
-        font-family: "Montserrat-Bold", sans-serif;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em; /* tracking-widest */
-    }
-
-    /* Heading */
-    h1 {
-        font-family: "Montserrat-ExtraBold", sans-serif;
-        font-size: 2.25rem; /* text-4xl */
-        margin-bottom: 1.5rem; /* mb-6 */
-        line-height: 1.2; /* leading-tight */
-        color: #1c2a44; /* text-primary */
-    }
-
-    h1 span {
-        color: #e8a900; /* text-accent */
-    }
-
-    @media (min-width: 768px) {
-        h1 {
-            font-size: 3.75rem; /* md:text-6xl */
-        }
-    }
-
-    /* Paragraph */
-    p {
-        font-size: 1.125rem; /* text-lg */
-        color: #4b5563; /* text-gray-600 */
-        max-width: 48rem; /* max-w-3xl */
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 2.5rem; /* mb-10 */
-    }
-
-    @media (min-width: 768px) {
-        p {
-            font-size: 1.25rem; /* md:text-xl */
-        }
-    }
-
-    /* Hero Image */
-    .hero-image-wrapper {
-        margin-bottom: 3rem; /* mb-12 */
-        border-radius: 1rem; /* rounded-xl */
-        overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* shadow-2xl */
-        border: 4px solid #ffffff;
-    }
-
-    .hero-image-wrapper img {
-        width: 100%;
-        height: auto;
-        max-height: 500px;
-        object-fit: cover;
-    }
-
-    /* Grid Blocks */
-    .grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.5rem; /* gap-6 */
-        text-align: left;
-        margin-top: 2rem; /* mt-8 */
-    }
-
-    @media (min-width: 768px) {
-        .grid {
-            grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
-        }
-    }
-
-    /* Key Value Cards */
-    .card {
-        padding: 1.5rem; /* p-6 */
-        background-color: #f9fafb; /* bg-gray-50 */
-        border-left-width: 4px; /* border-l-4 */
-        border-radius: 0.5rem; /* rounded */
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* shadow-sm */
-    }
-
-    .card-accent {
-        border-color: #e8a900; /* border-accent */
-    }
-
-    .card-primary {
-        border-color: #1c2a44; /* border-primary */
-    }
-
-    .card h3 {
-        font-family: "Montserrat-Bold", sans-serif;
-        font-size: 1.25rem; /* text-xl */
-        margin-bottom: 0.5rem; /* mb-2 */
-        color: #1c2a44; /* text-primary */
-    }
-
-    .card p {
-        font-size: 0.875rem; /* text-sm */
-        color: #4b5563; /* text-gray-600 */
-    }
-</style> -->
