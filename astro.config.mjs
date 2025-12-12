@@ -14,15 +14,24 @@ import react from '@astrojs/react';
 
 
 
+import cloudflare from '@astrojs/cloudflare';
+
+
+
+
 export default defineConfig({
-    site: 'https://yorkgaragepros.com',
-    vite: {
-        plugins: [tailwindcss()],
-    },
-    integrations: [sitemap(), sanity({
-        projectId: "xgztagdf",
-        dataset: "production",
-        useCdn: false, // for static builds
-    }), react()],
-    output: "static",
+  site: 'https://yorkgaragepros.com',
+
+  vite: {
+      plugins: [tailwindcss()],
+  },
+
+  integrations: [sitemap(), sanity({
+      projectId: "xgztagdf",
+      dataset: "production",
+      useCdn: false, // for static builds
+  }), react()],
+
+  output: "static",
+  adapter: cloudflare(),
 });
