@@ -22,9 +22,6 @@ const firebaseConfig = {
     appId: import.meta.env.PUBLIC_FIREBASE_APP_ID,
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
-if (process) {
-    console.log(process);
-}
 if (import.meta) {
     console.log(import.meta);
 }
@@ -56,16 +53,6 @@ if (firebaseConfig.apiKey) {
     const db = getFirestore(app);
     window.db = db;
     console.log(db);
-    // try {
-    //     const docRef = await addDoc(collection(db, "users"), {
-    //         first: "Ada",
-    //         last: "Lovelace",
-    //         born: 1815
-    //     });
-    //     console.log("Document written with ID: ", docRef.id);
-    // } catch (e) {
-    //     console.error("Error adding document: ", e);
-    // }
 
     // window.appId = firebaseConfig.appId;
 
