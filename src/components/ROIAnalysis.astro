@@ -12,7 +12,7 @@ import ROIAnalysisChart from './vue/ROIAnalysisChart.vue';
         </div>
 
         <div class="roi-card">
-            <ROIAnalysisChart client:idle />
+            <ROIAnalysisChart client:visible />
 
             <div class="roi-source">
                 Source: Cost vs. Value Report (National Averages)
@@ -20,85 +20,6 @@ import ROIAnalysisChart from './vue/ROIAnalysisChart.vue';
         </div>
     </div>
 </section>
-<!-- <section id="roi-analysis">
-    <div class="roi-container">
-        <div class="roi-header">
-            <h2>Why the Garage Matters</h2>
-            <p>
-                Comparative Return on Investment (ROI) for common home projects
-                in the Mid-Atlantic region.
-            </p>
-        </div>
-
-        <div class="roi-card">
-          
-            <div class="chart-container">
-                <canvas id="roiChart"></canvas>
-            </div>
-            <div class="roi-source">
-                Source: Cost vs. Value Report (National Averages)
-            </div>
-        </div>
-    </div>
-</section> -->
-
-<!-- <script>
-    import Chart from "chart.js/auto";
-
-    const ctx = document.getElementById("roiChart").getContext("2d");
-
-    new Chart(ctx, {
-        type: "bar",
-        data: {
-            labels: [
-                "Garage Door Replacement",
-                "Manufactured Stone Veneer",
-                "Wood Deck Addition",
-                "Minor Kitchen Remodel",
-                "Bath Remodel",
-            ],
-            datasets: [
-                {
-                    label: "Cost Recouped at Resale (%)",
-                    data: [93.8, 91.4, 65.8, 72.2, 60.1],
-                    backgroundColor: [
-                        "#E8A900", // Accent color for Garage Doors
-                        "#E5E7EB",
-                        "#E5E7EB",
-                        "#E5E7EB",
-                        "#E5E7EB",
-                    ],
-                    borderRadius: 4,
-                },
-            ],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            return context.raw + "% ROI";
-                        },
-                    },
-                },
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    grid: { color: "#f3f4f6" },
-                    title: { display: true, text: "Return on Investment (%)" },
-                },
-                x: {
-                    grid: { display: false },
-                },
-            },
-        },
-    });
-</script> -->
 
 <style>
     /* ROI Analysis Section */
