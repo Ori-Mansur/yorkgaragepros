@@ -35,7 +35,8 @@ import MobileNav from "./MobileNav.astro";
             <button id="ctaButton">Get Quote</button>
         </a>
         <div id="mobile-nav">
-            <button id="nav-btn" title="Menu" aria-label="menu" name="Menu">
+            <button id="nav-btn" aria-label="Open menu">
+                <span class="sr-only">Open menu</span>
                 <Menu />
             </button>
         </div>
@@ -178,6 +179,17 @@ import MobileNav from "./MobileNav.astro";
         color: var(--secondary-color);
         background-color: white;
         opacity: 0.1; /* bg-opacity-10 */
+    }
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
     }
     @media (min-width: 768px) {
         .booking-link {
