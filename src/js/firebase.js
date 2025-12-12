@@ -5,14 +5,9 @@
 // Firebase Imports (Mandatory for Firestore)
 import { initializeApp } from "firebase/app"; // Use package import instead of direct Gstatic URL
 import { getAnalytics } from "firebase/analytics";
-import { 
-    getAuth, signInAnonymously, 
-    signInWithCustomToken, onAuthStateChanged,
-    setPersistence, browserLocalPersistence 
-} from "firebase/auth";
-import { 
-    getFirestore, collection, addDoc, doc, setDoc, 
-    setLogLevel 
+import {
+    getFirestore, collection, addDoc, doc, setDoc,
+    setLogLevel
 } from "firebase/firestore";
 
 
@@ -27,11 +22,13 @@ const firebaseConfig = {
     appId: import.meta.env.PUBLIC_FIREBASE_APP_ID,
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
+console.log(import.meta.env);
+
 
 // Error check for configuration (optional, but good practice)
 if (!firebaseConfig.apiKey) {
     console.error("FIREBASE CONFIGURATION MISSING: Ensure all PUBLIC_FIREBASE environment variables are set.");
-    window.isAuthReady = true; 
+    window.isAuthReady = true;
 }
 
 // Set Firestore log level to debug for better console feedback
@@ -43,38 +40,29 @@ const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial
 if (firebaseConfig.apiKey) {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    console.log(app);
+
     const analytics = getAnalytics(app);
-    window.db = getFirestore(app);
-    window.auth = getAuth(app);
-    window.appId = firebaseConfig.appId;
-    window.isAuthReady = false;
+    console.log(analytics);
+    const db = getFirestore(app);
+    window.db = db;
+    console.log(db);
+    // try {
+    //     const docRef = await addDoc(collection(db, "users"), {
+    //         first: "Ada",
+    //         last: "Lovelace",
+    //         born: 1815
+    //     });
+    //     console.log("Document written with ID: ", docRef.id);
+    // } catch (e) {
+    //     console.error("Error adding document: ", e);
+    // }
 
-    // Persist authentication state locally
-    setPersistence(window.auth, browserLocalPersistence)
-        .then(() => {
-            // Sign in with custom token if available, otherwise anonymously
-            if (initialAuthToken) {
-                return signInWithCustomToken(window.auth, initialAuthToken);
-            } else {
-                return signInAnonymously(window.auth);
-            }
-        })
-        .catch((error) => {
-            console.error("Firebase Auth Error:", error);
-            signInAnonymously(window.auth).catch(e => console.error("Anonymous Sign-in Failed:", e));
-        });
+    // window.appId = firebaseConfig.appId;
 
-    // Auth state observer
-    onAuthStateChanged(window.auth, (user) => {
-        if (user) {
-            window.userId = user.uid;
-            window.isAuthReady = true;
-            console.log("Firestore initialized. User ID:", window.userId);
-        } else {
-            console.warn("User is signed out or auth is not complete.");
-        }
-    });
+
+
 } else {
     console.error("Firebase initialization skipped due to missing config.");
-    window.isAuthReady = true;
+    // window.isAuthReady = true;
 }

@@ -1,17 +1,35 @@
 <div class="contact-card">
     <h2>Send Us a Message</h2>
-    <form>
+    <form id="contactForm">
         <div class="form-inputs">
             <div class="input-container">
-                <input type="text" placeholder="Full Name" required />
+                <input
+                    type="text"
+                    id="fullName"
+                    name="name"
+                    placeholder="Full Name"
+                    required
+                />
             </div>
             <div class="input-container">
-                <input type="tel" placeholder="Phone" required />
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone"
+                    required
+                />
             </div>
         </div>
         <div class="form-inputs">
-            <input type="email" placeholder="Email Address" required />
-            <select required>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email Address"
+                required
+            />
+            <select id="service" name="service" required>
                 <option value="" disabled selected
                     >Select Service Interest...</option
                 >
@@ -30,8 +48,12 @@
                 <option value="General_Inquiry">General Inquiry / Quote</option>
             </select>
         </div>
-        <textarea rows="5" placeholder="Message / Project Details" required
-        ></textarea>
+        <textarea
+            rows="5"
+            id="notes"
+            name="notes"
+            placeholder="Message / Project Details"
+            required></textarea>
         <button type="submit">Send Inquiry</button>
     </form>
 </div>
@@ -58,7 +80,7 @@
         margin-bottom: 12px;
         font-size: 1rem;
         transition: 0.2s;
-        font-family: 'Montserrat';
+        font-family: "Montserrat";
     }
 
     form input:focus,
@@ -99,3 +121,50 @@
         background: #d69f00;
     }
 </style>
+<script type="module" src="/src/js/dbService.js"></script>
+<script type="module">
+    // import { saveLeadToFirestore } from '../js/dbService.js';
+    import { saveLeadToFirestore } from "/src/js/dbService.js";
+    document
+        .getElementById("contactForm")
+        .addEventListener("submit", async function (e) {
+            console.log("unde");
+
+            e.preventDefault();
+
+            const service = document.getElementById("service").value;
+            // if (!service)
+            //     return showMessage("Error", "Please select a service.");
+
+            const fullName = document.getElementById("fullName").value;
+            // if (garage.required && !garage.value)
+            //     return showMessage("Error", "Garage size required.");
+
+            const phone = document.getElementById("phone").value;
+            // if (!phone) return showMessage("Error", "Phone required.");
+
+            const formData = {
+                service: service,
+                fullName: fullName,
+                phone: phone,
+                email: document.getElementById("email").value,
+                notes: document.getElementById("notes").value,
+            };
+            const result = await saveLeadToFirestore(
+                "contacts",
+                formData,
+                "contactForm",
+            );
+            if (result.success) {
+                // alert("Thank you! Your message has been sent.");
+                this.reset();
+                // contactForm.reset();
+                // Redirect logic for GA4 tracking
+                // window.location.href = '/thank-you/'; 
+            } else {
+                alert(`Error submitting form: ${result.error}`);
+            }
+
+          
+        });
+</script>

@@ -1,0 +1,347 @@
+---
+import "../styles/global.css";
+import { Picture } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import UtilityNav from "../components/UtilityNav.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Broken from "../assets/broken garage door.webp";
+// This is the frontmatter. We use the same layout as the rest of the site
+// and define the dynamic part of the URL the user attempted to access.
+
+// Get the requested URL path that caused the 404
+const failedPath = Astro.request.url.replace(Astro.url.origin, "");
+
+// Define your business phone number and key city links
+const phoneNumber = "(905) 9609-YGP";
+const contactLink = "/contact/";
+const serviceAreas = [
+    { name: "Vaughan", href: "/garage-door-repair-vaughan/" },
+    { name: "Markham", href: "/garage-door-repair-markham/" },
+    { name: "Richmond Hill", href: "/garage-door-repair-richmond-hill/" },
+    { name: "Aurora", href: "/garage-door-repair-aurora/" },
+    { name: "Newmarket", href: "/garage-door-repair-newmarket/" },
+    { name: "Stouffville", href: "/garage-door-repair-stouffville/" },
+];
+---
+
+<Layout
+    title="404 Page Not Found - York Garage Pros"
+    description="Oops! We can't find that page, but we can help with your garage door repair in the York Region."
+    noIndex={true}
+>
+    <UtilityNav />
+    <Header />
+
+    <main class="error-wrapper">
+        <div class="error-container">
+            <div class="error-grid">
+                <!-- LEFT COLUMN -->
+                <div class="error-text-block">
+                    <h1 class="error-title">Oops! That Page Took a Detour.</h1>
+
+                    <p class="error-subtitle">
+                        Looks like your page got stuck. We can help get you back
+                        on track!
+                    </p>
+
+                    <p class="error-path">
+                        You tried to visit:
+                        <code class="error-code">{failedPath}</code>
+                    </p>
+
+                    <div class="error-buttons">
+                        <a href="tel:+19059609947" class="btn-primary">
+                            Call for Immediate Help {phoneNumber}
+                        </a>
+
+                        <a href="/contact" class="btn-secondary">
+                            Message Us Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN IMAGE -->
+                <div class="error-image-block">
+                    <Picture
+                        formats={["avif", "webp"]}
+                        src={Broken}
+                        alt="Illustration of a broken garage door with a question mark"
+                        class="error-image"
+                    />
+                </div>
+            </div>
+
+            <!-- SECTION DIVIDER -->
+            <div class="error-section">
+                <h2 class="error-section-title">Explore Our Top Pages</h2>
+
+                <div class="error-links">
+                    <a href="/" class="error-link icon-link">
+                        <svg
+                            class="link-icon"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-10v10a1 1 0 001 1h3m-5-10v8h-4v-8H9z"
+                            >
+                            </path>
+                        </svg>
+                        <span>Home</span>
+                    </a>
+
+                    <a href="/services/" class="error-link">Services</a>
+                    <!-- <a href="/service-areas/" class="error-link"
+                        >Service Areas</a
+                    > -->
+                    <!-- <a href="/reviews/" class="error-link">Read Reviews</a> -->
+                </div>
+
+                <h3 class="error-city-title">Or Find Your City:</h3>
+
+                <div class="error-city-list">
+                    <!-- AUTO GENERATED LINKS -->
+                    <!-- {
+                        serviceAreas.map(
+                            (area) => `
+                    <a href="${area.href}" class="city-item">${area.name}</a>
+                `,
+                        )
+                    } -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+    <style>
+        /* -----------------------------------
+   GLOBAL STYLES
+----------------------------------- */
+        :root {
+            --color-primary: #1c2a44; /* Navy */
+            --color-secondary: #e8a900; /* Gold */
+            --color-neutral-bg: #f7f8fc;
+            --color-text: #343d46;
+            --color-light-gray: #f0f0f0;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #ffffff;
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: "Montserrat-Bold";
+            color: var(--color-primary);
+            margin: 0;
+        }
+        /* Page Layout */
+        .error-wrapper {
+            padding: 4rem 0;
+            background: #ffffff;
+        }
+
+        .error-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* 2-Column Grid */
+        .error-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .error-grid {
+                grid-template-columns: 1.2fr 0.8fr;
+            }
+        }
+
+        /* Typography */
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        @media (min-width: 640px) {
+            .error-title {
+                font-size: 3rem;
+            }
+        }
+
+        .error-subtitle {
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            color: #4b5563;
+        }
+
+        .error-path {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        .error-code {
+            background: #f3f4f6;
+            padding: 0.25rem 0.4rem;
+            border-radius: 4px;
+            color: #dc2626;
+            word-break: break-word;
+        }
+
+        /* Buttons */
+        .error-buttons {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        @media (min-width: 640px) {
+            .error-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .btn-primary {
+            font-family: "Montserrat-Bold";
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            background: var(--color-primary);
+            color: var(--color-secondary);
+            font-size: 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            /* background: #1e40af; */
+            opacity: 7;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            font-size: 1rem;
+            background: var(--color-secondary);
+            color: var(--color-primary);
+            /* border: 1px solid #d1d5db; */
+            border-radius: 6px;
+            text-decoration: none;
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease;
+            font-family: "Montserrat-Bold";
+        }
+
+        .btn-secondary:hover {
+            opacity: 7;
+        }
+
+        /* Image */
+        .error-image-block {
+            display: flex;
+            justify-content: center;
+        }
+
+        .error-image {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+        }
+
+        /* Section Divider */
+        .error-section {
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .error-section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Links Grid */
+        .error-links {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .error-link {
+            color: var(--color-primary);
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-link:hover {
+            color: #1e40af;
+        }
+
+        .link-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+        }
+
+        /* City Listing */
+        .error-city-title {
+            margin-top: 2rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .error-city-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .city-item {
+            padding: 0.6rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            color: #374151;
+            text-decoration: none;
+            transition:
+                background 0.15s,
+                border-color 0.15s;
+        }
+
+        .city-item:hover {
+            background: #eff6ff;
+            border-color: var(--color-primary);
+        }
+    </style>
+</Layout>

@@ -6,6 +6,7 @@ export interface Props {
 	description?: string;
 	url?: string;
 	image?: string;
+	noIndex?: boolean;
 }
 
 const business = {
@@ -19,6 +20,7 @@ const {
 	description = "Professional garage door repair, installation, and maintenance serving Newmarket, Ontario and surrounding areas within a 50 km radius.",
 	url = business.domain,
 	image = business.defaultImage,
+	noIndex = false
 } = Astro.props;
 ---
 
@@ -27,6 +29,10 @@ const {
 	<head>
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		{noIndex && (
+            // If noIndex is true, inject the meta tag
+            <meta name="robots" content="noindex, follow" />
+        )}
 
 		<!-- Canonical -->
 		<link rel="canonical" href={url} />
@@ -72,7 +78,7 @@ const {
 		<!--  Partytown config -->
 		<!-- <GoogleTagManager gtmId="GTM-KQCW8CN6" /> -->
 
-		<!-- <script type="module" src="/scripts/firebase.js"></script> -->
+		<script src="../js/firebase.js" ></script>
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
 			{
