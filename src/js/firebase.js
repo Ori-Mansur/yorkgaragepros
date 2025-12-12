@@ -22,20 +22,6 @@ const firebaseConfig = {
     appId: import.meta.env.PUBLIC_FIREBASE_APP_ID,
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
-export default {
-    async fetch(request, env, ctx) {
-        console.log('fetch', env);
-
-        return new Response(`API host: ${env.PUBLIC_FIREBASE_AUTH_DOMAIN}`);
-    }
-};
-
-if (import.meta) {
-    console.log('import.meta', import.meta);
-}
-// if (env.PUBLIC_FIREBASE_AUTH_DOMAIN) {
-//     console.log('env', env.PUBLIC_FIREBASE_AUTH_DOMAIN);
-// }
 console.log(import.meta.env);
 
 
