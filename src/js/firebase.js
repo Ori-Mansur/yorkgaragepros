@@ -22,10 +22,14 @@ const firebaseConfig = {
     appId: import.meta.env.PUBLIC_FIREBASE_APP_ID,
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
-if (process?.env) {
-    console.log(process.env);
-    
-    
+if (process) {
+    console.log(process);
+}
+if (import.meta) {
+    console.log(import.meta);
+}
+if (env) {
+    console.log(env);
 }
 console.log(import.meta.env);
 
