@@ -13,7 +13,8 @@ export interface Props {
 const business = {
 	name: "York Garage Pros",
 	domain: "https://yorkgaragepros.com",
-	defaultImage: BrandImage,
+	defaultImage:
+		"https://yorkgaragepros.com/_astro/heropagemobile.pCMy9GB0_Z2adhm.avif",
 };
 
 const {
@@ -23,7 +24,7 @@ const {
 	image = business.defaultImage,
 	noIndex = false,
 	hasFirebase = false,
-	scripts
+	scripts,
 } = Astro.props;
 ---
 
@@ -32,10 +33,12 @@ const {
 	<head>
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		{noIndex && (
-            // If noIndex is true, inject the meta tag
-            <meta name="robots" content="noindex, follow" />
-        )}
+		{
+			noIndex && (
+				// If noIndex is true, inject the meta tag
+				<meta name="robots" content="noindex, follow" />
+			)
+		}
 
 		<!-- Canonical -->
 		<link rel="canonical" href={url} />
@@ -78,14 +81,7 @@ const {
 		</script>
 		<!-- End Google Tag Manager -->
 
-
-		{hasFirebase && (
-			<script src="../js/firebase.js" ></script>
-      
-                
-                
-      
-        )}
+		{hasFirebase && <script src="../js/firebase.js" />}
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
 			{
@@ -133,7 +129,6 @@ const {
 	</head>
 
 	<body>
-		
 		<slot />
 		<!-- ✅ GTM noscript fallback -->
 		<noscript>
