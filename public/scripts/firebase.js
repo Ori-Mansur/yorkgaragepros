@@ -4,7 +4,6 @@
 
 // Firebase Imports (Mandatory for Firestore)
 import { initializeApp } from "firebase/app"; // Use package import instead of direct Gstatic URL
-import { getAnalytics } from "firebase/analytics";
 import { 
     getAuth, signInAnonymously, 
     signInWithCustomToken, onAuthStateChanged,
@@ -43,7 +42,6 @@ const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial
 if (firebaseConfig.apiKey) {
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     window.db = getFirestore(app);
     window.auth = getAuth(app);
     window.appId = firebaseConfig.appId;

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yorkgaragepros.com/sitemap-0.xml
+
+Disallow: /booking/
+Disallow: /thank-you/
