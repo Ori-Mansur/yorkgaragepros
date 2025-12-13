@@ -1,7 +1,6 @@
 // src/js/firebase.js
 
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 import { getFirestore, setLogLevel } from "firebase/firestore";
 
@@ -18,19 +17,15 @@ const firebaseConfig = {
 setLogLevel("debug");
 
 let app;
-let analytics;
 let db;
 let storage;
 
 if (firebaseConfig.apiKey) {
     app = initializeApp(firebaseConfig);
 
-    if (typeof window !== "undefined" && firebaseConfig.measurementId) {
-        analytics = getAnalytics(app);
-    }
 
     db = getFirestore(app);
     storage = getStorage(app);
 }
 
-export { app, analytics, db, storage };
+export { app, db, storage };
