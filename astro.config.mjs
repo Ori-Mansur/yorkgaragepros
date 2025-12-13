@@ -21,7 +21,15 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap(), sanity({
+  integrations: [sitemap({
+    filter: (page) => {
+      if (page.includes('/booking') || page.includes('/thank-you')) {
+        return false;
+      }
+
+      return true;
+    }
+  }), sanity({
     projectId: "xgztagdf",
     dataset: "production",
     useCdn: false, // for static builds
