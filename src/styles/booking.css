@@ -103,6 +103,7 @@ body {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    text-align: center;
 }
 
 .submit-btn:hover {
@@ -113,27 +114,23 @@ body {
 }
 
 /* Image Preview */
-.image-preview-container {
-    display: none;
-    margin-bottom: 20px;
-}
 
-.image-preview {
+/* .image-preview {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-}
+} */
 
-.image-preview img {
+/* .image-preview img {
     width: 80px;
     height: 80px;
     object-fit: cover;
     border-radius: 8px;
     position: relative;
-}
+} */
 
 /* Remove Button */
-.remove-btn {
+/* .remove-btn {
     position: absolute;
     top: 0;
     right: 0;
@@ -146,7 +143,7 @@ body {
     border: none;
     border-radius: 50%;
     cursor: pointer;
-}
+} */
 
 /* Message Box */
 .message-box {
@@ -206,3 +203,179 @@ body {
         flex-direction: column;
     }
 }
+/* .booking-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #f7f7f7;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.booking-left {
+    background: var(--navy); 
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 40%;
+}
+.booking-left h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--gold); 
+}
+.booking-left p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+.booking-left-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+.calendar-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+.booking-right {
+    padding: 40px;
+    width: 60%;
+}
+.required {
+    color: #e3342f;
+    font-weight: bold;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.form-row .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+input[type="file"] {
+    border: 1px solid #ddd;
+    padding: 8px;
+    border-radius: 8px;
+}
+.submit-btn {
+    padding: 15px;
+    background: var(--gold);
+    color: var(--navy);
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 70%;
+    margin-right: 5%;
+}
+.submit-btn:hover {
+    background: #d69f00;
+}
+.cancel {
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--navy);
+    background: #e9ecef;
+    border-radius: 8px;
+    display: inline-block;
+    width: 20%;
+}
+
+
+
+
+
+.message-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.message-content {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 400px;
+}
+.message-content h3 {
+    margin-top: 0;
+}
+.message-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+} */
+ .image-preview-container {
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    margin-top: 15px;
+}
+.image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.image-preview-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.image-preview-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.remove-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    padding: 2px 5px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 0 0 0 5px;
+}
+.success { color: green; }
+.error { color: red; }

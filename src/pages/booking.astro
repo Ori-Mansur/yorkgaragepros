@@ -1,17 +1,34 @@
 ---
 import "../styles/global.css";
-import "../styles/booking.css";
 import Layout from "../layouts/Layout.astro";
+import BookingPage from "../components/vue/BookingForm.vue";
 ---
 
+<Layout
+    title="York Garage Pros | Book Your Free Estimate"
+    description="Schedule a consultation with our renovation specialists."
+    noIndex={true}
+>
+    <BookingPage client:idle />
+
+    </Layout>
+
+
+
+
+
+
+
+<!-- ---
 <Layout
     title="York Garage Pros | Book Your Free Garage Renovation Estimate"
     description="Schedule a consultation with our renovation specialists."
     hasFirebase={true}
+    noIndex={true}
 >
-    <!-- Booking Form Container -->
+   
     <div class="booking-container">
-        <!-- Left Side: Header/Visual -->
+   
         <div class="booking-left">
             <div>
                 <h1>Book Your Slot</h1>
@@ -42,10 +59,10 @@ import Layout from "../layouts/Layout.astro";
             </div>
         </div>
 
-        <!-- Right Side: Form -->
+      
         <div class="booking-right">
             <form id="bookingForm">
-                <!-- Service Selection -->
+        
                 <div class="form-group">
                     <label for="service"
                         >Select Service <span class="required">*</span></label
@@ -68,7 +85,6 @@ import Layout from "../layouts/Layout.astro";
                     </select>
                 </div>
 
-                <!-- Garage Size -->
                 <div class="form-group">
                     <label id="garageSizeLabel" for="garageSize"
                         >Garage Size</label
@@ -85,7 +101,7 @@ import Layout from "../layouts/Layout.astro";
                     </select>
                 </div>
 
-                <!-- Date & Time -->
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="date"
@@ -113,7 +129,6 @@ import Layout from "../layouts/Layout.astro";
                     </div>
                 </div>
 
-                <!-- Name & Phone -->
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name"
@@ -143,7 +158,7 @@ import Layout from "../layouts/Layout.astro";
                     </div>
                 </div>
 
-                <!-- Address & Email -->
+
                 <div class="form-group">
                     <label for="address"
                         >Service Address <span class="required">*</span></label
@@ -171,7 +186,7 @@ import Layout from "../layouts/Layout.astro";
                     />
                 </div>
 
-                <!-- Photos -->
+
                 <div class="form-group">
                     <label for="photos">Upload Photos (Optional)</label>
                     <input
@@ -184,12 +199,11 @@ import Layout from "../layouts/Layout.astro";
                     />
                 </div>
 
-                <!-- Image Preview -->
                 <div id="imagePreviewContainer" class="image-preview-container">
                     <div id="imagePreview" class="image-preview"></div>
                 </div>
 
-                <!-- Notes -->
+
                 <div class="form-group">
                     <label for="notes">Additional Notes (Optional)</label>
                     <textarea
@@ -199,7 +213,7 @@ import Layout from "../layouts/Layout.astro";
                         class="form-input"></textarea>
                 </div>
 
-                <!-- Submit -->
+
                 <div class="form-group">
                     <button type="submit" class="submit-btn"
                         >Confirm Booking</button
@@ -210,7 +224,6 @@ import Layout from "../layouts/Layout.astro";
         </div>
     </div>
 
-    <!-- Message Box -->
     <div id="messageBox" class="message-box">
         <div class="message-content">
             <h3 id="messageTitle"></h3>
@@ -372,4 +385,4 @@ import Layout from "../layouts/Layout.astro";
     document
         .getElementById("photos")
         .addEventListener("change", handleFileSelect);
-</script>
+</script> -->

@@ -1,0 +1,57 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ThankYouContent from "../components/vue/ThankYouContent.vue"; // We'll create this Vue component
+import "../styles/global.css";
+
+// Get the URL object to read query parameters
+const url = new URL(Astro.request.url);
+const formType = url.searchParams.get('form') || 'general'; // Defaults to 'general'
+
+// Set the content based on the form type
+let title = "Thank You!";
+let primaryMessage = "We received your submission.";
+let secondaryMessage = "Our team will be in touch shortly.";
+
+if (formType === 'booking') {
+    title = "Booking Confirmed!";
+    primaryMessage = "Your Free Estimate Appointment is Confirmed!";
+    secondaryMessage = "A specialist will call you shortly to confirm the details and requested time.";
+} else if (formType === 'contact') {
+    title = "Message Received!";
+    primaryMessage = "Thank You for Contacting York Garage Pros.";
+    secondaryMessage = "We aim to respond to all inquiries within one business day.";
+}
+
+// Ensure the page is indexed if it's a critical landing page, 
+// but for a generic thank-you page, noIndex is usually fine.
+const NO_INDEX = true;
+
+// NOTE: We don't need 'hasFirebase' here as the form submission is complete.
+---
+
+<Layout
+    title={`York Garage Pros | ${title}`}
+    description={primaryMessage}
+    noIndex={NO_INDEX}
+>
+    <div class="thank-you-container">
+        <ThankYouContent 
+            client:only="html"
+            title={title}
+            primaryMessage={primaryMessage}
+            secondaryMessage={secondaryMessage}
+            formType={formType}
+        />
+    </div>
+</Layout>
+
+<style>
+    /* Styling to center and match the design aesthetic */
+    .thank-you-container {
+        padding: 80px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        min-height: 50vh;
+        background-color: var(--white); /* Assuming your Layout background is white */
+    }
+</style>
