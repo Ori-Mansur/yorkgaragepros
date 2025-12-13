@@ -1,6 +1,6 @@
 // This file assumes window.db (your Firestore instance) has been initialized
 // by your public/firebase.js file and window.isAuthReady is true.
-
+import { db } from './firebase.js'
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 /**
@@ -10,7 +10,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
  * @returns {Promise<{success: boolean, id: string | null, error: string | null}>}
  */
 export async function saveLeadToFirestore(collectionName, formData, source) {
-    if (!window.db) {
+    if (!db) {
         return {
             success: false,
             id: null,
@@ -18,14 +18,8 @@ export async function saveLeadToFirestore(collectionName, formData, source) {
         };
     }
 
-    // Wait for Firebase Auth/DB to be ready (critical for security rules)
-    // while (!window.isAuthReady) {
-    //     console.log("Waiting for Firestore authentication to be ready...");
-    //     await new Promise(resolve => setTimeout(resolve, 100));
-    // }
-
     try {
-        const docRef = await addDoc(collection(window.db, collectionName), {
+        const docRef = await addDoc(collection(db, collectionName), {
             ...formData,
             status: "New Lead", // Default status for lead management
             source,

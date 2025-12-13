@@ -128,5 +128,5 @@ window.onload = function () {
     updateGarageSizeRequirement();
 }
 
-document.getElementById('service').addEventListener('change', updateGarageSizeRequirement);
-document.getElementById('photos').addEventListener('change', handleFileSelect);
+// document.getElementById('service').addEventListener('change', updateGarageSizeRequirement);
+// document.getElementById('photos').addEventListener('change', handleFileSelect);

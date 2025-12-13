@@ -4,7 +4,8 @@ import Layout from "../layouts/Layout.astro";
 import UtilityNav from "../components/UtilityNav.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import ContactForm from "../components/ContactForm.astro";
+// import ContactForm from "../components/ContactForm.astro";
+import ContactFormVue from "../components/vue/ContactForm.vue";
 import { MapPin, Phone, Mail, Calendar } from "@lucide/astro";
 ---
 
@@ -80,7 +81,9 @@ import { MapPin, Phone, Mail, Calendar } from "@lucide/astro";
         </div>
 
         <!-- Form -->
-        <ContactForm />
+
+        <!-- <ContactForm /> -->
+        <ContactFormVue client:idle/>
     </section>
 
     <!-- Map -->
