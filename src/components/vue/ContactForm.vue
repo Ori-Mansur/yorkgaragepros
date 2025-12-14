@@ -7,7 +7,7 @@
           <input
             type="text"
             id="fullName"
-            v-model="formData.fullName"
+            v-model="formData.name"
             placeholder="Full Name"
             required
           />
@@ -69,7 +69,7 @@ const message = ref("");
 const messageType = ref("");
 
 const formData = reactive({
-  fullName: "",
+  name: "",
   phone: "",
   email: "",
   service: "",
@@ -97,7 +97,7 @@ async function handleSubmit() {
       messageType.value = "success";
       // Reset the form data after success
       Object.assign(formData, {
-        fullName: "",
+        name: "",
         phone: "",
         email: "",
         service: "",

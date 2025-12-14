@@ -14,7 +14,7 @@ const firebaseConfig = {
     measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-setLogLevel("debug");
+setLogLevel("error");
 
 let app;
 let db;

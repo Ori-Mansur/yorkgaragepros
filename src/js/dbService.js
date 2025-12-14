@@ -2,15 +2,15 @@
 // has been initialized and exported by your local firebase.js file.
 import { db, storage } from './firebase.js' // <-- ADJUSTED IMPORT: Added 'storage'
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { 
-    ref, 
-    uploadBytes, 
-    getDownloadURL 
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL
 } from "firebase/storage"; // <-- Added necessary Storage functions
 
 
 // Max 5MB per file, useful to keep consistent with client-side validation
-const MAX_FILE_SIZE = 5 * 1024 * 1024; 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 /**
  * Uploads an array of File objects to Firebase Storage.
@@ -29,18 +29,18 @@ export async function uploadFilesToFirebase(files, collectionPath = 'booking_pho
 
     const uploadPromises = [];
     // Creates a unique, time-based folder for this submission (e.g., booking_photos/1734091200000)
-    const uploadPath = `${collectionPath}/${Date.now()}`; 
+    const uploadPath = `${collectionPath}/${Date.now()}`;
 
     for (const file of files) {
         // Optional: Perform a server-side size check (though client-side exists)
         if (file.size > MAX_FILE_SIZE) {
-             throw new Error(`File ${file.name} exceeds the ${MAX_FILE_SIZE / 1024 / 1024}MB size limit.`);
+            throw new Error(`File ${file.name} exceeds the ${MAX_FILE_SIZE / 1024 / 1024}MB size limit.`);
         }
-        
+
         // 1. Create a unique file name and reference (e.g., UUID.jpg)
         const fileExtension = file.name.split('.').pop();
         // Use crypto.randomUUID for robust unique identification
-        const uniqueFileName = `${crypto.randomUUID()}.${fileExtension}`; 
+        const uniqueFileName = `${crypto.randomUUID()}.${fileExtension}`;
         const fileRef = ref(storage, `${uploadPath}/${uniqueFileName}`);
 
         // 2. Create the upload task and chain the download URL retrieval
@@ -83,11 +83,12 @@ export async function saveLeadToFirestore(collectionName, formData, source) {
     try {
         const docRef = await addDoc(collection(db, collectionName), {
             ...formData,
-            status: "New Lead", 
+            status: "New Lead",
             source,
             userTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            timestamp: serverTimestamp() 
+            timestamp: serverTimestamp()
         });
+        sendNotificationEmail(collectionName, formData)
 
         console.log(`Lead saved successfully in ${collectionName} with ID: ${docRef.id}`);
         return { success: true, id: docRef.id, error: null };
@@ -99,5 +100,61 @@ export async function saveLeadToFirestore(collectionName, formData, source) {
             id: null,
             error: `Failed to save lead: ${e.message}`
         };
+    }
+}
+/**
+ * Sends a notification email using the Firebase Trigger Email Extension.
+ * This function creates a document in the 'mail' collection that the extension watches.
+ * @param {string} subject - The subject line for the notification email.
+ * @param {object} formData - The HTML body of the email.
+ * @param {string[]} recipients - An array of email addresses to send the notification to (e.g., ["sales@yourdomain.com"]).
+ * @returns {Promise<boolean>} True if the trigger document was successfully created.
+ */
+export async function sendNotificationEmail(subject, formData, recipients = 'orimansur@gmail.com') {
+    if (!db) {
+        console.error("Firestore is not initialized for email sending.");
+        throw new Error("Firestore DB not initialized.");
+    }
+    const htmlContent = `
+            <div style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
+                <h2 style="color: #003366;">New Booking Inquiry for York Garage Pros</h2>
+                <p><strong>Action Required:</strong> Call this lead immediately!</p>
+                
+                <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                    <tr><td style="padding: 5px; background-color: #f9f9f9; width: 30%;">
+                    <strong>Name:</strong></td><td style="padding: 5px;">${formData.name}</td></tr>
+                    <tr><td style="padding: 5px; background-color: #f9f9f9;">
+                    <strong>Phone:</strong></td><td style="padding: 5px;"><a href="tel:${formData.phone}">${formData.phone}</a></td></tr>
+                    <tr><td style="padding: 5px; background-color: #f9f9f9;">
+                    <strong>Phone:</strong></td><td style="padding: 5px;"><a href="mailto:${formData.email}">${formData.email}</a></td></tr>
+                    <tr><td style="padding: 5px; background-color: #f9f9f9;">
+                    <strong>Service:</strong></td><td style="padding: 5px; font-weight: bold;">${formData.service}</td></tr>
+                    <tr><td style="padding: 5px; background-color: #f9f9f9;">
+                    <strong>Description:</strong></td><td style="padding: 5px;">${formData.notes}</td></tr>
+                </table>
+                
+
+            </div>
+        `;
+
+
+    try {
+        await addDoc(collection(db, "mail"), {
+            // The extension requires 'to', 'cc', or 'bcc' fields
+            to: recipients,
+
+            // The email content
+            message: {
+                subject: subject,
+                html: htmlContent,
+            }
+        });
+
+        console.log("Email notification trigger document successfully created in 'mail' collection.");
+        return true;
+
+    } catch (e) {
+        console.error("Error creating email trigger document: ", e);
+        throw new Error(`Failed to send email notification trigger: ${e.message}`);
     }
 }
