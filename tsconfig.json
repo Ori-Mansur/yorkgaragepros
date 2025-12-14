@@ -9,7 +9,6 @@
   ],
   "compilerOptions": {
     "types": [
-      "@sanity/astro/module",
       "vue/jsx"
     ],
     "jsx": "preserve",
