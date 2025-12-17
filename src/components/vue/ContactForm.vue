@@ -121,6 +121,9 @@ async function handleSubmit() {
 
 <style scoped>
 /* Add success/error message styles */
+*{
+  box-sizing: border-box;
+}
 .success {
   color: green;
   margin-top: 10px;

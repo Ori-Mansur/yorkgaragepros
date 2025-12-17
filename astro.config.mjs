@@ -8,6 +8,11 @@ import vue from '@astrojs/vue';
 
 
 
+import mdx from '@astrojs/mdx';
+
+
+
+
 export default defineConfig({
   site: 'https://yorkgaragepros.com',
 
@@ -23,7 +28,7 @@ export default defineConfig({
 
       return true;
     }
-  }), vue()],
+  }), vue(), mdx()],
 
   output: "static",
   adapter: cloudflare(),
