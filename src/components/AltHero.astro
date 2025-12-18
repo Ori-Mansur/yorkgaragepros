@@ -30,12 +30,18 @@ import "../styles/global.css";
 
         <div class="garage-image-container">
             <Picture
+                loading="eager"
+                fetchpriority="high"
+                decoding="sync"
                 class={"desktop"}
                 formats={["avif", "webp"]}
                 src={heroPic}
                 alt="A premium insulated dark wood garage door with a vintage red car parked outside."
             />
             <Picture
+                loading="eager"
+                fetchpriority="high"
+                decoding="sync"
                 class={"mobile"}
                 formats={["avif", "webp"]}
                 src={heroPicMobile}
@@ -95,7 +101,7 @@ import "../styles/global.css";
             .section-garage .container {
                 padding: 0 1.5rem; /* sm:px-6 */
             }
-            .mobile{
+            .mobile {
                 display: none;
             }
         }
@@ -205,10 +211,10 @@ import "../styles/global.css";
             .cta-actions {
                 display: flex;
             }
-            .desktop{
+            .desktop {
                 display: none;
             }
-            .mobile{
+            .mobile {
                 display: block;
             }
         }
