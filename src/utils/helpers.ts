@@ -10,6 +10,11 @@ import newmarket from '../assets/cities/newmarket.png'
 import richmond_hill from '../assets/cities/richmond-hill.svg'
 import stouffville from '../assets/cities/stouffville.png'
 import vaughan from '../assets/cities/vaughan.svg'
+import carriage_house_panels from '../assets/doorTypes/carriage-house-panels.webp'
+import flush_panels from '../assets/doorTypes/flush-panels.webp'
+import long_ranch_panels from '../assets/doorTypes/long-ranch-panels.webp'
+import ribbed_panels from '../assets/doorTypes/ribbed-panels.webp'
+
 const cityLogoMap = {
     'vaughan': vaughan,
     'markham': markham,
@@ -24,6 +29,13 @@ const cityLogoMap = {
     // Fallback for any city not listed:
     'default': aurora,
 };
+const doorTypeImage = {
+    'long-ranch-panels': long_ranch_panels,
+    'flush-panels': flush_panels,
+    'carriage-house-panels': carriage_house_panels,
+    'ribbed-panels': ribbed_panels,
+    'default': ribbed_panels
+}
 
 
 
@@ -34,4 +46,8 @@ export function capitalizeWords(str: string): string {
 export function getCityLogo(city: string) {
     const logoUrl = cityLogoMap[city as keyof typeof cityLogoMap] || cityLogoMap.default;
     return logoUrl;
+}
+export function getDoorTypeImage(type: string) {
+    const imageUrl = doorTypeImage[type as keyof typeof doorTypeImage] || doorTypeImage.default;
+    return imageUrl;
 }

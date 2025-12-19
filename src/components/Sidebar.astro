@@ -1,305 +1,278 @@
 ---
 // src/components/Sidebar.astro
 
-import { getCollection } from 'astro:content';
-import { capitalizeWords } from '../utils/helpers'; // Assuming the helper function is in src/utils/
-import ContactForm from './vue/ContactForm.vue'
+import { getCollection } from "astro:content";
+import { capitalizeWords } from "../utils/helpers"; // Assuming the helper function is in src/utils/
+import ContactForm from "./vue/ContactForm.vue";
 
 export interface Props {
-    // The current service (e.g., 'garage-door', 'opener-service')
-    serviceSlug: string; 
-    // The current city (only defined on local pages, e.g., 'vaughan')
-    citySlug?: string; 
-    // The current product type (only defined on product pages, e.g., 'flush-panels')
-    typeSlug?: string; 
+  // The current service (e.g., 'garage-door', 'opener-service')
+  serviceSlug: string;
+  // The current city (only defined on local pages, e.g., 'vaughan')
+  citySlug?: string;
+  // The current product type (only defined on product pages, e.g., 'flush-panels')
+  typeSlug?: string;
 }
 
 const { serviceSlug, citySlug, typeSlug } = Astro.props;
 
 // --- 1. Fetch all collections ---
-const allCatalogs = await getCollection('service-catalogs');
-const allServiceAreas = await getCollection('service-areas');
-
+const allCatalogs = await getCollection("service-catalogs");
+const allServiceAreas = await getCollection("service-areas");
 
 // --- 2. Filter for Contextual Links ---
 
 // A. Filter Catalogs (Products/Brands) for the current service
 const relatedCatalogs = allCatalogs
-    .filter(entry => entry.data.service === serviceSlug)
-    .map(entry => ({
-        name: capitalizeWords(entry.data.type.replace(/-/g, ' ')),
-        url: `/${serviceSlug}/${entry.data.type}`,
-        // Determine if this is the active page (for styling)
-        isActive: entry.data.type === typeSlug
-    }));
+  .filter((entry) => entry.data.service === serviceSlug)
+  .map((entry) => ({
+    name: capitalizeWords(entry.data.type.replace(/-/g, " ")),
+    url: `/${serviceSlug}/${entry.data.type}`,
+    // Determine if this is the active page (for styling)
+    isActive: entry.data.type === typeSlug,
+  }));
 
 // B. Filter Service Areas for the current service
 const relatedServiceAreas = allServiceAreas
-    .filter(entry => entry.data.service === serviceSlug)
-    .map(entry => ({
-        name: entry.data.cityName, // Use the proper city name
-        url: `/${serviceSlug}/${entry.data.city}`,
-        // Determine if this is the active page
-        isActive: entry.data.city === citySlug
-    }));
-;
-
+  .filter((entry) => entry.data.service === serviceSlug)
+  .map((entry) => ({
+    name: entry.data.cityName, // Use the proper city name
+    url: `/${serviceSlug}/${entry.data.city}`,
+    // Determine if this is the active page
+    isActive: entry.data.city === citySlug,
+  }));
 // Determine which header to show
 const isLocalPage = !!citySlug;
 const isProductPage = !!typeSlug;
 
-const cityTitle = citySlug ? `in ${capitalizeWords(citySlug.replace(/-/g, ' '))}` : '';
-const serviceTitle = serviceSlug ? `${capitalizeWords(serviceSlug.replace(/-/g, ' '))}` : '';
-
+const cityTitle = citySlug
+  ? `in ${capitalizeWords(citySlug.replace(/-/g, " "))}`
+  : "";
+const serviceTitle = serviceSlug
+  ? `${capitalizeWords(serviceSlug.replace(/-/g, " "))}`
+  : "";
 ---
 
 <aside class="sidebar">
-
   <!-- CTA / Quick Quote -->
-    <div class="service-sidebar">
-        <h2 class="sidebar-title">
-                  Book Your {serviceTitle} Service {cityTitle} Today
-                </h2>
-        
-                <ContactForm
-                  client:load
-                  city={citySlug}
-                  service={serviceSlug}
-                />
-        
-                <div class="sidebar-emergency">
-                  <p>Or Call Us Now for Immediate Emergency Service:</p>
-                  <p class="sidebar-phone">
-                    <a href="tel:+19059609947">(905) 9609-YGP</a>
-                  </p>
-                </div>
-      </div>
+  <div class="service-sidebar">
+    <h2 class="sidebar-title">
+      Book Your {serviceTitle} Service {cityTitle} Today
+    </h2>
+
+    <ContactForm client:load city={citySlug} service={serviceSlug} />
+
+    <div class="sidebar-emergency">
+      <p>Or Call Us Now for Immediate Emergency Service:</p>
+      <p class="sidebar-phone">
+        <a href="tel:+19059609947">(905) 9609-YGP</a>
+      </p>
+    </div>
+  </div>
 
   <!-- Service Areas -->
   <div class="sidebar-card">
-    <h3 class="sidebar-heading">
-      Service Areas
-    </h3>
-    
+    <h3 class="sidebar-heading">Service Areas</h3>
 
     <ul class="sidebar-list">
-        {relatedServiceAreas.map(page => (
-            <li>
-      <a
-        href={page.url}
-        class="sidebar-link"
-      >
-          {page.name}
-        
-      </a>
-      </li>
-    ))}
-      
-      <li>
-        <a href="#" class="sidebar-link">
-          Newmarket
-        </a>
-      </li>
-      <li>
-        <a href="#" class="sidebar-link">
-          Aurora
-        </a>
-      </li>
+      {
+        relatedServiceAreas.map((page) => (
+          <li>
+            <a href={page.url} class="sidebar-link">
+              {page.name}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 
   <!-- Related Products -->
   <div class="sidebar-card">
-    <h3 class="sidebar-heading">
-      Related Products & Brands
-    </h3>
+    <h3 class="sidebar-heading">Related Products & Brands</h3>
 
     <ul class="sidebar-list">
-      <li>
-        <a href="#" class="sidebar-link">
-          LiftMaster Openers
-        </a>
-      </li>
-      <li>
-        <a href="#" class="sidebar-link">
-          Chamberlain Systems
-        </a>
-      </li>
+      {
+        relatedCatalogs.map((page) => (
+          <li>
+            <a href={page.url} class="sidebar-link">
+              {page.name}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
-
 </aside>
 <style>
-    /* ===== Variables ===== */
-:root {
-  --navy-darkest: #1c2a44;
-  --navy-dark: #243559;
-  --gold: #e8a900;
-  --gold-dark: #c89300;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-600: #4b5563;
-  --white: #ffffff;
-}
+  /* ===== Variables ===== */
+  :root {
+    --navy-darkest: #1c2a44;
+    --navy-dark: #243559;
+    --gold: #e8a900;
+    --gold-dark: #c89300;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-600: #4b5563;
+    --white: #ffffff;
+  }
 
-/* ===== Sidebar Wrapper ===== */
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  
-}
+  /* ===== Sidebar Wrapper ===== */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
 
-/* ===== CTA Card ===== */
-.sidebar-cta {
-  background: var(--gold);
-  color: var(--navy-darkest);
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
-  position: sticky;
-  top: 80px;
-}
+  /* ===== CTA Card ===== */
+  .sidebar-cta {
+    background: var(--gold);
+    color: var(--navy-darkest);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 80px;
+  }
 
-.sidebar-title {
-  font-size: 1.5rem;
-  font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
-  margin-bottom: 8px;
-   color: var(--navy-darkest);
-}
+  .sidebar-title {
+    font-size: 1.5rem;
+    font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+    margin-bottom: 8px;
+    color: var(--navy-darkest);
+  }
 
-.sidebar-cta-text {
-  font-size: 0.95rem;
-  margin-bottom: 16px;
-}
+  .sidebar-cta-text {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
 
-.sidebar-cta-button {
-  width: 100%;
-  background: var(--navy-darkest);
-  color: var(--white);
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+  .sidebar-cta-button {
+    width: 100%;
+    background: var(--navy-darkest);
+    color: var(--white);
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
 
-.sidebar-cta-button:hover {
-  background: var(--navy-dark);
-}
+  .sidebar-cta-button:hover {
+    background: var(--navy-dark);
+  }
 
-.sidebar-phone {
-  margin-top: 16px;
-  text-align: center;
-  font-weight: 700;
-}
+  .sidebar-phone {
+    margin-top: 16px;
+    text-align: center;
+    font-weight: 700;
+  }
 
-.sidebar-phone a {
-  color: inherit;
-  text-decoration: none;
-}
+  .sidebar-phone a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-.sidebar-phone a:hover {
-  text-decoration: underline;
-}
+  .sidebar-phone a:hover {
+    text-decoration: underline;
+  }
 
-/* ===== Sidebar Cards ===== */
-.sidebar-card {
-  background: var(--white);
-  padding: 24px;
-  border-radius: 12px;
-  border: 1px solid var(--gray-200);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-}
+  /* ===== Sidebar Cards ===== */
+  .sidebar-card {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  }
 
-.sidebar-heading {
-  font-size: 1.25rem;
-  font-weight: 700;
-  font-family: "Montserrat-Bold", "Inter", sans-serif;
-  color: var(--gold-dark);
-  border-bottom: 2px solid var(--gray-200);
-  padding-bottom: 8px;
-  margin: 0;
-}
+  .sidebar-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: "Montserrat-Bold", "Inter", sans-serif;
+    color: var(--gold-dark);
+    border-bottom: 2px solid var(--gray-200);
+    padding-bottom: 8px;
+    margin: 0;
+  }
 
-/* ===== Lists ===== */
-.sidebar-list {
+  /* ===== Lists ===== */
+  .sidebar-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-list li + li {
-  /* margin-top: 8px; */
-  /* border-right: 1px solid var(--gray-600); */
-}
-
-.sidebar-link {
-display: inline-block;
-  padding: 10px 12px;
-  border-radius: 8px;
-  color: var(--gray-600);
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-.sidebar-link {
-    
-}
-
-.sidebar-link:hover {
-  background: var(--gray-100);
-}
-
-/* Active Link */
-.sidebar-link.active {
-  background: var(--navy-darkest);
-  color: var(--white);
-  font-weight: 700;
-}
-.service-sidebar {
-  /* background: var(--gray-50); */
-  background: var(--white);
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--gray-200);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-/* Emergency CTA */
-.sidebar-emergency {
-  margin-top: 32px;
-  background: var(--navy);
-  padding: 16px;
-  border-radius: 12px;
-  text-align: center;
-}
-
-.sidebar-emergency p {
-  color: #fff;
-  margin: 0;
-}
-
-.sidebar-phone {
-  font-size: 1.75rem;
-   font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
-  color: var(--gold);
-  margin-top: 6px;
-}
-
-.sidebar-phone a {
-  color: inherit;
-  text-decoration: none;
-}
-
-
-/* ===== Mobile Tweaks ===== */
-@media (max-width: 768px) {
-  .sidebar-cta {
-    position: static;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
-}
 
+  .sidebar-list li + li {
+    /* margin-top: 8px; */
+    /* border-right: 1px solid var(--gray-600); */
+  }
+
+  .sidebar-link {
+    display: inline-block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: var(--gray-600);
+    text-decoration: none;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
+  }
+  .sidebar-link {
+  }
+
+  .sidebar-link:hover {
+    background: var(--gray-100);
+  }
+
+  /* Active Link */
+  .sidebar-link.active {
+    background: var(--navy-darkest);
+    color: var(--white);
+    font-weight: 700;
+  }
+  .service-sidebar {
+    /* background: var(--gray-50); */
+    background: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+  /* Emergency CTA */
+  .sidebar-emergency {
+    margin-top: 32px;
+    background: var(--navy);
+    padding: 16px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .sidebar-emergency p {
+    color: #fff;
+    margin: 0;
+  }
+
+  .sidebar-phone {
+    font-size: 1.75rem;
+    font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+    color: var(--gold);
+    margin-top: 6px;
+  }
+
+  .sidebar-phone a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* ===== Mobile Tweaks ===== */
+  @media (max-width: 768px) {
+    .sidebar-cta {
+      position: static;
+    }
+  }
 </style>
