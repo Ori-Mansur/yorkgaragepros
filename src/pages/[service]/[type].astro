@@ -1,0 +1,288 @@
+---
+// src/pages/[serviceSlug]/[typeSlug].astro
+
+import '../../styles/global.css'
+
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import UtilityNav from "../../components/UtilityNav.astro"; 
+import Header from "../../components/Header.astro"; 
+import Footer from "../../components/Footer.astro"; 
+import Sidebar from '../../components/Sidebar.astro';
+import ProductCard from '../../components/ProductCard.astro'; // Assuming you create this component
+import { capitalizeWords } from '../../utils/helpers'; // Assuming a simple helper function
+
+// 1. Get all entries from the new service-catalogs collection
+type CatalogEntry = Awaited<ReturnType<typeof getCollection<'service-catalogs'>>>[number];
+
+// Inside src/pages/[serviceSlug]/[typeSlug].astro
+
+export async function getStaticPaths() {
+    const catalogEntries = await getCollection('service-catalogs');
+    
+    return catalogEntries.map((entry) => {
+        return {
+            params: { 
+                service: entry.data.service, // <-- Parameter name defined as 'service'
+                type: entry.data.type // <-- Parameter name defined as 'type'
+            },
+            props: { entry },
+        };
+    });
+}
+
+// 2. Destructure props and render the MDX content
+const { entry } = Astro.props as { entry: CatalogEntry };
+const { Content } = await entry.render();
+
+const { title, h1, metaDescription, service, type, features, colors, glassStyles } = entry.data;
+
+const safeService = service || 'undefined-service'; 
+const safeSlug = type || 'undefined-slug'; 
+
+// Use the safe variables in the helper functions
+const serviceName = capitalizeWords(safeService.replace(/-/g, ' '));
+const typeName = capitalizeWords(safeSlug.replace(/-/g, ' '));
+
+// const canonicalURL = `https://yorkgaragepros.com/${service}/${type}`;
+---
+
+<Layout title={title} description={metaDescription} >
+    <UtilityNav/>
+  <Header/>
+
+  <section class="product-page">
+ <div class="container">
+
+  <h1 class="page-title">{h1}</h1>
+
+  <p class="page-intro">
+   A comprehensive look at our <strong>{typeName}</strong> options for your
+   {serviceName} needs across the GTA.
+  </p>
+
+  <div class="layout-grid">
+
+      <div class="content">
+
+        <article class="card">
+     <div class="prose">
+      <Content />
+     </div>
+    </article>
+
+        {features && features.length > 0 && (
+     <section class="features">
+      <h2>Key Product Specifications</h2>
+
+      <ul class="feature-list">
+       {features.map(feature => (
+        <li>
+         <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z"/>
+         </svg>
+         <strong>{feature.name}:</strong>
+         <span>{feature.value}</span>
+        </li>
+       ))}
+      </ul>
+     </section>
+    )}
+
+        <div class="options-grid">
+
+     {colors && colors.length > 0 && (
+      <div class="option-card">
+       <h3>Available Color Options</h3>
+       <ul class="pill-list">
+        {colors.map(color => (
+         <li >{color.name}
+         <span class="color-buble" style={`background-color: ${color.color};`}></span>
+         </li>
+        ))}
+       </ul>
+      </div>
+     )}
+
+     {glassStyles && glassStyles.length > 0 && (
+      <div class="option-card">
+       <h3>Glass Styles</h3>
+       <ul class="pill-list">
+        {glassStyles.map(style => (
+         <li>{style}</li>
+        ))}
+       </ul>
+      </div>
+     )}
+
+    </div>
+   </div>
+
+      <aside class="sidebar">
+            <Sidebar serviceSlug={service} typeSlug={type} />
+   </aside>
+   
+
+  </div>
+ </div>
+</section>
+<Footer/>
+</Layout>
+
+<style>
+  /* ========== Variables ========== */
+:root {
+ --navy: #1c2a44;
+ --navy-dark: #141f33;
+ --gold: #e8a900;
+ --bg: #f7f8fc;
+ --text: #343d46;
+ --muted: #6b7280;
+ --white: #ffffff;
+ --shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+/* ========== Layout ========== */
+.product-page {
+ background: var(--bg);
+ padding: 3rem 1rem;
+}
+
+.container {
+ max-width: 1200px;
+ margin: 0 auto;
+}
+
+.page-title {
+ font-size: 2.25rem;
+ font-weight: 800;
+ color: var(--navy-dark);
+ margin-bottom: 1rem;
+}
+
+.page-intro {
+ font-size: 1.2rem;
+ color: var(--muted);
+ margin-bottom: 3rem;
+}
+
+/* ========== Grid ========== */
+.layout-grid {
+ display: grid;
+ gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+ .layout-grid {
+  grid-template-columns: 2fr 1fr;
+ }
+}
+
+/* ========== Cards ========== */
+.card {
+ background: var(--white);
+ padding: 2rem;
+ border-radius: 12px;
+ box-shadow: var(--shadow);
+}
+
+.prose {
+ font-size: 1.05rem;
+ line-height: 1.7;
+}
+
+/* ========== Features ========== */
+.features {
+ background: #fff9e6;
+ border-left: 5px solid var(--gold);
+ padding: 2rem;
+ border-radius: 10px;
+ box-shadow: var(--shadow);
+}
+
+.features h2 {
+ color: var(--navy-dark);
+ margin-bottom: 1.5rem;
+}
+
+.feature-list {
+ display: grid;
+ gap: 1rem;
+}
+
+.feature-list li {
+ display: flex;
+ align-items: center;
+ gap: 0.75rem;
+}
+
+.feature-list svg {
+ width: 20px;
+ height: 20px;
+ fill: var(--gold);
+}
+
+/* ========== Options ========== */
+.options-grid {
+ display: grid;
+ gap: 2rem;
+}
+
+@media (min-width: 768px) {
+ .options-grid {
+  grid-template-columns: 1fr 1fr;
+ }
+}
+
+.option-card {
+ background: var(--white);
+ padding: 1.5rem;
+ border-radius: 12px;
+ box-shadow: var(--shadow);
+}
+
+.option-card h3 {
+ margin-bottom: 1rem;
+ color: var(--navy);
+}
+
+.pill-list {
+  padding: 0;
+ display: flex;
+ flex-wrap: wrap;
+ /* gap: 0.5rem; */
+ list-style: none;
+}
+
+.pill-list li {
+ /* background: #e5e7eb; */
+ padding: 0.4rem 0.4rem;
+ 
+ text-align: center;
+ font-size: 0.80rem;
+ width: 105px;
+  
+}
+.color-buble{
+  margin: 0 auto;
+  border: 1px solid var(--navy);
+  border-radius: 999px;
+  display: block;
+  height: 30px;
+  width: 70px;
+}
+
+
+/* ========== Sidebar ========== */
+.sidebar {
+ position: relative;
+}
+
+@media (min-width: 1024px) {
+ .sidebar {
+  position: sticky;
+  top: 2rem;
+ }
+}
+
+</style>

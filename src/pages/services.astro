@@ -7,7 +7,7 @@ import Footer from "../components/Footer.astro";
 import Door from "../assets/newdoor.webp";
 import Opener from "../assets/opener.webp";
 import Epoxy from "../assets/epoxy.webp";
-import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
+import { DoorOpen, Wrench, Cog, Layers, ArrowRight } from "@lucide/astro";
 ---
 
 <Layout>
@@ -36,7 +36,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
 
                 <div class="services-grid">
                     <!-- CARD 1 -->
-                    <div class="service-card">
+                    <a href="#" class="service-card">
                         <div class="service-image">
                             <img src={Door.src} alt="Garage door" />
                         </div>
@@ -67,11 +67,13 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
                                     upgrades.
                                 </li>
                             </ul>
+                            <span class="read-more"
+                                >Read More<ArrowRight /></span
+                            >
                         </div>
-                    </div>
-
+                    </a>
                     <!-- CARD 2 -->
-                    <div class="service-card">
+                    <a href="#" class="service-card">
                         <div class="service-image">
                             <img src={Opener.src} alt="Garage opener" />
                         </div>
@@ -99,11 +101,14 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
                                     setups.
                                 </li>
                             </ul>
+                            <span class="read-more"
+                                >Read More<ArrowRight /></span
+                            >
                         </div>
-                    </div>
+                    </a>
 
                     <!-- CARD 3 -->
-                    <div class="service-card">
+                    <a href="#" class="service-card">
                         <div class="service-image">
                             <img src={Epoxy.src} alt="Epoxy floor" />
                         </div>
@@ -132,8 +137,11 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
                                     <strong>Aesthetics:</strong> Many styles & finishes.
                                 </li>
                             </ul>
+                            <span class="read-more"
+                                >Read More<ArrowRight /></span
+                            >
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="section-divider"></div>
@@ -175,7 +183,9 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
                                 tracks.
                             </li>
                         </ul>
-
+                        <a class="read-more" href="/garage-door-repair"
+                            >Read More<ArrowRight /></a
+                        >
                         <div class="repair-cta">
                             <a href="tel:+19059609947" class="btn-red"
                                 >CALL EMERGENCY REPAIR: (905) 9609-YGP</a
@@ -227,7 +237,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
         h2,
         h3,
         h4 {
-            font-family: "Montserrat-Bold";
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
             color: var(--color-primary);
             margin: 0;
         }
@@ -235,6 +245,14 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
         img,
         svg {
             display: block;
+        }
+        .read-more {
+            display: flex;
+            color: var(--color-secondary);
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
+        }
+        .read-more svg {
+            display: inline;
         }
 
         /* Utility Buttons */
@@ -244,7 +262,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
             padding: 12px 24px;
             border-radius: 8px;
 
-            font-family: "Montserrat-Bold";
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
             text-decoration: none;
             display: inline-block;
             transition: 0.3s ease;
@@ -261,7 +279,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
             border-radius: 8px;
             border: none;
             font-size: 16px;
-            font-family: "Montserrat-Bold";
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
             cursor: pointer;
             transition: 0.3s ease;
         }
@@ -277,7 +295,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
             border-radius: 8px;
             display: inline-block;
             text-decoration: none;
-            font-family: "Montserrat-Bold";
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
             transition: 0.3s ease;
         }
 
@@ -344,7 +362,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
 
         .section-title {
             font-size: 26px;
-            font-family: "Montserrat-ExtraBold";
+            font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
             padding-bottom: 10px;
             border-bottom: 2px solid #ddd;
             margin-bottom: 30px;
@@ -404,6 +422,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
 
         .service-content ul li {
             margin-bottom: 8px;
+            color: var(--color-text);
         }
 
         /* Header inside card */
@@ -451,7 +470,7 @@ import { DoorOpen, Wrench, Cog, Layers } from "@lucide/astro";
         .repair-title {
             color: var(--color-secondary);
             font-size: 20px;
-            font-family: "Montserrat-Bold";
+            font-family: "Montserrat-Bold", "Inter", sans-serif;
             margin-bottom: 8px;
         }
 

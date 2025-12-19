@@ -1,0 +1,208 @@
+---
+// 1. Imports
+import '../../styles/global.css'
+import Layout from "../../layouts/Layout.astro"; // Adjust path based on your folder depth
+import { getServiceData ,serviceAreaMatrix } from '../../js/serviceAreaMatrix.js'; // Adjust path
+import UtilityNav from "../../components/UtilityNav.astro"; 
+import Header from "../../components/Header.astro"; 
+import Footer from "../../components/Footer.astro"; 
+import ContactForm from "../../components/vue/ContactForm.vue"; // Your Vue form component
+
+// 2. getStaticPaths: Defines ALL the URLs to be built
+export async function getStaticPaths() {
+    // This matrix defines every single page you want to generate
+    const cityServiceMatrix = [
+        // YORK REGION CORE PAGES
+        { city: 'vaughan', service: 'installation' },
+        { city: 'markham', service: 'spring-repair' },
+        { city: 'richmond-hill', service: 'opener-service' },
+        // Add more services/cities here as you expand!
+        // { city: 'aurora', service: 'maintenance' }, 
+    ];
+    
+
+
+    // Map the matrix into the structure Astro expects for dynamic routing
+    return cityServiceMatrix.map(item => ({
+        params: { 
+            city: item.city, 
+            service: item.service 
+        },
+        props: { 
+            city: item.city, 
+            service: item.service 
+        },
+    }));
+}
+
+// 3. Data Fetching (Runs at build time for each generated page)
+const { city, service } = Astro.props;
+const data = getServiceData(city, service);
+
+// Handle the case where the data might not exist (optional fallback)
+if (!data) {
+    return Astro.redirect('/404');
+}
+
+// Destructure the required data for the template
+const { title, h1, bodyHtml, cityName } = data;
+---
+
+<Layout title={title}>
+    <UtilityNav/>
+    <Header/>
+    <section class="service-page">
+  <div class="service-container">
+
+    <h1 class="service-title">
+      {h1}
+    </h1>
+
+    <p class="service-intro">
+      York Garage Pros offers expert {service} services for homes in {cityName}
+      and the surrounding York Region.
+    </p>
+
+    <div class="service-grid">
+
+      <!-- Main Content -->
+      <div class="service-content">
+        <Fragment set:html={bodyHtml} />
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="service-sidebar">
+        <h2 class="sidebar-title">
+          Book Your Service in {cityName} Now
+        </h2>
+
+        <ContactForm client:load city={cityName} service={service} />
+
+        <div class="sidebar-callout">
+          <p>Or Call Us 24/7 for Emergency Service:</p>
+          <p class="emergency-phone">
+            <a href="tel:289XXXXXXX">(289) XXX-XXXX</a>
+          </p>
+        </div>
+      </aside>
+
+    </div>
+
+  </div>
+</section>
+<Footer/>
+</Layout>
+<style>
+    /* ========== Variables ========== */
+:root {
+  --navy: #1c2a44;
+  --gold: #e8a900;
+  --gray-bg: #f5f6fa;
+  --text: #343d46;
+  --muted: #6b7280;
+  --white: #ffffff;
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ========== Layout ========== */
+.service-page {
+  padding: 32px 16px;
+  background: #fff;
+}
+
+.service-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ========== Heading ========== */
+.service-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--navy);
+  border-bottom: 4px solid var(--gold);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+
+.service-intro {
+  font-size: 1.1rem;
+  color: #374151;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+/* ========== Grid ========== */
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+/* ========== Content ========== */
+.service-content {
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.service-content h2,
+.service-content h3 {
+  color: var(--navy);
+  margin-top: 32px;
+}
+
+.service-content p {
+  margin-bottom: 16px;
+}
+
+/* ========== Sidebar ========== */
+.service-sidebar {
+  background: var(--gray-bg);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.sidebar-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+
+.sidebar-callout {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.emergency-phone {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #dc2626;
+  margin-top: 6px;
+}
+
+.emergency-phone a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ========== Desktop Enhancements ========== */
+@media (min-width: 1024px) {
+  .service-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .service-sidebar {
+    position: sticky;
+    top: 24px;
+    align-self: flex-start;
+  }
+
+  .service-title {
+    font-size: 2.6rem;
+  }
+}
+
+</style>
