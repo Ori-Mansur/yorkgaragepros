@@ -28,6 +28,7 @@ const serviceCatalogsCollection = defineCollection({
         
         // SEO Fields for the Dynamic Page
         title: z.string(),
+        cardTitle: z.string().optional(),
         h1: z.string(),
         metaDescription: z.string(),
 

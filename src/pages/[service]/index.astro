@@ -98,15 +98,14 @@ const relatedCatalogsWithIcons = relatedCatalogs.map(entry => ({
                             class="specialty-card"
                         >
                             
-                            {/* {entry.iconName} */}
-                            <span class="specialty-icon">
+                            {/* <span class="specialty-icon">
 
                             <entry.iconName  />
-                            </span>
+                            </span> */}
                            
                             <div class="specialty-text">
                                 <h3 class="specialty-name">
-                                    {entry.data.title}
+                                    {entry.data.cardTitle || entry.data.title}
                                 </h3>
                                 <p class="specialty-desc">
                                     {entry.data.metaDescription}
