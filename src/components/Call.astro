@@ -1,0 +1,27 @@
+---
+import { Phone } from "@lucide/astro";
+---
+
+<a class="phone-btn" href="tel:+19059609947">
+    <Phone />
+</a>
+<style>
+    .phone-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: sticky;
+        z-index: 100000;
+        height: 50px;
+        width: 50px;
+        border-radius: 999px;
+        background-color: #e8a900;
+        color: #1c2a44;
+        position: fixed; /* Changed from sticky to fixed for a floating effect */
+        bottom: 30px; /* Distance from the bottom of the screen */
+        right: 20px; /* Distance from the right side of the screen */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Makes it pop off the background */
+        cursor: pointer; /* Shows the user it is clickable */
+        text-decoration: none; /* If using an <a> tag, this removes the underline */
+    }
+</style>

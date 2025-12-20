@@ -1,5 +1,6 @@
 ---
 // import BrandImage from "../assets/heropage.webp";
+import Call from '../components/Call.astro'
 export interface Props {
 	title?: string;
 	description?: string;
@@ -64,7 +65,7 @@ const {
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<!-- Google Tag Manager -->
-		<script is:inline>
+		<!-- <script is:inline>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
 				w[l].push({
@@ -78,7 +79,7 @@ const {
 				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
 				f.parentNode.insertBefore(j, f);
 			})(window, document, "script", "dataLayer", "GTM-KQCW8CN6");
-		</script>
+		</script> -->
 		<!-- End Google Tag Manager -->
 
 		<!-- {  hasFirebase && (<script src="../js/firebase.js" />)} -->
@@ -174,6 +175,7 @@ const {
 	</head>
 
 	<body>
+		<Call/>
 		<slot />
 		<!-- ✅ GTM noscript fallback -->
 		<noscript>
