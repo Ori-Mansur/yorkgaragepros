@@ -6,9 +6,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ContactFormVue from "../components/vue/ContactForm.vue";
 import { MapPin, Phone, Mail, Calendar } from "@lucide/astro";
+const title = 'York Garage Pros | Get a Free Quote & Schedule Service';
+const description= 'Need garage door repair fast? Contact the pros at York Garage Pros today. Call +1 (905) 9609-YGP for a free estimate or to book your same-day service appointment.'
 ---
 
-<Layout hasFirebase={true}>
+<Layout title={title} description={description} hasFirebase={true}>
     <UtilityNav />
     <Header />
 
