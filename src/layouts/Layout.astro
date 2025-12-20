@@ -1,6 +1,8 @@
 ---
-// import BrandImage from "../assets/heropage.webp";
-import Call from '../components/Call.astro'
+import Call from "../components/Call.astro";
+console.log(import.meta.env.DEV);
+
+// const isDev = import.meta.env.DEV;
 export interface Props {
 	title?: string;
 	description?: string;
@@ -10,7 +12,7 @@ export interface Props {
 	hasFirebase?: boolean;
 	scripts?: string[];
 }
-
+// const isGTMLoad = !isDev;
 const business = {
 	name: "York Garage Pros",
 	domain: "https://yorkgaragepros.com",
@@ -66,7 +68,8 @@ const {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<meta charset="utf-8" />
 		<!-- Google Tag Manager -->
-		<!-- <script is:inline>
+
+		<script is:inline>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
 				w[l].push({
@@ -80,7 +83,7 @@ const {
 				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
 				f.parentNode.insertBefore(j, f);
 			})(window, document, "script", "dataLayer", "GTM-KQCW8CN6");
-		</script> -->
+		</script>
 		<!-- End Google Tag Manager -->
 
 		<!-- {  hasFirebase && (<script src="../js/firebase.js" />)} -->
@@ -176,7 +179,7 @@ const {
 	</head>
 
 	<body>
-		<Call/>
+		<Call />
 		<slot />
 		<!-- ✅ GTM noscript fallback -->
 		<noscript>
