@@ -1,0 +1,81 @@
+{
+  "model": "81600",
+  "name": "DC Chain Drive Wi-Fi® Garage Door Opener with Integrated Bluetooth® Technology",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 81600 is a quiet DC chain drive garage door opener featuring integrated Wi-Fi and Bluetooth for seamless connectivity. It offers reliable performance, smart control via the myQ app, and enhanced security features with a powerful chain drive system.",
+  "shortDescription": "DC chain drive Wi-Fi opener with Bluetooth, myQ integration, and quiet operation for dependable garage control.",
+  "features": [
+    "DC Motor: Purposefully designed for quiet performance",
+    "myQ® Connected: Control, secure, and monitor the garage from the myQ app anytime, from anywhere",
+    "Secure in-garage delivery: Enables Amazon Key In-Garage Delivery (free for Prime members)",
+    "Security+ 2.0®: Sends a new code with every remote click",
+    "Invisible light beam safety system with auto-reverse",
+    "PosiLock® electronic protection against forced openings",
+    "Integrated Bluetooth technology: Reduces setup time and easier connection to myQ app and smart home devices",
+    "Powerful chain drive: Rugged steel construction with precision fabrication for dependable performance",
+    "myQ Diagnostics: Real-time health reports and alerts for garage door issues"
+  ],
+  "specifications": {
+    "motor": "12V DC, 53 RPM, automatic thermal protection, permanent lubrication",
+    "mechanics": "Steel chassis, T-rail and trolley, full chain drive (63:1 gear reduction), auto-force adjustment, electronic limits, DC Wi-Fi logic board with built-in surge suppressor",
+    "power": "120V AC, 60 Hz, 2.7A current rating, UL Listed",
+    "speed": "8.5 inches per second upward, 6.5 inches per second downward",
+    "lighting": "Max. 1 x 100-watt lightbulb; Adjustable-time solid-state delay; Enhanced CFL compatible, max. 26 watts",
+    "dimensions": {
+      "head": "Not specified in detail"
+    },
+    "railOptions": [
+      { "height": "7ft", "installedLength": "128\"", "maxOpening": "7' 6\"" },
+      { "height": "8ft", "installedLength": "140\"", "maxOpening": "8' 6\"" },
+      { "height": "10ft", "installedLength": "164\"", "maxOpening": "10' 6\"" }
+    ],
+    "headroomRequired": "2\"",
+    "warranties": {
+      "motor": "4 Years",
+      "partsAndAccessories": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (81600)",
+    "3-Button Remote Control (893LM)",
+    "Multi-Function Control Panel (882LMW)",
+    "The Protector System® Safety Reversing Sensors",
+    "Assembled Solid-Steel Chain T-Rail"
+  ],
+  "images": [
+    {
+      "url": "https://embed.widencdn.net/img/cgi/tmhjem0h2o/420px/81600-81602---LEFT.png",
+      "alt": "LiftMaster 81600 DC Chain Drive Wi-Fi Garage Door Opener left view",
+      "type": "hero"
+    },
+    {
+      "url": "https://marvinsgaragedoors.com/wp-content/uploads/2024/09/81600-81602-CENTER.png.webp",
+      "alt": "LiftMaster 81600 garage door opener center view",
+      "type": "main"
+    },
+    {
+      "url": "https://i.ebayimg.com/images/g/sEQAAOSw~FBm-pRO/s-l400.png",
+      "alt": "LiftMaster 81600 1/2 HP DC Chain Drive opener product image",
+      "type": "detail"
+    },
+    {
+      "url": "https://manuals.plus/wp-content/uploads/2023/05/LiftMaster-81600-DC-Chain-Drive-Wi-Fi-Garage-Door-Opener--1568x1272.png",
+      "alt": "LiftMaster 81600 owner's manual diagram",
+      "type": "diagram"
+    },
+    {
+      "url": "https://motiongaragedoors.ca/wp-content/webp-express/webp-images/uploads/2025/04/81600-81602-LEFT.png.webp",
+      "alt": "LiftMaster 81600 chain drive garage door opener left angle",
+      "type": "side"
+    },
+    {
+      "url": "https://learngaragedoors.com/wp-content/uploads/2022/11/featured-liftmaster-8160w-garage-door-opener-installed.5c4731bedcc64b37b1b1dd56715f4997-scaled.jpeg",
+      "alt": "Installed LiftMaster 81600 garage door opener",
+      "type": "installed"
+    }
+  ],
+  "pdfGuide": "81600_Product Guide_EN.pdf",
+  "category": "garage-door-openers",
+  "tags": ["chain-drive", "wi-fi", "bluetooth", "myq", "dc-motor", "quiet"],
+  "available": true
+}

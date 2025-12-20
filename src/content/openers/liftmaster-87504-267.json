@@ -1,0 +1,87 @@
+{
+  "id":"liftmaster-87504-267",
+  "model": "87504-267",
+  "service": "garage-door-opener",
+  "name": "Secure View™ Smart Garage Opener with Built-in Camera, LED Corner to Corner Lighting™ System, Battery Backup, Ultra-Quiet Belt Drive®",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 87504-267 is a top-tier smart garage door opener featuring a built-in camera with 2-way audio, 360° corner-to-corner LED lighting, battery backup for power outages, and an ultra-quiet belt drive system. It integrates with myQ for remote control, monitoring, and secure access.",
+  "shortDescription": "Ultra-quiet belt drive smart opener with camera, corner-to-corner LED lighting, battery backup, and myQ connectivity.",
+  "features": [
+    "Quiet and smooth operation with best-in-class belt drive system and DC motor for reliable service",
+    "myQ® Connected: Control, secure, and monitor the garage from the myQ app anytime, from anywhere",
+    "Secure in-garage delivery: Enables Amazon Key In-Garage Delivery (free for Prime members)",
+    "Battery backup: Ensures garage access even when power is out",
+    "Security+ 2.0®: Sends a new code with every remote click for enhanced security",
+    "Invisible light beam safety system with auto-reverse",
+    "PosiLock® electronic protection against forced openings",
+    "Motion detection: Automatically lights the way for added safety",
+    "Built-in 130° wide-angle camera with 2-way communication via myQ app",
+    "Integrated LED Corner to Corner Lighting: 2,000 lumens in a 360° ring for uniform garage illumination"
+  ],
+  "specifications": {
+    "motor": "12V DC, 53 RPM, automatic thermal protection, permanent lubrication",
+    "mechanics": "Steel chassis, T-rail and trolley, full reinforced belt drive (63:1 gear reduction), auto-force adjustment, electronic limits, DC Wi-Fi logic board with built-in surge suppressor",
+    "power": "120V AC, 60 Hz, 2.7A current rating, UL Listed, 4' power cord (3-prong)",
+    "speed": "9 inches per second upward, 6.5 inches per second downward",
+    "lighting": "2,000 lumens integrated LED (360°)",
+    "dimensions": {
+      "head": "10.5\" L x 18.7\" W x 8.185\" H (30\" wide with doors open)"
+    },
+    "railOptions": [
+      { "height": "7ft", "part": "2777BD", "installedLength": "122.5\"", "maxOpening": "7' 6\"" },
+      { "height": "8ft", "part": "2778BD", "installedLength": "139\"", "maxOpening": "8' 6\"" },
+      { "height": "10ft", "part": "2770BD", "installedLength": "163\"", "maxOpening": "10' 6\"" }
+    ],
+    "headroomRequired": "2\"",
+    "warranties": {
+      "beltAndMotor": "Lifetime",
+      "ledAndParts": "5 Years",
+      "batteryCameraAccessories": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (87504-267)",
+    "Two 3-Button Remote Controls (893MAX)",
+    "Smart Control Panel (880LMW)",
+    "Garage Door Opener Battery (485LM)",
+    "Wireless Keyless Entry System (877LM)",
+    "The Protector System® Safety Reversing Sensors",
+    "Assembled Solid-Steel Belt T-Rail"
+  ],
+  "images": [
+    {
+      "url": "https://www.rennersupply.com/wp-content/uploads/2022/03/LM-87504-267.jpg",
+      "alt": "LiftMaster 87504-267 Secure View Smart Garage Door Opener installed view",
+      "type": "hero"
+    },
+    {
+      "url": "https://www.liftmaster.com/medias/84505RMC-video-feature.jpg?context=bWFzdGVyfGltYWdlc3w2MjMzOHxpbWFnZS9qcGVnfGFHVTVMMmd3WlM4NU1EYzVOakV6TWpJM01ETTRMemcwTlRBMVVrMURMWFpwWkdWdkxXWmxZWFIxY21VdWFuQm58ZWFjNDNhZjQ4NjYzODVkY2UwYjJmNjkzZjI3MmZjMDc3MTcwZmViNTE1YTk1ZGNkZjFlNjExMDczYzQ0NWM2Yg",
+      "alt": "Feature image of LiftMaster 87504-267 with camera and lighting",
+      "type": "main"
+    },
+    {
+      "url": "https://cdn11.bigcommerce.com/s-s0ed9zfrnq/images/stencil/1280x1280/products/3798/68720/cff95eb5e7141c418fde2058e8a9a72a8f6e6dc79314d73fe2569550070d0683__43407.1746457775.png?c=1",
+      "alt": "LiftMaster 87504-267 DC LED Battery Backup Belt Drive with camera",
+      "type": "detail"
+    },
+    {
+      "url": "https://kauffmanmetals.com/wp-content/uploads/2025/04/LiftMaster-Model-87504-267-Smart-LED-Garage-Door-Opener-cover-image-768x538.jpg",
+      "alt": "Cover image of LiftMaster 87504-267 Smart LED Garage Door Opener",
+      "type": "cover"
+    },
+    {
+      "url": "https://twinsgaragedoors.com/wp-content/uploads/2023/12/Liftmaster-door-opener-87504-267-2-1160x674-1.webp",
+      "alt": "Installed LiftMaster 87504-267 garage door opener",
+      "type": "installed"
+    },
+    {
+      "url": "https://www.reliableohd.com/wp-content/uploads/2024/08/87504-267.jpg",
+      "alt": "Side view of LiftMaster 87504-267 Secure View opener",
+      "type": "side"
+    }
+  ],
+  "pdfGuide": "87504-267_Product_Guide_EN.pdf",
+  "category": "garage-door-openers",
+  "tags": ["smart", "belt-drive", "camera", "battery-backup", "led-lighting", "myq", "quiet"],
+  "available": true
+}

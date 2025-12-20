@@ -49,6 +49,14 @@
 		text-decoration: none;
 	}
 
+	h1 {
+		font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+	}
+
+	strong {
+		font-family: "Montserrat-Bold", "Inter", sans-serif;
+	}
+
 	.hidden {
 		display: none;
 	}

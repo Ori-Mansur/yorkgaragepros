@@ -1,0 +1,82 @@
+{
+  "model": "84505R",
+  "service": "garage-door-opener",
+  "name": "Secure View™ Smart Garage Opener with Built-in Camera, Integrated Dual LED Lighting System, Ultra-Quiet Belt Drive®",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 84505R is a premium smart garage door opener with an integrated HD camera, 2-way audio, ultra-quiet belt drive, and bright dual LED lighting. Control and monitor your garage remotely via the myQ app.",
+  "shortDescription": "Ultra-quiet belt drive smart opener with built-in camera, dual LED lights, and myQ connectivity.",
+  "features": [
+    "Quiet and smooth operation with best-in-class belt drive system and DC motor",
+    "myQ® Connected: Control, secure, and monitor the garage from the myQ app anytime, from anywhere",
+    "Secure in-garage delivery: Enables Amazon Key In-Garage Delivery (free for Prime members)",
+    "Security+ 2.0®: Sends a new code with every remote click",
+    "myQ Diagnostics compatible: Real-time health reports and alerts",
+    "Invisible light beam safety system with auto-reverse",
+    "PosiLock® electronic protection against forced openings",
+    "Built-in 130° wide-angle HD camera with 2-way audio and night vision via myQ app",
+    "Integrated dual LED lighting: 1,500 lumens, long-lasting"
+  ],
+  "specifications": {
+    "motor": "12V DC, 53 RPM, automatic thermal protection",
+    "mechanics": "Steel chassis, T-rail and trolley, full reinforced belt drive (63:1 gear reduction), auto-force adjustment, electronic limits, DC Wi-Fi logic board",
+    "power": "120V AC, 60 Hz, 6A current rating, UL Listed",
+    "speed": "7.2 inches per second (up and down)",
+    "lighting": "Dual LED - 1,500 lumens",
+    "dimensions": {
+      "head": "10.5\" L x 12.72\" W x 8.185\" H (30\" wide with doors open)"
+    },
+    "railOptions": [
+      { "height": "7ft", "part": "2777BD", "installedLength": "127\"", "maxOpening": "7' 6\"" },
+      { "height": "8ft", "part": "2778BD", "installedLength": "139\"", "maxOpening": "8' 6\"" },
+      { "height": "10ft", "part": "2770BD", "installedLength": "163\"", "maxOpening": "10' 6\"" }
+    ],
+    "headroomRequired": "2\"",
+    "warranties": {
+      "motorAndBelt": "Lifetime",
+      "partsCameraAccessoriesLED": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (84505R)",
+    "3-Button Remote Control (893LM)",
+    "Multi-Function Control Panel (882LMW)",
+    "The Protector System® Safety Reversing Sensors",
+    "Assembled Solid-Steel Belt T-Rail (sold separately in some kits)"
+  ],
+  "images": [
+    {
+      "url": "https://www.liftmaster.com/medias/84505RMC-video-feature.jpg?context=bWFzdGVyfGltYWdlc3w2MjMzOHxpbWFnZS9qcGVnfGFHVTVMMmd3WlM4NU1EYzVOakV6TWpJM01ETTRMemcwTlRBMVVrMURMWFpwWkdWdkxXWmxZWFIxY21VdWFuQm58ZWFjNDNhZjQ4NjYzODVkY2UwYjJmNjkzZjI3MmZjMDc3MTcwZmViNTE1YTk1ZGNkZjFlNjExMDczYzQ0NWM2Yg",
+      "alt": "LiftMaster 84505R mounted on ceiling with camera visible",
+      "type": "hero"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/414DSFUP-IL.jpg",
+      "alt": "Front view of the 84505R opener head with LiftMaster logo",
+      "type": "main"
+    },
+    {
+      "url": "https://m.media-amazon.com/images/I/41xBsSEF14L._AC_UF894,1000_QL80_.jpg",
+      "alt": "Close-up of camera and lighting on the 84505R",
+      "type": "detail"
+    },
+    {
+      "url": "https://cdn11.bigcommerce.com/s-32eq2wsbti/images/stencil/1280x1280/products/15853/229575/liftmaster-84505rmc-secure-view-dc-led-belt-drive-wi-fi-with-integrated-camera-84505rmc__21636.1725051274.jpg?c=2",
+      "alt": "Side view of the LiftMaster 84505R smart garage opener",
+      "type": "side"
+    },
+    {
+      "url": "https://www.liftmaster.com/medias/PeopleDetectionAsset-555x315-3x.png?context=bWFzdGVyfHJvb3R8MTM0MzQ3fGltYWdlL3BuZ3xhR0ppTDJoa1lTODRPVGM0T0RnNE9ERTROekU0TDFCbGIzQnNaVVJsZEdWamRHbHZia0Z6YzJWMFh6VTFOWGd6TVRWZk0zZ3VjRzVufDU5ZTkxY2IyMTcwZTA0YzFiNjg0ODlmOTFhM2ZiMDc5NTU4NzFhOGE2OGNjZjE5NWYwY2Y3YzRmOTEzMTU4OTU",
+      "alt": "myQ app screenshot showing camera view and 2-way communication",
+      "type": "app"
+    },
+    {
+      "url": "https://cgi.widen.net/content/fp2d6g37hn/jpeg/893LM.jpg?crop=false&position=c&q=80&color=ffffffff&u=kk1bpt",
+      "alt": "Included 3-button remote control (893LM) and wall panel",
+      "type": "accessories"
+    }
+  ],
+  "pdfGuide": "84505R_Product_Guide_EN.pdf",
+  "category": "garage-door-openers",
+  "tags": ["smart", "belt-drive", "camera", "myq", "quiet", "led-lighting"],
+  "available": true
+}

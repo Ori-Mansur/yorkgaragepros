@@ -1,0 +1,83 @@
+{
+  "model": "83650-267",
+  "name": "½ HP AC Chain Drive Wi-Fi® Garage Door Opener with Integrated Bluetooth® Technology",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 83650-267 is a robust 1/2 HP AC chain drive garage door opener with built-in Wi-Fi and Bluetooth for easy connectivity. It provides industrial-strength performance, smart control via the myQ app, dual lighting for better visibility, and includes two remotes and a wireless keyless entry for added convenience.",
+  "shortDescription": "1/2 HP AC chain drive Wi-Fi opener with Bluetooth, myQ integration, dual lighting, and industrial strength.",
+  "features": [
+    "AC Motor: Purposefully designed and built to last",
+    "myQ® Connected: Control, secure, and monitor the garage from the myQ app anytime, from anywhere",
+    "Secure in-garage delivery: Enables Amazon Key In-Garage Delivery (free for Prime members)",
+    "Security+ 2.0®: Sends a new code with every remote click",
+    "Invisible light beam safety system with auto-reverse",
+    "PosiLock® electronic protection against forced openings",
+    "Integrated Bluetooth technology: Reduces setup time and easier connection to myQ app and smart home devices",
+    "Lighting: Dual light lens that brightens high-traffic areas of the garage",
+    "Chain drive system: For steady performance and industrial strength",
+    "myQ Diagnostics: Real-time health reports and alerts for garage door issues"
+  ],
+  "specifications": {
+    "motor": "1/2 HP AC, 1,625 RPM, automatic thermal protection, permanent lubrication",
+    "mechanics": "Steel chassis, T-rail and trolley, full chain drive (16:1 gear reduction), auto-force adjustment, electronic limits, AC Wi-Fi logic board with built-in surge suppressor",
+    "power": "120V AC, 60 Hz, 2.7A current rating, UL Listed",
+    "speed": "7 inches per second (up and down)",
+    "lighting": "Max. 2 x 100-watt lightbulbs; Solid-state light delay; Enhanced CFL compatible, max. 26 watts",
+    "dimensions": {
+      "head": "Not specified in detail"
+    },
+    "railOptions": [
+      { "height": "7ft", "installedLength": "128\"", "maxOpening": "7' 6\"" },
+      { "height": "8ft", "installedLength": "140\"", "maxOpening": "8' 6\"" },
+      { "height": "10ft", "installedLength": "164\"", "maxOpening": "10' 6\"" }
+    ],
+    "headroomRequired": "2\"",
+    "warranties": {
+      "motor": "Lifetime",
+      "parts": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (83650)",
+    "Two 3-Button Remote Controls (893LM)",
+    "Multi-Function Control Panel (882LMW)",
+    "Wireless Keyless Entry (877LM)",
+    "The Protector System® Safety Reversing Sensors",
+    "Assembled Solid-Steel Chain T-Rail"
+  ],
+  "images": [
+    {
+      "url": "https://store.preferreddoorservice.com/media/catalog/product/cache/33a676de6731c79ef3c6a340c6735c4e/image/7641d7fe/liftmaster-83650-267-1-2-hp-chain-drive-7-opener-wifi-bluetooth-w-rail.png",
+      "alt": "LiftMaster 83650-267 garage door opener with rail",
+      "type": "hero"
+    },
+    {
+      "url": "https://www.garaga.com/sites/default/files/00_Garaga/Products/Residential/Openers/IncludedPackage/83650-267.jpg",
+      "alt": "LiftMaster 83650-267 opener head",
+      "type": "main"
+    },
+    {
+      "url": "https://kauffmanmetals.com/wp-content/uploads/2025/04/LiftMaster-Model-83650-267-Wi-Fi-Garage-Door-Opener-cover-image-768x591.jpg",
+      "alt": "Cover image of LiftMaster 83650-267 Wi-Fi Garage Door Opener",
+      "type": "cover"
+    },
+    {
+      "url": "https://i5.walmartimages.com/seo/LiftMaster-83650-HP-Garage-Door-Opener-with-Built-in-Wi-Fi-2-Pieces_083abfd2-a5ea-4a0e-ae1e-498fe630ddef.a0242157ce88c522432178f44cb400b4.jpeg",
+      "alt": "LiftMaster 83650-267 product image from Walmart",
+      "type": "detail"
+    },
+    {
+      "url": "https://i.ytimg.com/vi/Ymsq5ZpEEZw/maxresdefault.jpg",
+      "alt": "YouTube thumbnail for LiftMaster 83650-267 demonstration",
+      "type": "video_thumbnail"
+    },
+    {
+      "url": "https://unitedgaragedoor.com/wp-content/uploads/SmartOpeners.webp",
+      "alt": "LiftMaster 83650-267 smart opener image",
+      "type": "additional"
+    }
+  ],
+  "pdfGuide": "83650-267_Product_Guide_EN.pdf",
+  "category": "garage-door-openers",
+  "tags": ["chain-drive", "wi-fi", "bluetooth", "myq", "ac-motor", "dual-lighting"],
+  "available": true
+}

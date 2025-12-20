@@ -1,0 +1,81 @@
+{
+  "model": "81650",
+  "name": "½ HP AC Chain Drive Wi-Fi® Garage Door Opener with Integrated Bluetooth® Technology",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 81650 is a durable 1/2 HP AC chain drive garage door opener featuring integrated Wi-Fi and Bluetooth for seamless connectivity. It offers reliable performance, smart control via the myQ app, and enhanced security features for industrial-strength operation.",
+  "shortDescription": "1/2 HP AC chain drive opener with Wi-Fi, Bluetooth, and myQ integration for steady, smart garage control.",
+  "features": [
+    "AC Motor: Purposefully designed and built to last",
+    "myQ® Connected: Control, secure, and monitor the garage from the myQ app anytime, from anywhere",
+    "Secure in-garage delivery: Enables Amazon Key In-Garage Delivery (free for Prime members)",
+    "Security+ 2.0®: Sends a new code with every remote click",
+    "Invisible light beam safety system with auto-reverse",
+    "PosiLock® electronic protection against forced openings",
+    "Integrated Bluetooth technology: Reduces setup time and easier connection to myQ app and smart home devices",
+    "Chain drive system: For steady performance and industrial strength",
+    "myQ Diagnostics: Real-time health reports and alerts for garage door issues"
+  ],
+  "specifications": {
+    "motor": "1/2 HP AC, 1,625 RPM, automatic thermal protection, permanent lubrication",
+    "mechanics": "Steel chassis, T-rail and trolley, full chain drive (16:1 gear reduction), auto-force adjustment, electronic limits, AC Wi-Fi logic board with built-in surge suppressor",
+    "power": "120V AC, 60 Hz, 6A current rating, UL Listed",
+    "speed": "7 inches per second (up and down)",
+    "lighting": "Max. 1 x 100-watt lightbulb; Enhanced CFL compatible, max. 26 watts",
+    "dimensions": {
+      "head": "Not specified in detail"
+    },
+    "railOptions": [
+      { "height": "7ft", "installedLength": "124\"", "maxOpening": "7' 6\"" },
+      { "height": "8ft", "installedLength": "136\"", "maxOpening": "8' 6\"" },
+      { "height": "10ft", "installedLength": "160\"", "maxOpening": "10' 6\"" }
+    ],
+    "headroomRequired": "2\"",
+    "warranties": {
+      "motor": "4 Years",
+      "parts": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (81650)",
+    "3-Button Remote Control (893LM)",
+    "Multi-Function Control Panel (882LMW)",
+    "The Protector System® Safety Reversing Sensors",
+    "Assembled Solid-Steel Chain T-Rail"
+  ],
+  "images": [
+    {
+      "url": "https://nationaldoor.net/wp-content/uploads/2023/06/x81650_Hero_1-1.png",
+      "alt": "LiftMaster 81650 garage door opener hero image",
+      "type": "hero"
+    },
+    {
+      "url": "https://store.preferreddoorservice.com/media/catalog/product/cache/33a676de6731c79ef3c6a340c6735c4e/image/7649d008/liftmaster-81650-operator-1-2-hp-ac-chain-drive-wi-fi-w-rail.png",
+      "alt": "LiftMaster 81650 operator with rail",
+      "type": "main"
+    },
+    {
+      "url": "https://i.ebayimg.com/images/g/rToAAOSw21NfIEIu/s-l400.jpg",
+      "alt": "LiftMaster 81650 Wi-Fi AC 1/2 HP Chain Drive opener",
+      "type": "detail"
+    },
+    {
+      "url": "https://images.offerup.com/_TOcOpXLxhfXU80ZgNaJ_91Ak0U=/1920x1440/7ec4/7ec4e54758634d8382c0cef5c19d8362.jpg",
+      "alt": "Installed view of LiftMaster 81650 chain drive opener",
+      "type": "installed"
+    },
+    {
+      "url": "https://images.offerup.com/GhxDaIltKRkJ7dD-yzCtPfVPvuQ=/1920x1440/1073/10732b2a8e6340d79257224e9a511c44.jpg",
+      "alt": "Side view of LiftMaster 81650 garage door opener",
+      "type": "side"
+    },
+    {
+      "url": "https://affordable-door.com/wp-content/uploads/2025/10/LiftMaster-Garage-Door-Opener-768x402.jpg",
+      "alt": "LiftMaster 81650 product image",
+      "type": "additional"
+    }
+  ],
+  "pdfGuide": "81650_Product_Guide_EN.pdf",
+  "category": "garage-door-openers",
+  "tags": ["chain-drive", "wi-fi", "bluetooth", "myq", "ac-motor"],
+  "available": true
+}

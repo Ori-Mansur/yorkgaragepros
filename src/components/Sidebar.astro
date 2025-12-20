@@ -76,13 +76,28 @@ const serviceTitle = serviceSlug
 
     <ul class="sidebar-list">
       {
-        relatedServiceAreas.map((page) => (
+        relatedServiceAreas.length ? (
+          relatedServiceAreas.map((page) => (
+            <li>
+              <a href={page.url} class="sidebar-link">
+                {page.name}
+              </a>
+            </li>
+          ))
+        ) : (
           <li>
-            <a href={page.url} class="sidebar-link">
-              {page.name}
-            </a>
+            <span class="sidebar-link">York Region</span>
           </li>
-        ))
+          <li>
+            <span class="sidebar-link">Peel Region</span>
+          </li>
+          <li>
+            <span class="sidebar-link">Durham Region</span>
+          </li>
+          <li>
+            <span class="sidebar-link">Simcoe County</span>
+          </li>
+        )
       }
     </ul>
   </div>

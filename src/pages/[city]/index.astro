@@ -1,238 +1,237 @@
 ---
-import '../../styles/global.css'
-import { getCollection, type CollectionEntry } from 'astro:content';
+import "../../styles/global.css";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro"; // Adjust path
 import UtilityNav from "../../components/UtilityNav.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { capitalizeWords } from "../../utils/helpers";
 
 // Define the type for clarity
-type ServicePageEntry = CollectionEntry<'service-areas'>;
+type ServicePageEntry = CollectionEntry<"service-areas">;
 
 // 1. getStaticPaths: Defines ALL the city index pages to be built
 export async function getStaticPaths() {
-    const servicePages = await getCollection('service-areas');
+  const servicePages = await getCollection("service-areas");
 
-    // Get a unique list of all city slugs
-    const uniqueCities = [...new Set(servicePages.map(page => page.data.city))];
+  // Get a unique list of all city slugs
+  const uniqueCities = [...new Set(servicePages.map((page) => page.data.city))];
 
-    // Map the unique cities to create the index pages
-    return uniqueCities.map(city => ({
-        params: { city },
-        props: { city },
-    }));
+  // Map the unique cities to create the index pages
+  return uniqueCities.map((city) => ({
+    params: { city },
+    props: { city },
+  }));
 }
 
 // 2. Data Fetching
 const { city } = Astro.props as { city: string };
 
 // Fetch all pages related to this specific city (e.g., all 'richmond-hill' pages)
-const relatedPages = (await getCollection('service-areas')).filter(
-    page => page.data.city === city
-);
+const relatedPages = await getCollection("service-catalogs");
 
 // Get the full city name (e.g., 'Richmond Hill') from the first related page
-const cityName = relatedPages[0]?.data.cityName || city.replace(/-/g, ' ');
+const cityName = capitalizeWords(city);
 
 // Set SEO metadata
-const serviceList = relatedPages.map(p => p.data.serviceName).join(', ');
+const serviceList = relatedPages.map((p) => p.data.service).join(", ");
 const title = `${cityName} Garage Door Services | ${serviceList} | York Garage Pros`;
 const h1 = `All Services in ${cityName}`;
 const metaDescription = `Looking for garage service in ${cityName}? We offer expert ${serviceList} and 24/7 emergency repair. Local and certified technicians.`;
 ---
 
 <Layout title={title} description={metaDescription}>
-    <UtilityNav/>
-    <Header/>
+  <UtilityNav />
+  <Header />
 
   <section class="service-city-list">
-  <h1 class="page-title">
-    {h1}
-  </h1>
+    <h1 class="page-title">
+      {h1}
+    </h1>
 
-  <p class="page-intro">
-    York Garage Pros offers comprehensive, 24/7 emergency and scheduled repair
-    and installation services across all neighborhoods in
-    <strong>{cityName}</strong>. Choose your specific service below:
-  </p>
-
-  <div class="service-grid">
-    {relatedPages.map(page => (
-      <a
-        href={`/${page.data.service}/${page.data.city}`}
-        class="service-card"
-      >
-        <h2 class="service-card-title">
-          {page.data.serviceName}
-        </h2>
-        <p class="service-card-text">
-          Find detailed pricing and service information for
-          {page.data.serviceName} in {cityName}.
-        </p>
-      </a>
-    ))}
-  </div>
-
-  <div class="emergency-cta">
-    <h3 class="cta-title">
-      Need Immediate Help in {cityName}?
-    </h3>
-    <p class="cta-text">
-      Call our local emergency repair team for fast service across all of the
-      York Region.
+    <p class="page-intro">
+      York Garage Pros offers comprehensive, 24/7 emergency and scheduled repair
+      and installation services across all neighborhoods in
+      <strong>{cityName}</strong>. Choose your specific service below:
     </p>
-    <a href="tel:+19059609947" class="cta-button">
-      (905) 9609-YGP (24/7 Support)
-    </a>
-  </div>
-</section>
 
+    <div class="service-grid">
+      {
+        relatedPages.map((page) => (
+          <a href={`/${page.data.service}/${city}`} class="service-card">
+            <h2 class="service-card-title">{page.data.cardTitle}</h2>
+            <p class="service-card-text">
+              Find detailed pricing and service information for
+              {page.data.cardTitle} in {cityName}.
+            </p>
+          </a>
+        ))
+      }
+    </div>
 
-    <Footer/>
+    <div class="emergency-cta">
+      <h3 class="cta-title">
+        Need Immediate Help in {cityName}?
+      </h3>
+      <p class="cta-text">
+        Call our local emergency repair team for fast service across all of the
+        York Region.
+      </p>
+      <a href="tel:+19059609947" class="cta-button">
+        (905) 9609-YGP (24/7 Support)
+      </a>
+    </div>
+  </section>
+
+  <Footer />
 </Layout>
 <style>
-    /* ===============================
+  /* ===============================
    Variables
 ================================ */
-:root {
-  --navy: #1c2a44;
-  --navy-dark: #162033;
-  --gold: #e8a900;
-  --red: #dc2626;
-  --gray-bg: #f7f8fc;
-  --gray-text: #4b5563;
-  --white: #ffffff;
-}
+  :root {
+    --navy: #1c2a44;
+    --navy-dark: #162033;
+    --gold: #e8a900;
+    --red: #dc2626;
+    --gray-bg: #f7f8fc;
+    --gray-text: #4b5563;
+    --white: #ffffff;
+  }
 
-/* ===============================
+  /* ===============================
    Section Layout
 ================================ */
-.service-city-list {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 4rem 1rem;
-}
+  .service-city-list {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+  }
 
-/* ===============================
+  /* ===============================
    Headings & Text
 ================================ */
-.page-title {
-  font-size: 2.25rem;
-  font-weight: 800;
-  color: var(--navy-dark);
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
+  .page-title {
+    font-size: 2.25rem;
+    font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+    color: var(--navy-dark);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
 
-.page-intro {
-  font-size: 1.125rem;
-  color: var(--gray-text);
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto 3rem;
-  line-height: 1.6;
-}
+  .page-intro {
+    font-size: 1.125rem;
+    color: var(--gray-text);
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+  }
 
-/* ===============================
+  /* ===============================
    Service Grid
 ================================ */
-.service-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
+  .service-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-/* ===============================
+  /* ===============================
    Service Cards
 ================================ */
-.service-card {
-  display: block;
-  background: var(--white);
-  padding: 1.5rem;
-  border-radius: 1rem;
-  border-left: 5px solid var(--red);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-  text-decoration: none;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+  .service-card {
+    display: block;
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border-left: 5px solid var(--red);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
 
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
-}
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
+  }
 
-.service-card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: 0.5rem;
-  transition: color 0.2s ease;
-}
+  .service-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+  }
 
-.service-card:hover .service-card-title {
-  color: var(--red);
-}
+  .service-card:hover .service-card-title {
+    color: var(--red);
+  }
 
-.service-card-text {
-  color: var(--gray-text);
-  font-size: 1rem;
-  line-height: 1.5;
-}
+  .service-card-text {
+    color: var(--gray-text);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
 
-/* ===============================
+  /* ===============================
    Emergency CTA
 ================================ */
-.emergency-cta {
-  margin-top: 4rem;
-  padding: 2.5rem 2rem;
-  background: #f3f4f6;
-  border-radius: 1rem;
-  text-align: center;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
-}
+  .emergency-cta {
+    margin-top: 4rem;
+    padding: 2.5rem 2rem;
+    background: #f3f4f6;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
 
-.cta-title {
-  font-size: 1.875rem;
-  font-weight: 800;
-  color: var(--navy);
-  margin-bottom: 1rem;
-}
+  .cta-title {
+    font-size: 1.875rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
 
-.cta-text {
-  font-size: 1.125rem;
-  color: var(--gray-text);
-  margin-bottom: 1.5rem;
-}
+  .cta-text {
+    font-size: 1.125rem;
+    color: var(--gray-text);
+    margin-bottom: 1.5rem;
+  }
 
-.cta-button {
-  display: inline-block;
-  background: var(--gold);
-  color: var(--navy);
-  font-size: 1.25rem;
-  font-weight: 800;
-  padding: 0.9rem 2rem;
-  border-radius: 0.75rem;
-  text-decoration: none;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
+  .cta-button {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 0.9rem 2rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+  }
 
-.cta-button:hover {
-  background: #d69f00;
-  transform: translateY(-2px);
-}
+  .cta-button:hover {
+    background: #d69f00;
+    transform: translateY(-2px);
+  }
 
-/* ===============================
+  /* ===============================
    Responsive Enhancements
 ================================ */
-@media (min-width: 768px) {
-  .page-title {
-    font-size: 2.75rem;
-  }
+  @media (min-width: 768px) {
+    .page-title {
+      font-size: 2.75rem;
+    }
 
-  .service-grid {
-    grid-template-columns: repeat(2, 1fr);
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
-}
-
 </style>

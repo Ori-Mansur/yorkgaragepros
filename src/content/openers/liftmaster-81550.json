@@ -1,0 +1,82 @@
+{
+  "model": "81550",
+  "service": "garage-door-opener",
+  "name": "½ HP AC Belt Drive Wi-Fi® Garage Door Opener with Integrated Bluetooth® Technology",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 81550 is a reliable 1/2 HP AC belt drive garage door opener featuring integrated Wi-Fi and Bluetooth for seamless connectivity. It offers quiet operation, smart control via the myQ app, and enhanced security features.",
+  "shortDescription": "1/2 HP AC belt drive opener with Wi-Fi, Bluetooth, and myQ integration for quiet, smart garage control.",
+  "features": [
+    "AC Motor: Purposefully designed and built to last",
+    "myQ® Connected: Control, secure, and monitor the garage from the myQ app anytime, from anywhere",
+    "Secure in-garage delivery: Enables Amazon Key In-Garage Delivery (free for Prime members)",
+    "Security+ 2.0®: Sends a new code with every remote click",
+    "Invisible light beam safety system with auto-reverse",
+    "PosiLock® electronic protection against forced openings",
+    "Integrated Bluetooth technology: Reduces setup time and easier connection to myQ app and smart home devices",
+    "Quiet operation: Long-lasting belt drive for maintenance-free performance",
+    "myQ Diagnostics: Real-time health reports and alerts for garage door issues"
+  ],
+  "specifications": {
+    "motor": "1/2 HP AC, 1,625 RPM, automatic thermal protection, permanent lubrication",
+    "mechanics": "Steel chassis, T-rail and trolley, full reinforced belt drive (16:1 gear reduction), auto-force adjustment, electronic limits, AC Wi-Fi logic board with built-in surge suppressor",
+    "power": "120V AC, 60 Hz, 6A current rating, UL Listed",
+    "speed": "7 inches per second (up and down)",
+    "lighting": "Max. 1 x 100-watt lightbulb; Enhanced CFL compatible, max. 26 watts",
+    "dimensions": {
+      "head": "Not specified in detail"
+    },
+    "railOptions": [
+      { "height": "7ft", "installedLength": "124\"", "maxOpening": "7' 6\"" },
+      { "height": "8ft", "installedLength": "136\"", "maxOpening": "8' 6\"" },
+      { "height": "10ft", "installedLength": "160\"", "maxOpening": "10' 6\"" }
+    ],
+    "headroomRequired": "2\"",
+    "warranties": {
+      "motor": "4 Years",
+      "parts": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (81550)",
+    "3-Button Remote Control (893LM)",
+    "Multi-Function Control Panel (882LMW)",
+    "The Protector System® Safety Reversing Sensors",
+    "Assembled Solid-Steel Belt T-Rail (sold separately in some kits)"
+  ],
+  "images": [
+    {
+      "url": "https://i.ebayimg.com/images/g/xjIAAOSw~Dxm-pOF/s-l400.png",
+      "alt": "LiftMaster 81550 garage door opener main product image from eBay",
+      "type": "hero"
+    },
+    {
+      "url": "https://www.garaga.com/sites/default/files/00_Garaga/Products/Residential/Openers/IncludedPackage/81550.jpg",
+      "alt": "LiftMaster 81550 opener head and rail system",
+      "type": "main"
+    },
+    {
+      "url": "https://valleyoverheaddoorsales.com/wp-content/uploads/2024/02/81550-3-e1708555856360.jpg",
+      "alt": "Installed LiftMaster 81550 garage door opener",
+      "type": "installed"
+    },
+    {
+      "url": "https://affordable-door.com/wp-content/uploads/2025/10/LiftMaster-Garage-Door-Opener-768x402.jpg",
+      "alt": "Close-up of LiftMaster 81550 features",
+      "type": "detail"
+    },
+    {
+      "url": "https://manuals.plus/wp-content/uploads/2023/03/LiftMaster-81550-HP-AC-Belt-Drive-Wi-Fi-Garage-Door-Opener-Owners-Manual-3.png",
+      "alt": "LiftMaster 81550 product diagram from manual",
+      "type": "diagram"
+    },
+    {
+      "url": "https://www.garaga.com/sites/default/files/styles/rte_desktop/public/00_Garaga/Products/Residential/Openers/IncludedPackage/893LM.jpg.webp?itok=JELr70em",
+      "alt": "Included 3-button remote control (893LM) for LiftMaster 81550",
+      "type": "accessories"
+    }
+  ],
+  "pdfGuide": "81550_Product_Guide_ENG.pdf",
+  "category": "garage-door-openers",
+  "tags": ["belt-drive", "wi-fi", "bluetooth", "myq", "quiet", "ac-motor"],
+  "available": true
+}

@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import ProductCard from "./ProductCard.astro";
+import { getOpenerImage } from "../utils/helpers";
+const type = Astro.props.type; // e.g., 'belt-drive'
+
+const products = (await getCollection("openers")).filter((op) => {
+    return op.data.tags.includes(type);
+});
+
+console.log(products);
+---
+
+<div class="product-grid">
+    {
+        products.map((product) => (
+            <ProductCard
+                url={`/garage-door-opener/${product.id}`}
+                title={product.id}
+                alt={product.id}
+                image={getOpenerImage(product.id)}
+            />
+        ))
+    }
+</div>
+<style>
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+    }
+    /* ========= Responsive Adjustments ========= */
+    @media (min-width: 640px) {
+        .hub-title {
+            font-size: 2.8rem;
+        }
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 900px) {
+        .product-grid {
+            grid-template-columns: repeat(
+                3,
+                1fr
+            ); /* 4 columns on large screens */
+        }
+   
+    }
+</style>

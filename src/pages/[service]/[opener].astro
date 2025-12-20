@@ -1,0 +1,355 @@
+---
+import "../../styles/global.css";
+// 1. Astro Content Collection Imports
+// This API efficiently reads all your Markdown files at build time
+import { getCollection } from "astro:content";
+import { type CollectionEntry } from "astro:content";
+// 1. Imports
+import Layout from "../../layouts/Layout.astro"; // Adjust path based on your folder depth
+import UtilityNav from "../../components/UtilityNav.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Sidebar from "../../components/Sidebar.astro";
+import OpenerView from "../../components/OpenerView.astro";
+
+// Define the Content Collection type for clarity
+type ServicePageEntry = CollectionEntry<"openers">;
+
+// 3. getStaticPaths: Defines ALL the URLs to be built
+export async function getStaticPaths() {
+    // 3.1 Fetch ALL content from the 'service-areas' collection
+    const servicePages = await getCollection("openers");
+
+    // 3.2 Map the content to the dynamic URL structure
+    return servicePages.map((page: ServicePageEntry) => ({
+        params: {
+            // These params define the URL segments: /service-slug/city-slug
+            opener: page.id, // e.g., 'opener-service'
+            service: "garage-door-opener",
+        },
+        props: {
+            page, // Pass the entire page object (content and data) to the component
+        },
+    }));
+}
+
+// 4. Data Fetching and Destructuring (Runs at build time)
+const { page } = Astro.props as { page: ServicePageEntry };
+
+// Render the Markdown content into an Astro component (runs once at build time)
+// const { Content } = await page.render();
+
+// Destructure the SEO metadata from the Frontmatter (page.data)
+const { model, description, brand, name } = page.data;
+const title = `${brand} ${model}`;
+// Set the Canonical URL for SEO consistency
+// const canonicalURL = `https://yorkgaragepros.com/${page.data.service}/${page.data.city}`;
+---
+
+<Layout title={title} description={description}>
+    <UtilityNav />
+    <Header />
+
+    <!-- <link rel="canonical" href={canonicalURL} /> -->
+
+    <section class="service-page">
+        <div class="service-container">
+            <h1 class="service-title">
+                {title}
+            </h1>
+
+            <p class="service-intro">
+                {name}
+            </p>
+            <section class="content-grid">
+                <div class="main-column">
+                    <!-- Main Content Card -->
+                    <div class="content-card">
+                        <OpenerView opener={page.data} />
+                        <div class="prose">
+                            <!-- <Content /> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <Sidebar serviceSlug="garage-door-opener" citySlug={""} />
+                </aside>
+            </section>
+        </div>
+    </section>
+
+    <Footer />
+</Layout>
+<style>
+    /* ===============================
+   Variables
+================================ */
+    :root {
+        --navy-darkest: #0f1f33;
+        --navy: #1c2a44;
+        --gold: #e8a900;
+        --gray-50: #f9fafb;
+        --gray-200: #e5e7eb;
+        --gray-700: #374151;
+        --white: #ffffff;
+    }
+
+    /* ===============================
+   Layout
+================================ */
+    .service-page {
+        padding: 40px 16px;
+        background: #fff;
+    }
+
+    .service-container {
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+
+    /* ===============================
+   Headings & Intro
+================================ */
+    .service-title {
+        font-size: 2.25rem;
+
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        color: var(--navy-darkest);
+        border-bottom: 4px solid var(--gold);
+        padding-bottom: 12px;
+        margin-bottom: 24px;
+    }
+
+    .service-intro {
+        font-size: 1.25rem;
+        color: var(--gray-700);
+        border-left: 4px solid var(--gold);
+        padding-left: 12px;
+        font-style: italic;
+        margin-bottom: 40px;
+    }
+
+    /* ===============================
+   Grid
+================================ */
+    .service-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    /* ===============================
+   Content
+================================ */
+    .service-content {
+        font-size: 1.125rem;
+        line-height: 1.75;
+    }
+
+    /* ===============================
+   Sidebar
+================================ */
+    .service-sidebar {
+        background: var(--gray-50);
+        padding: 24px;
+        border-radius: 16px;
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .sidebar-title {
+        font-size: 1.5rem;
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
+        color: var(--navy);
+        margin-bottom: 16px;
+    }
+
+    /* ========== Sidebar ========== */
+    .sidebar {
+        position: relative;
+    }
+
+    @media (min-width: 1024px) {
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+        }
+    }
+
+    /* ===============================
+   Responsive
+================================ */
+    @media (min-width: 1024px) {
+        .service-page {
+            padding: 64px 24px;
+        }
+
+        .service-grid {
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .service-sidebar {
+            position: sticky;
+            top: 32px;
+            align-self: flex-start;
+        }
+    }
+    .prose h2 {
+        /* Large, bold, and distinct from paragraphs */
+        font-size: 1.875rem; /* text-3xl */
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
+        color: #002244; /* Dark Navy */
+        margin-top: 2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #ffa500; /* Gold separator */
+    }
+
+    .prose h3 {
+        /* Sub-headings for specific services */
+        font-size: 1.5rem; /* text-2xl */
+        font-family: "Montserrat-SemiBold", "Inter", sans-serif;
+        color: #4b5563; /* Medium Gray */
+        margin-top: 1.5rem;
+    }
+    /* ===============================
+   Brand Variables
+================================ */
+    :root {
+        --navy: #1c2a44;
+        --gold: #e8a900;
+        --gray-bg: #f8f9fb;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --danger: #dc2626;
+        --white: #ffffff;
+        --shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ===============================
+   Layout
+================================ */
+    .content-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 32px 16px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 32px;
+    }
+
+    .main-column {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+    }
+
+    /* ===============================
+   Content Card
+================================ */
+    .content-card {
+        background: var(--white);
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        border: 1px solid #e5e7eb;
+    }
+
+    .prose {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: var(--text);
+    }
+
+    /* ===============================
+   Testimonials
+================================ */
+    .testimonial-box {
+        background: #fff7e6;
+        padding: 32px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        border-left: 6px solid var(--gold);
+    }
+
+    .testimonial-box h2 {
+        color: var(--navy);
+        font-size: 1.8rem;
+        margin-bottom: 16px;
+    }
+
+    .quote {
+        font-style: italic;
+        color: #374151;
+        margin-top: 12px;
+    }
+
+    .quote span {
+        display: block;
+        margin-top: 6px;
+        font-size: 0.9rem;
+        color: var(--muted);
+    }
+
+    /* ===============================
+   Commitment Section
+================================ */
+    .commitment {
+        border-top: 1px solid #e5e7eb;
+        padding-top: 40px;
+    }
+
+    .commitment h2 {
+        text-align: center;
+        font-size: 1.9rem;
+        color: var(--navy);
+        margin-bottom: 32px;
+    }
+
+    .commitment-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .commitment-card {
+        background: var(--white);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        border-bottom: 4px solid var(--danger);
+    }
+
+    .commitment-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+        color: var(--navy);
+    }
+
+    .commitment-card p {
+        font-size: 0.95rem;
+        color: var(--muted);
+    }
+
+    /* ===============================
+   Responsive Enhancements
+================================ */
+    @media (min-width: 768px) {
+        .content-grid {
+            padding: 48px 24px;
+        }
+
+        .commitment-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .content-grid {
+            padding: 64px 24px;
+        }
+    }
+</style>
