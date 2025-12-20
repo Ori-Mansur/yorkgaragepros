@@ -44,14 +44,6 @@ import MobileNav from "./MobileNav.astro";
 </header>
 <MobileNav />
 <script type="module">
-    function setupHeaderListeners() {
-        document.getElementById("ctaButton").addEventListener("click", () => {
-            document
-                .getElementById("estimator")
-                .scrollIntoView({ behavior: "smooth" });
-        });
-    }
-    setupHeaderListeners();
     function openMobileMenu() {
         const menu = document.getElementById("mobileMenu");
         document
