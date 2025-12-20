@@ -35,6 +35,7 @@
           <select id="service" v-model="formData.service" required class="form-input">
             <option value="">Choose a service...</option>
             <option value="NewDoorInstall">New Garage Door Installation</option>
+            <option value="GarageDoorOpener">Garage Door Opener</option>
             <option value="EmergencyRepair">Emergency Door Repair</option>
             <option value="FloorCoating">Epoxy Floor Coating</option>
           </select>
