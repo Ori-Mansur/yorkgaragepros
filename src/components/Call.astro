@@ -23,5 +23,9 @@ import { Phone } from "@lucide/astro";
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Makes it pop off the background */
         cursor: pointer; /* Shows the user it is clickable */
         text-decoration: none; /* If using an <a> tag, this removes the underline */
+        transition: transform 0.2s ease;
+    }
+    .phone-btn:hover {
+        transform: scale(1.1); /* Feedback when hovered */
     }
 </style>
