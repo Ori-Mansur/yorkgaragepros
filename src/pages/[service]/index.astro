@@ -235,7 +235,7 @@ const relatedCatalogsWithIcons = relatedCatalogs.map((entry) => ({
 
     .specialty-grid {
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
     }
 
@@ -243,7 +243,7 @@ const relatedCatalogsWithIcons = relatedCatalogs.map((entry) => ({
         /* display: flex; */
         align-items: center;
         background: var(--bg-light);
-        padding: 24px;
+
         border-radius: 12px;
         border: 1px solid #e5e7eb;
         box-shadow: var(--shadow-md);
@@ -267,7 +267,8 @@ const relatedCatalogsWithIcons = relatedCatalogs.map((entry) => ({
     }
 
     .specialty-name {
-        font-size: 1.25rem;
+        padding: 10px;
+        font-size: 1rem;
         font-family: "Montserrat-Bold", "Inter", sans-serif;
         color: var(--navy-dark);
         margin-bottom: 4px;
@@ -287,6 +288,7 @@ const relatedCatalogsWithIcons = relatedCatalogs.map((entry) => ({
         max-width: fit-content;
         aspect-ratio: 1/1;
         height: auto;
+        border-radius: 12px 12px 0 0;
     }
     /* 2. City Links (New Horizontal Card Design) */
     .city-links-section {
@@ -397,6 +399,12 @@ const relatedCatalogsWithIcons = relatedCatalogs.map((entry) => ({
     @media (min-width: 640px) {
         .hub-title {
             font-size: 2.8rem;
+        }
+        .specialty-card {
+            padding: 24px;
+        }
+        .type-image {
+            border-radius: 0;
         }
         .specialty-grid {
             grid-template-columns: repeat(2, 1fr);

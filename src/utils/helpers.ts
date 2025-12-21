@@ -15,6 +15,10 @@ import flush_panels from '../assets/doorTypes/flush-panels.webp'
 import long_ranch_panels from '../assets/doorTypes/long-ranch-panels.webp'
 import ribbed_panels from '../assets/doorTypes/ribbed-panels.webp'
 import liftmaster_87504_267 from '../assets/openers/x83650267_Hero_1.png'
+import broken_spring from '../assets/doorTypes/broken-spring.webp'
+import broken_lift_cable from '../assets/doorTypes/broken-lift-cable.webp'
+import door_off_track from '../assets/doorTypes/door-off-track.webp'
+import roller from '../assets/doorTypes/roller.webp'
 
 const cityLogoMap = {
     'vaughan': vaughan,
@@ -35,6 +39,10 @@ const doorTypeImage = {
     'flush-panels': flush_panels,
     'carriage-house-panels': carriage_house_panels,
     'ribbed-panels': ribbed_panels,
+    'broken-springs': broken_spring,
+    'lift-cables': broken_lift_cable,
+    'off-track-door': door_off_track,
+    'worn-rollers': roller,
     'default': ribbed_panels
 }
 const openerImage = {
