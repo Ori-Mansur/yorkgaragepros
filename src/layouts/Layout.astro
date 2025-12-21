@@ -1,8 +1,5 @@
 ---
 import Call from "../components/Call.astro";
-console.log(import.meta.env.DEV);
-
-const isDev = import.meta.env.DEV;
 export interface Props {
 	title?: string;
 	description?: string;
@@ -12,7 +9,6 @@ export interface Props {
 	hasFirebase?: boolean;
 	scripts?: string[];
 }
-const isGTMLoad = !isDev;
 const business = {
 	name: "York Garage Pros",
 	domain: "https://yorkgaragepros.com",
@@ -69,7 +65,7 @@ const {
 		<meta charset="utf-8" />
 		<!-- Google Tag Manager -->
 
-		{isGTMLoad && <script is:inline>
+		<script is:inline>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
 				w[l].push({
@@ -84,7 +80,6 @@ const {
 				f.parentNode.insertBefore(j, f);
 			})(window, document, "script", "dataLayer", "GTM-KQCW8CN6");
 		</script>
-		}
 		<!-- End Google Tag Manager -->
 
 		<!-- Local Business Schema -->
