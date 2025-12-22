@@ -15,7 +15,7 @@ import { ArrowDown } from "@lucide/astro";
         <nav class="mobile-nav">
             <a href="/" class="mobile-link" data-close>Home</a>
             <!-- <a href="/services" class="mobile-link" data-close>Services</a> -->
-            <li class="dropdown-service-mobile">
+            <li class="dropdown-service-mobile" id="dropdown-service-mobile">
                 <div class="service-toggle-container">
                     <a href="/services" class="mobile-link">Services </a>
                     <span class="arrow mobile-link" id="mobile-service-toggle"
@@ -47,31 +47,37 @@ import { ArrowDown } from "@lucide/astro";
 </div>
 <script type="module">
     function setToggle() {
-        document.addEventListener("DOMContentLoaded", () => {
-            const dropdownToggle = document.querySelector(
-                "#mobile-service-toggle",
-            );
-            const dropdownParent = document.querySelector(
-                ".dropdown-service-mobile",
-            );
+        // REMOVED the "#" from the IDs
+        const dropdownToggle = document.getElementById("mobile-service-toggle");
+        const dropdownParent = document.getElementById("dropdown-service-mobile");
 
-            // Function to handle the toggle
-            const toggleMenu = (e) => {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault(); // Stop the page from jumping
-                    e.stopPropagation(); // Stop the click from closing immediately
-                    dropdownParent.classList.toggle("active");
-                }
-            };
+        // Safety check to make sure the elements exist
+        if (!dropdownToggle || !dropdownParent) return;
 
-            // Listen for BOTH click and touchstart for instant response on iPhone
-            dropdownToggle.addEventListener("click", toggleMenu);
-            dropdownToggle.addEventListener("touchstart", toggleMenu, {
-                passive: false,
-            });
-        });
+        const toggleMenu = (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdownParent.classList.toggle("active");
+            }
+        };
+
+        // Use a simple click listener first; 
+        // Modern iPhones handle clicks on IDs/Buttons well if preventDefault is used.
+        dropdownToggle.addEventListener("click", toggleMenu);
+        
+        // If you still need touchstart for speed, use this pattern to prevent double-toggling:
+        dropdownToggle.addEventListener("touchstart", (e) => {
+            toggleMenu(e);
+        }, { passive: false });
     }
-    setToggle();
+
+    // Ensure the DOM is ready before running
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", setToggle);
+    } else {
+        setToggle();
+    }
 </script>
 <style>
     /* ========== VARIABLES ========== */
@@ -207,7 +213,6 @@ import { ArrowDown } from "@lucide/astro";
         .submenu {
             position: static;
         } /* Push content down on mobile */
-
     }
     .dropdown-service-mobile.active .submenu {
         display: block;
