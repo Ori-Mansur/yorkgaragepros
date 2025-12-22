@@ -49,7 +49,9 @@ import { ArrowDown } from "@lucide/astro";
     function setToggle() {
         // REMOVED the "#" from the IDs
         const dropdownToggle = document.getElementById("mobile-service-toggle");
-        const dropdownParent = document.getElementById("dropdown-service-mobile");
+        const dropdownParent = document.getElementById(
+            "dropdown-service-mobile",
+        );
 
         // Safety check to make sure the elements exist
         if (!dropdownToggle || !dropdownParent) return;
@@ -62,14 +64,18 @@ import { ArrowDown } from "@lucide/astro";
             }
         };
 
-        // Use a simple click listener first; 
+        // Use a simple click listener first;
         // Modern iPhones handle clicks on IDs/Buttons well if preventDefault is used.
         dropdownToggle.addEventListener("click", toggleMenu);
-        
+
         // If you still need touchstart for speed, use this pattern to prevent double-toggling:
-        dropdownToggle.addEventListener("touchstart", (e) => {
-            toggleMenu(e);
-        }, { passive: false });
+        dropdownToggle.addEventListener(
+            "touchstart",
+            (e) => {
+                toggleMenu(e);
+            },
+            { passive: false },
+        );
     }
 
     // Ensure the DOM is ready before running
@@ -188,7 +194,10 @@ import { ArrowDown } from "@lucide/astro";
     }
     .submenu {
         display: none;
-        padding-left: 0px;
+        padding-left: 0;
+        margin-top: 5px;
+        border-left: 2px solid var(--accent); /* Visual guide for the nested list */
+        margin-left: 12px;
     }
 
     .submenu li a {
@@ -217,6 +226,15 @@ import { ArrowDown } from "@lucide/astro";
     .dropdown-service-mobile.active .submenu {
         display: block;
     }
+    .arrow {
+        transition: transform 0.3s ease;
+        display: inline-block;
+    }
+
+    .dropdown-service-mobile.active .arrow {
+        transform: rotate(180deg);
+        color: var(--accent); /* Optional: turn arrow gold when open */
+    }
 
     /* ========== CTA BUTTON ========== */
     .mobile-cta {
@@ -239,5 +257,24 @@ import { ArrowDown } from "@lucide/astro";
     .mobile-cta:hover {
         transform: translateY(-1px);
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    }
+    /* Only apply hover effects on desktop/mouse devices */
+    @media (hover: hover) {
+        .mobile-link:hover,
+        .submenu li a:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+    }
+
+    /* Add a separate 'Active' state for the tap moment */
+    .mobile-link:active,
+    .submenu li a:active {
+        background: rgba(
+            232,
+            169,
+            0,
+            0.4
+        ); /* Subtle gold fade when finger is down */
     }
 </style>
