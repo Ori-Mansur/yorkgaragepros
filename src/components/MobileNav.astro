@@ -17,9 +17,10 @@ import { ArrowDown } from "@lucide/astro";
             <!-- <a href="/services" class="mobile-link" data-close>Services</a> -->
             <li class="dropdown-service-mobile">
                 <div class="service-toggle-container">
-
                     <a href="/services" class="mobile-link">Services </a>
-                    <span class="arrow mobile-link"  id="mobile-service-toggle">▼</span>
+                    <span class="arrow mobile-link" id="mobile-service-toggle"
+                        >▼</span
+                    >
                 </div>
                 <ul class="submenu">
                     <li>
@@ -54,13 +55,19 @@ import { ArrowDown } from "@lucide/astro";
                 ".dropdown-service-mobile",
             );
 
-            dropdownToggle.addEventListener("click", (e) => {
-
-                // Only trigger toggle on smaller screens
+            // Function to handle the toggle
+            const toggleMenu = (e) => {
                 if (window.innerWidth <= 768) {
-                    e.preventDefault(); // Prevent the link from jumping
+                    e.preventDefault(); // Stop the page from jumping
+                    e.stopPropagation(); // Stop the click from closing immediately
                     dropdownParent.classList.toggle("active");
                 }
+            };
+
+            // Listen for BOTH click and touchstart for instant response on iPhone
+            dropdownToggle.addEventListener("click", toggleMenu);
+            dropdownToggle.addEventListener("touchstart", toggleMenu, {
+                passive: false,
             });
         });
     }
@@ -168,7 +175,7 @@ import { ArrowDown } from "@lucide/astro";
         background: var(--accent);
         color: var(--primary);
     }
-    .service-toggle-container{
+    .service-toggle-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
