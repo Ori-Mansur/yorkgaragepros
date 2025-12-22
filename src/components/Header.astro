@@ -28,9 +28,13 @@ import MobileNav from "./MobileNav.astro";
                     >Services <span class="arrow">▼</span></a
                 >
                 <ul class="submenu">
-                    <li><a href="/garage-door-repair">Garage Door Repair</a></li>
+                    <li>
+                        <a href="/garage-door-repair">Garage Door Repair</a>
+                    </li>
                     <li><a href="/garage-door">Garage Door Installation</a></li>
-                    <li><a href="/garage-door-opener">Garage Door Opener</a></li>
+                    <li>
+                        <a href="/garage-door-opener">Garage Door Opener</a>
+                    </li>
                 </ul>
             </li>
             <a href="/about">About</a>
@@ -73,7 +77,7 @@ import MobileNav from "./MobileNav.astro";
             });
         });
     }
-    
+
     openMobileMenu();
 </script>
 
@@ -171,6 +175,7 @@ import MobileNav from "./MobileNav.astro";
         transition:
             background-color 0.2s ease,
             opacity 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
     }
     #nav-btn svg {
         width: 1.5rem;
@@ -249,10 +254,9 @@ import MobileNav from "./MobileNav.astro";
         text-decoration: none;
         transition: color 0.3s ease;
     }
-    .submenu li{
+    .submenu li {
         padding-bottom: 1rem;
     }
-    
 
     /* Desktop: Show on Hover */
     @media (min-width: 769px) {
