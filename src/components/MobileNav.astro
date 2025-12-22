@@ -1,6 +1,9 @@
+---
+import { ArrowDown } from "@lucide/astro";
+---
+
 <div id="mobileMenu" class="mobile-menu">
     <div class="mobile-menu-inner">
-
         <div class="menu-header">
             <span class="menu-title">Menu</span>
 
@@ -10,137 +13,219 @@
         </div>
 
         <nav class="mobile-nav">
-             <a href="/" class="mobile-link" data-close>Home</a>
-            <a href="/services" class="mobile-link" data-close>Services</a>
+            <a href="/" class="mobile-link" data-close>Home</a>
+            <!-- <a href="/services" class="mobile-link" data-close>Services</a> -->
+            <li class="dropdown-service-mobile">
+                <div class="service-toggle-container">
+
+                    <a href="/services" class="mobile-link">Services </a>
+                    <span class="arrow mobile-link"  id="mobile-service-toggle">▼</span>
+                </div>
+                <ul class="submenu">
+                    <li>
+                        <a href="/garage-door-repair">Garage Door Repair</a>
+                    </li>
+                    <li><a href="/garage-door">Garage Door Installation</a></li>
+                    <li>
+                        <a href="/garage-door-opener">Garage Door Opener</a>
+                    </li>
+                </ul>
+            </li>
             <a href="/about" class="mobile-link" data-close>About</a>
             <a href="/contact" class="mobile-link" data-close>Contact Us</a>
-            <a href="/#roi-analysis" class="mobile-link" data-close>Why Renovate?</a>
+            <a href="/#roi-analysis" class="mobile-link" data-close
+                >Why Renovate?</a
+            >
             <a href="/#estimator" class="mobile-link" data-close>Estimator</a>
 
             <a href="/booking" class="mobile-cta" data-close>
                 Get a Free Estimate
             </a>
         </nav>
-
     </div>
 </div>
+<script type="module">
+    function setToggle() {
+        document.addEventListener("DOMContentLoaded", () => {
+            const dropdownToggle = document.querySelector(
+                "#mobile-service-toggle",
+            );
+            const dropdownParent = document.querySelector(
+                ".dropdown-service-mobile",
+            );
+
+            dropdownToggle.addEventListener("click", (e) => {
+
+                // Only trigger toggle on smaller screens
+                if (window.innerWidth <= 768) {
+                    e.preventDefault(); // Prevent the link from jumping
+                    dropdownParent.classList.toggle("active");
+                }
+            });
+        });
+    }
+    setToggle();
+</script>
 <style>
     /* ========== VARIABLES ========== */
-:root {
-    --primary: #1c2a44;      /* Navy */
-    --accent: #e8a900;       /* Gold */
-    --white: #ffffff;
-    --gray-border: #374151;
-}
-
-/* ========== MOBILE MENU BASE ========== */
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 260px;
-    background: var(--primary);
-    z-index: 40;
-
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    box-shadow: -12px 0 30px rgba(0, 0, 0, 0.35);
-}
-
-/* ACTIVE STATE (add with JS) */
-.mobile-menu.open {
-    transform: translateX(0);
-}
-
-/* Hide on desktop */
-@media (min-width: 768px) {
-    .mobile-menu {
-        display: none;
+    :root {
+        --primary: #1c2a44; /* Navy */
+        --accent: #e8a900; /* Gold */
+        --white: #ffffff;
+        --gray-border: #374151;
     }
-}
+    li {
+        list-style: none;
+    }
+    /* ========== MOBILE MENU BASE ========== */
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 260px;
+        background: var(--primary);
+        z-index: 40;
 
-/* ========== INNER WRAP ========== */
-.mobile-menu-inner {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.35);
+    }
 
-/* ========== HEADER ========== */
-.menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
-}
+    /* ACTIVE STATE (add with JS) */
+    .mobile-menu.open {
+        transform: translateX(0);
+    }
 
-.menu-title {
-    font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
-    font-size: 20px;
-    color: var(--accent);
-}
+    /* Hide on desktop */
+    @media (min-width: 768px) {
+        .mobile-menu {
+            display: none;
+        }
+    }
 
-.menu-close {
-    background: none;
-    border: none;
-    padding: 6px;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s;
-}
+    /* ========== INNER WRAP ========== */
+    .mobile-menu-inner {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 
-.menu-close:hover {
-    background: rgba(255, 255, 255, 0.15);
-}
+    /* ========== HEADER ========== */
+    .menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+    }
 
-.menu-close-icon {
-    width: 24px;
-    height: 24px;
-    color: var(--white);
-}
+    .menu-title {
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        font-size: 20px;
+        color: var(--accent);
+    }
 
-/* ========== NAV ITEMS ========== */
-.mobile-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
+    .menu-close {
+        background: none;
+        border: none;
+        padding: 6px;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background 0.2s;
+    }
 
-.mobile-link {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 10px 12px;
-    border-radius: 8px;
-    transition: background 0.2s, color 0.2s;
-}
+    .menu-close:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
 
-.mobile-link:hover {
-    background: var(--accent);
-    color: var(--primary);
-}
+    .menu-close-icon {
+        width: 24px;
+        height: 24px;
+        color: var(--white);
+    }
 
-/* ========== CTA BUTTON ========== */
-.mobile-cta {
-    margin-top: 24px;
-    padding: 12px;
-    text-align: center;
+    /* ========== NAV ITEMS ========== */
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
 
-    background: var(--accent);
-    color: var(--primary);
-    font-weight: 800;
-    border-radius: 10px;
-    text-decoration: none;
+    .mobile-link {
+        cursor: pointer;
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 8px;
+        transition:
+            background 0.2s,
+            color 0.2s;
+    }
 
-    border-top: 1px solid var(--gray-border);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
+    .mobile-link:hover {
+        background: var(--accent);
+        color: var(--primary);
+    }
+    .service-toggle-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .submenu {
+        display: none;
+        padding-left: 0px;
+    }
 
-.mobile-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
-}
+    .submenu li a {
+        width: 100%;
+        font-size: 0.875rem;
+        display: inline-block;
+        color: var(--white);
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 0 10px 18px;
+        border-radius: 8px;
+        transition:
+            background 0.2s,
+            color 0.2s;
+    }
+    .submenu li a:hover {
+        background: var(--accent);
+        color: var(--primary);
+    }
+    /* Mobile: Show when 'active' class is present */
+    @media (max-width: 768px) {
+        .submenu {
+            position: static;
+        } /* Push content down on mobile */
 
+        .dropdown-service-mobile.active .submenu {
+            display: block;
+        }
+    }
+
+    /* ========== CTA BUTTON ========== */
+    .mobile-cta {
+        margin-top: 24px;
+        padding: 12px;
+        text-align: center;
+
+        background: var(--accent);
+        color: var(--primary);
+        font-weight: 800;
+        border-radius: 10px;
+        text-decoration: none;
+
+        border-top: 1px solid var(--gray-border);
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .mobile-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    }
 </style>

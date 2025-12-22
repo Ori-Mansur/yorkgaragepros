@@ -23,7 +23,16 @@ import MobileNav from "./MobileNav.astro";
         <!-- Primary Navigation Links -->
         <nav class="nav-links">
             <a href="/">Home</a>
-            <a href="/services">Services</a>
+            <li class="dropdown">
+                <a href="/services" class="dropdown-toggle"
+                    >Services <span class="arrow">▼</span></a
+                >
+                <ul class="submenu">
+                    <li><a href="/garage-door-repair">Garage Door Repair</a></li>
+                    <li><a href="/garage-door">Garage Door Installation</a></li>
+                    <li><a href="/garage-door-opener">Garage Door Opener</a></li>
+                </ul>
+            </li>
             <a href="/about">About</a>
             <a href="/contact">Contact Us</a>
             <a href="/#roi-analysis">Why Renovate?</a>
@@ -64,6 +73,7 @@ import MobileNav from "./MobileNav.astro";
             });
         });
     }
+    
     openMobileMenu();
 </script>
 
@@ -118,6 +128,9 @@ import MobileNav from "./MobileNav.astro";
     a {
         text-decoration: none;
         color: #ffffff;
+    }
+    li {
+        list-style: none;
     }
 
     /* Navigation */
@@ -207,5 +220,58 @@ import MobileNav from "./MobileNav.astro";
 
     #ctaButton:hover {
         background-color: #d97706; /* hover:bg-yellow-600 */
+    }
+    /* Submenu Hidden by Default */
+    .submenu {
+        display: none; /* hidden by default */
+        gap: 1.5rem; /* gap-6 */
+        font-size: 0.875rem; /* text-sm */
+        font-family: "Montserrat-SemiBold", "Inter", sans-serif;
+        position: absolute;
+        background: var(--primary-color);
+        /* border: 1px solid #ddd; */
+        border-radius: 0 0 12px 12px;
+
+        padding: 1rem;
+        min-width: 150px;
+    }
+    .submenu::before {
+        content: "";
+        position: absolute;
+        top: -20px; /* This fills the gap above the menu */
+        left: 0;
+        right: 0;
+        height: 20px;
+        display: block;
+    }
+    .submenu a {
+        color: #ffffff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .submenu li{
+        padding-bottom: 1rem;
+    }
+    
+
+    /* Desktop: Show on Hover */
+    @media (min-width: 769px) {
+        .dropdown:hover .submenu {
+            display: block;
+        }
+    }
+
+    /* Mobile: Show when 'active' class is present */
+    @media (max-width: 768px) {
+        .nav-links {
+            flex-direction: column;
+        }
+        .submenu {
+            position: static;
+        } /* Push content down on mobile */
+
+        .dropdown.active .submenu {
+            display: block;
+        }
     }
 </style>
