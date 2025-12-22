@@ -97,18 +97,19 @@ import { ArrowDown } from "@lucide/astro";
         list-style: none;
     }
     /* ========== MOBILE MENU BASE ========== */
+
     .mobile-menu {
         position: fixed;
-        top: 0;
+        /* Remove 'top' and 'height' from here, JS will set them */
         right: 0;
-        height: 100vh;
-        width: 260px;
+        width: 280px;
         background: var(--primary);
-        z-index: 40;
-
+        z-index: 100;
         transform: translateX(100%);
         transition: transform 0.3s ease;
-        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.35);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        /* Ensure the menu content can scroll if it's long */
+        overflow-y: auto;
     }
 
     /* ACTIVE STATE (add with JS) */
@@ -124,11 +125,13 @@ import { ArrowDown } from "@lucide/astro";
     }
 
     /* ========== INNER WRAP ========== */
+
     .mobile-menu-inner {
         padding: 24px;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        /* Optional: Add a bit more top padding if the "Menu" title feels too high */
+        padding-top: 10px;
     }
 
     /* ========== HEADER ========== */

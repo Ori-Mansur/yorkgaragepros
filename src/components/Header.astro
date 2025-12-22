@@ -59,25 +59,29 @@ import MobileNav from "./MobileNav.astro";
 <script type="module">
     function openMobileMenu() {
         const menu = document.getElementById("mobileMenu");
-        document
-            .getElementById("nav-btn")
-            .addEventListener("click", (event) => {
-                console.log(event.pageY);
+        const navBtn = document.getElementById("nav-btn");
+        const header = document.querySelector("header"); // Selects your header element
 
-                if (menu.classList.contains("open")) {
-                    menu.classList.remove("open");
-                } else {
-                    menu.classList.add("open");
-                    menu.style.paddingTop = `${event.pageY + 20}px`;
-                }
-            });
-        document.querySelectorAll("[data-close]").forEach((link) => {
-            link.addEventListener("click", () => {
-                menu.classList.remove("open");
-            });
-        });
+        if (!menu || !navBtn || !header) return;
+
+        const handleToggle = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // 1. Get the exact distance from the top of the screen to the bottom of the header
+            const headerRect = header.getBoundingClientRect();
+            const headerBottom = headerRect.bottom;
+
+            // 2. Apply that exact height to the menu's top position
+            menu.style.top = `${headerBottom}px`;
+            menu.style.height = `calc(100vh - ${headerBottom}px)`;
+
+            const isOpen = menu.classList.toggle("open");
+            document.body.style.overflow = isOpen ? "hidden" : "";
+        };
+
+        navBtn.addEventListener("click", handleToggle);
     }
-
     openMobileMenu();
 </script>
 
@@ -168,27 +172,37 @@ import MobileNav from "./MobileNav.astro";
     #nav-btn {
         border-radius: 0.5rem;
         padding: 0.5rem;
-        background-color: var(--primary-color);
-        color: var(--secondary-color);
+        background-color: transparent; /* Changed from var to transparent */
+        color: #ffffff;
         border: none;
         cursor: pointer;
-        transition:
-            background-color 0.2s ease,
-            opacity 0.2s ease;
+        transition: background-color 0.2s ease;
         -webkit-tap-highlight-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
+
+    /* Only hover on Desktop */
+    @media (hover: hover) {
+        #nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Subtle highlight */
+        }
+    }
+
+    /* Active state for the exact moment of the tap on iPhone */
+    #nav-btn:active {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: scale(0.95); /* Slight shrink feedback */
+    }
+
     #nav-btn svg {
         width: 1.5rem;
         height: 1.5rem;
-        color: var(--secondary-color);
+        color: #ffffff;
     }
-    #nav-btn:hover svg {
-        fill: var(--secondary-color);
-    }
-    #nav-btn:hover {
+    #nav-btn:active svg {
         color: var(--secondary-color);
-        background-color: white;
-        opacity: 0.1; /* bg-opacity-10 */
     }
     .sr-only {
         position: absolute;
@@ -226,56 +240,82 @@ import MobileNav from "./MobileNav.astro";
     #ctaButton:hover {
         background-color: #d97706; /* hover:bg-yellow-600 */
     }
-    /* Submenu Hidden by Default */
+    /* ========== Submenu Base (Desktop & Shared) ========== */
     .submenu {
-        display: none; /* hidden by default */
-        gap: 1.5rem; /* gap-6 */
-        font-size: 0.875rem; /* text-sm */
-        font-family: "Montserrat-SemiBold", "Inter", sans-serif;
+        display: none; /* Mobile default */
         position: absolute;
-        background: var(--primary-color);
-        /* border: 1px solid #ddd; */
-        border-radius: 0 0 12px 12px;
+        background: #1c2a44; /* Match your primary navy */
+        min-width: 240px;
+        padding: 1.25rem;
 
-        padding: 1rem;
-        min-width: 150px;
+        /* The Gold Border - matching your mobile style */
+        border-left: 3px solid #e8a900;
+        border-radius: 0 0 12px 0; /* Rounded bottom-right only for a sharp look */
+
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+        list-style: none;
+        margin: 0;
     }
+
+    /* Invisible Bridge to prevent closing when moving mouse down */
     .submenu::before {
         content: "";
         position: absolute;
-        top: -20px; /* This fills the gap above the menu */
+        top: -20px;
         left: 0;
         right: 0;
         height: 20px;
-        display: block;
     }
+
+    .submenu li {
+        padding: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .submenu li:last-child {
+        margin-bottom: 0;
+    }
+
     .submenu a {
         color: #ffffff;
         text-decoration: none;
-        transition: color 0.3s ease;
-    }
-    .submenu li {
-        padding-bottom: 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        display: block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
     }
 
-    /* Desktop: Show on Hover */
+    /* Desktop Hover Effect for items inside the list */
+    @media (hover: hover) {
+        .submenu a:hover {
+            background: rgba(232, 169, 0, 0.15); /* Soft gold tint */
+            color: #e8a900;
+            padding-left: 18px; /* Slight slide effect */
+        }
+    }
+
+    /* ========== Desktop Animation & Logic ========== */
     @media (min-width: 769px) {
-        .dropdown:hover .submenu {
-            display: block;
-        }
-    }
-
-    /* Mobile: Show when 'active' class is present */
-    @media (max-width: 768px) {
-        .nav-links {
-            flex-direction: column;
-        }
         .submenu {
-            position: static;
-        } /* Push content down on mobile */
-
-        .dropdown.active .submenu {
             display: block;
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(5px);
+            transition:
+                opacity 0.3s ease,
+                transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1),
+                visibility 0.3s;
+            pointer-events: none;
+        }
+
+        .dropdown:hover .submenu {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
     }
 </style>
