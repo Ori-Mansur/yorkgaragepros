@@ -57,7 +57,7 @@ const deals = {
     title: "Boxing Day Special",
     badge: "EXCLUSIVE HOLIDAY RATE",
     price: "$225.25",
-    priceNote: "Total All-Inclusive Flat Rate",
+    priceNote: "Total All-Inclusive Spring Replacement",
     code: "BOXING225",
     hasCode: true,
     endDate: "2025-12-26T23:59:59",
