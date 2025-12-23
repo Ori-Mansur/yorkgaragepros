@@ -1,9 +1,10 @@
 ---
+import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import UtilityNav from "../components/UtilityNav.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import SpecialOffer from "../components/vue/SpecialOffer.vue";
+import SpecialOfferVue from '../components/vue/SpecialOffer.vue';
 
 const deal = Astro.url.searchParams.get("deal") || "Default";
 const title = `${deal} | $225.25 Garage Door Spring Special | York Region Pros`;
@@ -24,7 +25,7 @@ const title = `${deal} | $225.25 Garage Door Spring Special | York Region Pros`;
             </section>
 
             <!-- Main Offer -->
-            <SpecialOffer client:load />
+            <SpecialOfferVue client:load />
 
             <!-- Brand Logos (placeholder container) -->
             <div class="brand-grid">

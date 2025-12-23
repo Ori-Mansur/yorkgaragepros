@@ -44,6 +44,21 @@
         <span>✓</span> <strong>Reliability:</strong> 5-Star Rated Local Tech
       </div>
     </div>
+    <div class="info-wrapper" v-if="currentOffer.hasCode">
+      <span class="info-icon">
+        Terms & Conditions <Info width="{16}" height="{16}" />
+      </span>
+      <div class="terms-bubble">
+        <div class="bubble-header">Terms & Conditions</div>
+        <ul>
+          <li><strong>Dates:</strong> Dec 23 - Dec 26, 2025.</li>
+          <li><strong>Residential:</strong> Door sizes 7x7 up to 8x16.</li>
+          <li><strong>Spring ID:</strong> Includes 1.75" to 2" Inside Diameter.</li>
+          <li><strong>Spring Length:</strong> Up to 41" max.</li>
+          <li><strong>Inventory:</strong> Offer based on current stock.</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -280,5 +295,67 @@ onMounted(() => {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.info-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.info-icon {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  gap: 4px;
+  /* border-left: 1px solid #334155; */
+  padding-left: 10px;
+}
+
+.terms-bubble {
+  text-align: left;
+  visibility: hidden;
+  position: absolute;
+  bottom: 140%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  background: white;
+  color: #334155;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  font-size: 0.8rem;
+  border: 1px solid #e2e8f0;
+  transition: opacity 0.3s ease;
+}
+
+.info-wrapper:hover .terms-bubble {
+  visibility: visible;
+}
+
+.terms-bubble ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.terms-bubble li {
+  /* margin-bottom: 6px; */
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 4px;
+}
+/* .terms-bubble li strong {
+       display: block;
+    } */
+
+.bubble-header {
+  font-weight: bold;
+  color: #0f172a;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  text-align: center;
 }
 </style>
