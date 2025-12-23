@@ -1,0 +1,197 @@
+---
+import "../styles/global.css";
+import { Info, Gift } from "@lucide/astro";
+---
+
+<section class="banner-container">
+    <div class="boxing-day-banner">
+        <div class="banner-main">
+            <div class="gift-animation">
+                <Gift width={22} height={22} color="#eab308" />
+            </div>
+            <span class="badge shimmer">BOXING DAY SALE</span>
+            <div class="gift-animation">
+                <span class="bowtie">🎀</span>
+            </div>
+        </div>
+        <p class="spring-replacment">
+            Spring Replacement: <strong>$225.25 TOTAL</strong>
+        </p>
+        <div class="info-wrapper">
+            <span class="info-icon">
+                Terms & Conditions <Info width={16} height={16} />
+            </span>
+            <div class="terms-bubble">
+                <div class="bubble-header">Terms & Conditions</div>
+                <ul>
+                    <li><strong>Dates:</strong> Dec 23 - Dec 26, 2025.</li>
+                    <li><strong>Residential:</strong> Door sizes 7x7 up to 8x16.</li>
+                    <li><strong>Spring ID:</strong> Includes 1.75" to 2" Inside Diameter.</li>
+                    <li><strong>Spring Length:</strong> Up to 41" max.</li>
+                    <li><strong>Inventory:</strong> Offer based on current stock.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .banner-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    .boxing-day-banner {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        color: #f8fafc;
+        padding: 8px 24px;
+        border-radius: 20px;
+        display: inline-block;
+        border: 1px solid #94a3b8;
+        position: relative;
+        margin: 1rem auto;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        align-self: center;
+    }
+
+    .banner-main {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 15px;
+    }
+    .spring-replacment {
+        margin: 6px 0;
+    }
+
+    .icon-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .bowtie {
+        font-size: 1.2rem;
+    }
+
+    /* Gift Wiggle Animation */
+    .gift-animation {
+        animation: wiggle 2s infinite ease-in-out;
+    }
+
+    @keyframes wiggle {
+        0%,
+        100% {
+            transform: rotate(0deg);
+        }
+        25% {
+            transform: rotate(10deg);
+        }
+        75% {
+            transform: rotate(-10deg);
+        }
+    }
+
+    /* Shimmer Effect for Gold Badge */
+    .badge {
+        background: #eab308;
+        color: #000;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .shimmer::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent
+        );
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        100% {
+            left: 200%;
+        }
+    }
+
+    p {
+        /* margin: 0; */
+        font-size: 1.05rem;
+    }
+
+    /* Info Bubble logic */
+    .info-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .info-icon {
+        color: #94a3b8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        gap: 4px;
+        /* border-left: 1px solid #334155; */
+        padding-left: 10px;
+    }
+
+    .terms-bubble {
+        text-align: left;
+        visibility: hidden;
+        position: absolute;
+        bottom: 140%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 250px;
+        background: white;
+        color: #334155;
+        padding: 12px;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        z-index: 100;
+        font-size: 0.8rem;
+        border: 1px solid #e2e8f0;
+        transition: opacity 0.3s ease;
+    }
+
+    .info-wrapper:hover .terms-bubble {
+        visibility: visible;
+    }
+
+    .terms-bubble ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .terms-bubble li {
+        /* margin-bottom: 6px; */
+        border-bottom: 1px solid #f1f5f9;
+        padding-bottom: 4px;
+    }
+    /* .terms-bubble li strong {
+       display: block;
+    } */
+
+    .bubble-header {
+        font-weight: bold;
+        color: #0f172a;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+</style>
