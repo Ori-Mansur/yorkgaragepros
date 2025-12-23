@@ -105,24 +105,17 @@
     </div>
 </section>
 
-<script type="module">
-    // --- Pricing Constants for Estimator (Base Price for 1-Car Equivalent) ---
+<script is:inline>
+    // --- Pricing Constants ---
     const PRICING = {
-        // Door Installation: standard insulated steel door + installation cost (Base value: $1,800)
         door: { base: 1800, minMultiplier: 1.0, maxMultiplier: 1.5, days: 1 },
-
-        // Opener Installation: standard belt-drive opener + installation cost (Base value: $600)
         opener: {
             base: 600,
             minMultiplier: 1.0,
             maxMultiplier: 1.6,
             days: 0.5,
         },
-
-        // Epoxy Coating: cost per standard car bay (roughly 200 sq ft) (Base value: $1,500)
         epoxy: { base: 1500, minMultiplier: 1.0, maxMultiplier: 2.0, days: 2 },
-
-        // Repair Estimate: Base cost for common repair (e.g., spring replacement). Does NOT scale by size.
         repair: {
             base: 350,
             minMultiplier: 1.0,
@@ -132,96 +125,79 @@
     };
 
     function calculateEstimate() {
-        // Get inputs
+        // Elements
         const sizeSelect = document.getElementById("garageSizeEst");
-        const size = parseFloat(sizeSelect.value); // 1, 2, or 3
+        const doorChecked = document.getElementById("doorService");
+        const openerChecked = document.getElementById("openerService");
+        const epoxyChecked = document.getElementById("epoxyService");
+        const repairChecked = document.getElementById("repairService");
 
-        const doorChecked = document.getElementById("doorService").checked;
-        const openerChecked = document.getElementById("openerService").checked;
-        const epoxyChecked = document.getElementById("epoxyService").checked;
-        const repairChecked = document.getElementById("repairService").checked; // NEW INPUT
+        if (!sizeSelect || !doorChecked) return; // Safety check
 
+        const size = parseFloat(sizeSelect.value);
         let minPrice = 0;
         let maxPrice = 0;
         let totalDays = 0;
 
-        // --- Door Installation Calculation (Scales with size) ---
-        if (doorChecked) {
-            const p = PRICING.door;
-            minPrice += p.base * p.minMultiplier * size;
-            maxPrice += p.base * p.maxMultiplier * size;
-            totalDays += p.days;
+        if (doorChecked.checked) {
+            minPrice += PRICING.door.base * PRICING.door.minMultiplier * size;
+            maxPrice += PRICING.door.base * PRICING.door.maxMultiplier * size;
+            totalDays += PRICING.door.days;
+        }
+        if (openerChecked.checked) {
+            minPrice +=
+                PRICING.opener.base * PRICING.opener.minMultiplier * size;
+            maxPrice +=
+                PRICING.opener.base * PRICING.opener.maxMultiplier * size;
+            totalDays += PRICING.opener.days;
+        }
+        if (epoxyChecked.checked) {
+            minPrice += PRICING.epoxy.base * PRICING.epoxy.minMultiplier * size;
+            maxPrice += PRICING.epoxy.base * PRICING.epoxy.maxMultiplier * size;
+            totalDays += PRICING.epoxy.days;
+        }
+        if (repairChecked.checked) {
+            minPrice += PRICING.repair.base * PRICING.repair.minMultiplier;
+            maxPrice += PRICING.repair.base * PRICING.repair.maxMultiplier;
+            totalDays += PRICING.repair.days;
         }
 
-        // --- Opener Installation Calculation (Scales with size) ---
-        if (openerChecked) {
-            const p = PRICING.opener;
-            minPrice += p.base * p.minMultiplier * size;
-            maxPrice += p.base * p.maxMultiplier * size;
-            totalDays += p.days;
-        }
-
-        // --- Epoxy Coating Calculation (Scales with size) ---
-        if (epoxyChecked) {
-            const p = PRICING.epoxy;
-            minPrice += p.base * p.minMultiplier * size;
-            maxPrice += p.base * p.maxMultiplier * size;
-            totalDays += p.days;
-        }
-
-        // --- Repair Calculation (Fixed cost, does NOT scale with size) ---
-        if (repairChecked) {
-            const p = PRICING.repair;
-            // Use min and max multipliers as defined, but apply only the base cost once.
-            minPrice += p.base * p.minMultiplier;
-            maxPrice += p.base * p.maxMultiplier;
-            totalDays += p.days;
-        }
-
-        // --- Update UI ---
         const priceRangeElement = document.getElementById("priceRange");
         const timeRangeElement = document.getElementById("timeRange");
 
-        if (minPrice === 0 && maxPrice === 0) {
+        if (minPrice === 0) {
             priceRangeElement.textContent = "$0 - $0";
             timeRangeElement.textContent = "Project Duration: 0 Days";
         } else {
-            // Format prices with commas and dollar sign
-            const formattedMin = Math.round(minPrice).toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 0,
-            });
-            const formattedMax = Math.round(maxPrice).toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-                minimumFractionDigits: 0,
-            });
+            // Safari-safe currency formatting
+            const format = (num) =>
+                "$" + Math.round(num).toLocaleString("en-US");
 
-            priceRangeElement.textContent = `${formattedMin} - ${formattedMax}`;
+            priceRangeElement.textContent = `${format(minPrice)} - ${format(maxPrice)}`;
 
-            // Format time
-            let timeText;
-            if (totalDays < 1) {
-                timeText = "Less than 1 Day";
-            } else {
-                timeText = `${totalDays} Day${totalDays > 1 ? "s" : ""}`;
-            }
-
+            let timeText =
+                totalDays < 1
+                    ? "Less than 1 Day"
+                    : `${totalDays} Day${totalDays > 1 ? "s" : ""}`;
             timeRangeElement.textContent = `Project Duration: ${timeText}`;
         }
     }
 
-    // Attach event listeners to trigger calculation on change
-    document.addEventListener("DOMContentLoaded", () => {
+    // iPhone-optimized event listeners
+    function initEstimator() {
         const form = document.getElementById("estimatorForm");
         if (form) {
-            // Listen for changes on all form elements
+            // 'input' is better for iPhone than 'change'
+            form.addEventListener("input", calculateEstimate);
             form.addEventListener("change", calculateEstimate);
         }
-        // Run on initial load
         calculateEstimate();
-    });
+    }
+
+    // Fire immediately and on load
+    initEstimator();
+    document.addEventListener("DOMContentLoaded", initEstimator);
+    window.onload = initEstimator;
 </script>
 <style>
     /* ===============================
@@ -235,7 +211,7 @@
         --brand-gold: #e8a900;
         --sec-bg: #f3f4f6;
     }
-    *{
+    * {
         box-sizing: border-box;
     }
     input,
