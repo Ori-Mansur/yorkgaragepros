@@ -1,0 +1,141 @@
+---
+import Layout from "../layouts/Layout.astro";
+import UtilityNav from "../components/UtilityNav.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SpecialOffer from "../components/vue/SpecialOffer.vue";
+
+const deal = Astro.url.searchParams.get("deal") || "Default";
+const title = `${deal} | $225.25 Garage Door Spring Special | York Region Pros`;
+---
+
+<Layout title={title}>
+    <UtilityNav />
+    <Header />
+    <main class="offer-page">
+        <div class="offer-container">
+            <!-- SEO-only content -->
+            <section class="visually-hidden">
+                <h2>Garage Door Spring Replacement Newmarket & Aurora</h2>
+                <p>
+                    Expert local garage door repair. Serving
+                    York Region & Simcoe County.
+                </p>
+            </section>
+
+            <!-- Main Offer -->
+            <SpecialOffer client:load />
+
+            <!-- Brand Logos (placeholder container) -->
+            <div class="brand-grid">
+                <!-- logos go here -->
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>
+<style>
+    /* =========================
+   Variables
+========================= */
+    :root {
+        --navy: #1c2a44;
+        --navy-dark: #141d30;
+        --gold: #e8a900;
+        --gray-bg: #f4f6fa;
+        --text-dark: #1f2933;
+        --muted: #6b7280;
+        --white: #ffffff;
+        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    /* =========================
+   Base
+========================= */
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family:
+            Inter,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+        background: var(--gray-bg);
+        color: var(--text-dark);
+        line-height: 1.6;
+    }
+
+    /* =========================
+   Accessibility
+========================= */
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* =========================
+   Layout
+========================= */
+    .offer-page {
+        min-height: 100vh;
+        padding: 2rem 1rem;
+    }
+
+    .offer-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* =========================
+   Brand Grid
+========================= */
+    .brand-grid {
+        margin-top: 3rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        opacity: 0.7;
+        filter: grayscale(1);
+        transition:
+            filter 0.3s ease,
+            opacity 0.3s ease;
+    }
+
+    .brand-grid:hover {
+        opacity: 1;
+        filter: grayscale(0);
+    }
+
+    /* =========================
+   Tablet
+========================= */
+    @media (min-width: 640px) {
+        .offer-page {
+            padding: 3rem 2rem;
+        }
+
+        .brand-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    /* =========================
+   Desktop
+========================= */
+    @media (min-width: 1024px) {
+        .brand-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+</style>
