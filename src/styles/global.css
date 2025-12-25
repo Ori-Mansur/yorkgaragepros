@@ -111,27 +111,27 @@
 	@font-face {
 		font-family: 'Montserrat';
 		/* A name for your custom font */
-		src: url('../fonts/static/Montserrat-Regular.ttf');
+		src: url('/fonts/static/Montserrat-Regular.woff2');
 		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'Montserrat-ExtraBold';
 		/* A name for your custom font */
-		src: url('../fonts/static/Montserrat-ExtraBold.ttf');
+		src: url('/fonts/static/Montserrat-ExtraBold.woff2');
 		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'Montserrat-Bold';
 		/* A name for your custom font */
-		src: url('../fonts/static/Montserrat-Bold.ttf');
+		src: url('/fonts/static/Montserrat-Bold.woff2');
 		font-display: swap;
 	}
 
 	@font-face {
 		font-family: 'Montserrat-SemiBold';
 		/* A name for your custom font */
-		src: url('../fonts/static/Montserrat-SemiBold.ttf');
+		src: url('/fonts/static/Montserrat-SemiBold.woff2');
 		font-display: swap;
 	}
