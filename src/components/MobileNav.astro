@@ -32,6 +32,26 @@ import { ArrowDown } from "@lucide/astro";
                     </li>
                 </ul>
             </li>
+            <li class="dropdown-service-mobile" id="dropdown-area-mobile">
+                <div class="service-toggle-container">
+                    <a href="/garage-door-repair" class="mobile-link">Service areas </a>
+                    <span class="arrow mobile-link" id="mobile-area-toggle"
+                        >▼</span
+                    >
+                </div>
+                <ul class="submenu">
+                    <li><a href="/newmarket">Newmarket</a></li>
+                    <li><a href="/aurora">Aurora</a></li>
+                    <li><a href="/richmond-hill">Richmond Hill</a></li>
+                    <li><a href="/vaughan">Vaughan</a></li>
+                    <li><a href="/markham">Markham</a></li>
+                    <li><a href="/stouffville">Stouffville</a></li>
+                    <li><a href="/king">King</a></li>
+                    <li><a href="/barrie">Barrie</a></li>
+                    <li><a href="/bradford">Bradford</a></li>
+                    <li><a href="/innisfil">Innisfil</a></li>
+                </ul>
+            </li>
             <a href="/about" class="mobile-link" data-close>About</a>
             <a href="/contact" class="mobile-link" data-close>Contact Us</a>
             <a href="/#roi-analysis" class="mobile-link" data-close
@@ -77,12 +97,45 @@ import { ArrowDown } from "@lucide/astro";
             { passive: false },
         );
     }
+    function setToggleArea() {
+        // REMOVED the "#" from the IDs
+        const dropdownToggle = document.getElementById("mobile-area-toggle");
+        const dropdownParent = document.getElementById(
+            "dropdown-area-mobile",
+        );
+
+        // Safety check to make sure the elements exist
+        if (!dropdownToggle || !dropdownParent) return;
+
+        const toggleMenu = (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdownParent.classList.toggle("active");
+            }
+        };
+
+        // Use a simple click listener first;
+        // Modern iPhones handle clicks on IDs/Buttons well if preventDefault is used.
+        dropdownToggle.addEventListener("click", toggleMenu);
+
+        // If you still need touchstart for speed, use this pattern to prevent double-toggling:
+        dropdownToggle.addEventListener(
+            "touchstart",
+            (e) => {
+                toggleMenu(e);
+            },
+            { passive: false },
+        );
+    }
 
     // Ensure the DOM is ready before running
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", setToggle);
+        document.addEventListener("DOMContentLoaded", setToggleArea);
     } else {
         setToggle();
+        setToggleArea()
     }
 </script>
 <style>

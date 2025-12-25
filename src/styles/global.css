@@ -8,8 +8,49 @@
 	}
 
 	* {
-		box-sizing: border-box
+		box-sizing: border-box;
+		scrollbar-width: thin;
+		scrollbar-color: var(--gold) var(--navy);
 	}
+
+	/* 1. The Container (Scrollbar width) */
+	::-webkit-scrollbar {
+		width: 8px;
+		/* Vertical scrollbar width */
+		height: 8px;
+		/* Horizontal scrollbar height */
+	}
+
+	/* 2. The Background (Track) */
+	::-webkit-scrollbar-track {
+		background: var(--navy);
+		/* Using your brand navy (#1c2a44) */
+		border-radius: 0;
+	}
+
+	/* 3. The Grabbable Part (Thumb) */
+	::-webkit-scrollbar-thumb {
+		background: var(--gold);
+		/* Using your brand gold (#e8a900) */
+		border-radius: 4px;
+		/* Slightly rounded for a modern look */
+		border: 2px solid var(--navy);
+		/* Creates a "padding" effect around the gold */
+	}
+
+	/* 4. Hover State (Make it slightly darker or brighter when hovered) */
+	::-webkit-scrollbar-thumb:hover {
+		background: #ffc107;
+		/* A slightly brighter gold on hover */
+	}
+
+	/* 5. Horizontal Specific (Optional, kept gold to stay consistent) */
+	::-webkit-scrollbar-thumb:horizontal {
+		background: var(--gold);
+		border-radius: 4px;
+	}
+
+
 
 	button {
 		/* Reset all properties to their initial or inherited values */
