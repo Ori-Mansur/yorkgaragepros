@@ -73,5 +73,5 @@
   "pdfGuide": "98022_Product_Guide_EN.pdf",
   "category": "garage-door-openers",
   "tags": ["wall-mount", "battery-backup", "wi-fi", "bluetooth", "myq", "quiet", "led-lighting", "heavy-lifting"],
-  "available": true
+  "available": false
 }
