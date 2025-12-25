@@ -32,4 +32,8 @@ export default defineConfig({
 
   output: "static",
   adapter: cloudflare(),
+  build: {
+    // Inline all CSS into the HTML if it's smaller than 10kb
+    inlineStylesheets: 'always',
+  },
 });
