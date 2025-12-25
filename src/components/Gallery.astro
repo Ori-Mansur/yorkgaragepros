@@ -1,246 +1,264 @@
 ---
-// Define the interface for the images
 interface ImageObject {
-  url: string;
-  alt: string;
+    url: string;
+    alt: string;
 }
 
 interface Props {
-  images: ImageObject[];
+    images: ImageObject[];
 }
 
 const { images } = Astro.props;
 
-// Safety check: if no images, don't render
 if (!images || images.length === 0) return null;
 
 const firstImage = images[0];
 ---
 
 <div class="product-gallery">
-  <div class="main-image-container" id="mainImageWrapper">
-    <img 
-      id="featuredImage" 
-      src={firstImage.url} 
-      alt={firstImage.alt} 
-      class="zoom-trigger"
-    />
-  </div>
-
-  <div class="thumbnail-pagination">
-    <button class="nav-arrow left" id="prevThumb" aria-label="Previous images">❮</button>
-    
-    <div class="thumbnails-window">
-      <div class="thumbnails-track" id="thumbTrack">
-        {images.map((img, index) => (
-          <img 
-            src={img.url} 
-            alt={img.alt}
-            class={`thumb ${index === 0 ? 'active' : ''}`}
-            data-full={img.url}
-          />
-        ))}
-      </div>
+    <div class="main-image-container">
+        <img
+            id="featuredImage"
+            src={firstImage.url}
+            alt={firstImage.alt}
+            class="zoom-trigger"
+            loading="eager"
+        />
     </div>
-    
-    <button class="nav-arrow right" id="nextThumb" aria-label="Next images">❯</button>
-  </div>
+
+    <div class="thumbnail-pagination">
+        <button class="nav-arrow left" id="prevThumb" type="button">❮</button>
+        <div class="thumbnails-window">
+            <div class="thumbnails-track" id="thumbTrack">
+                {
+                    images.map((img, index) => (
+                        <img
+                            src={img.url}
+                            alt={img.alt}
+                            class={`thumb ${index === 0 ? "active" : ""}`}
+                            data-full={img.url}
+                            loading="lazy"
+                        />
+                    ))
+                }
+            </div>
+        </div>
+        <button class="nav-arrow right" id="nextThumb" type="button">❯</button>
+    </div>
 </div>
 
 <div id="imageModal" class="modal" aria-hidden="true">
-  <span class="close-modal">&times;</span>
-  <div class="modal-content-wrapper">
-    <img id="modalImage" src="" alt="Enlarged view" />
-  </div>
+    <span class="close-modal">&times;</span>
+    <div class="modal-content-wrapper">
+        <img id="modalImage" src="" alt="Enlarged view" />
+    </div>
 </div>
 
 <style>
-  .product-gallery { width: 100%; }
-  
-  .main-image-container { 
-    overflow: hidden; 
-    border-radius: 12px; 
-    cursor: zoom-in;
-    margin-bottom: 1rem;
-    border: 1px solid #e5e7eb;
-    background: #f9fafb;
-    aspect-ratio: 4 / 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    /* Keep your existing styles, but add this mobile tweak */
+    .main-image-container {
+        overflow: hidden;
+        border-radius: 12px;
+        cursor: zoom-in;
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+        /* This prevents the height from jumping on slow mobile connections */
+        aspect-ratio: 4 / 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
 
-  #featuredImage { 
-    max-width: 100%; 
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-  }
+    #featuredImage {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 
-  /* Pagination Styling */
-  .thumbnail-pagination { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    position: relative;
-  }
 
-  .thumbnails-window { 
-    overflow: hidden; 
-    width: 100%; 
-    padding: 4px 0;
-  }
+    /* Pagination Styling */
+    .thumbnail-pagination {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+    }
 
-  .thumbnails-track { 
-    display: flex; 
-    gap: 12px; 
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    /* Allow manual swipe on mobile if JS fails */
-    overflow-x: auto; 
-    scrollbar-width: none;
-  }
-  
-  .thumbnails-track::-webkit-scrollbar { display: none; }
-  
-  .thumb { 
-    width: 80px; 
-    height: 60px; 
-    flex-shrink: 0;
-    object-fit: cover; 
-    cursor: pointer; 
-    border: 2px solid transparent; 
-    border-radius: 6px;
-    opacity: 0.7;
-    transition: all 0.2s ease;
-  }
+    .thumbnails-window {
+        overflow: hidden;
+        max-width: 50vw;
+        padding: 4px 0;
+    }
 
-  .thumb.active { 
-    border-color: #e8a900; 
-    opacity: 1; 
-    transform: scale(1.05);
-  }
+    .thumbnails-track {
+        display: flex;
+        gap: 12px;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Allow manual swipe on mobile if JS fails */
+        overflow-x: auto;
+        overflow: hidden;
+        scrollbar-width: none;
+    }
 
-  .nav-arrow {
-    background: #1c2a44;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transition: background 0.2s;
-  }
+    .thumbnails-track::-webkit-scrollbar {
+        display: none;
+    }
 
-  .nav-arrow:hover { background: #e8a900; }
+    .thumb {
+        width: 80px;
+        height: 60px;
+        flex-shrink: 0;
+        object-fit: cover;
+        cursor: pointer;
+        border: 3px solid transparent;
+        border-radius: 6px;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+    }
 
-  /* Modal Styling */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(10, 15, 25, 0.95);
-    align-items: center; 
-    justify-content: center;
-    padding: 20px;
-  }
+    .thumb.active {
+        border-color: #e8a900;
+        opacity: 1;
+        transform: scale(1.05);
+    }
 
-  .modal-content-wrapper { 
-    max-width: 95%; 
-    max-height: 90vh; 
-    overflow: hidden;
-    position: relative;
-  }
+    .nav-arrow {
+        background: #1c2a44;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        transition: background 0.2s;
+    }
 
-  #modalImage { 
-    width: 100%; 
-    height: auto; 
-    max-height: 85vh;
-    object-fit: contain;
-    transition: transform 0.3s ease-out; 
-  }
+    .nav-arrow:hover {
+        background: #e8a900;
+    }
 
-  /* Zoom effect in modal */
-  .modal-content-wrapper:hover #modalImage { 
-    transform: scale(1.4); 
-    cursor: zoom-out; 
-  }
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 15, 25, 0.95);
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
 
-  .close-modal { 
-    position: absolute; 
-    top: 20px; 
-    right: 30px; 
-    color: white; 
-    font-size: 40px; 
-    cursor: pointer;
-    line-height: 1;
-  }
+    .modal-content-wrapper {
+        max-width: 95%;
+        max-height: 90vh;
+        overflow: hidden;
+        position: relative;
+    }
+
+    #modalImage {
+        width: 100%;
+        height: auto;
+        max-height: 85vh;
+        object-fit: contain;
+        transition: transform 0.3s ease-out;
+    }
+
+    /* Zoom effect in modal */
+    .modal-content-wrapper:hover #modalImage {
+        transform: scale(1.4);
+        cursor: zoom-out;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        font-size: 40px;
+        cursor: pointer;
+        line-height: 1;
+    }
 </style>
 
-<script >
-  function initGallery() {
-    const featuredImage = document.getElementById('featuredImage') as HTMLImageElement;
-    const track = document.getElementById('thumbTrack');
-    const thumbs = document.querySelectorAll('.thumb') as NodeListOf<HTMLImageElement>;
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage') as HTMLImageElement;
-    const closeModal = document.querySelector('.close-modal');
-    const nextBtn = document.getElementById('nextThumb');
-    const prevBtn = document.getElementById('prevThumb');
+<script>
+    function initGallery() {
+        // Select elements
+        const featuredImage = document.getElementById(
+            "featuredImage",
+        ) as HTMLImageElement | null;
+        const track = document.getElementById("thumbTrack");
+        const thumbs = document.querySelectorAll(
+            ".thumb",
+        ) as NodeListOf<HTMLImageElement>;
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById(
+            "modalImage",
+        ) as HTMLImageElement | null;
+        const closeModal = document.querySelector(".close-modal");
+        const nextBtn = document.getElementById("nextThumb");
+        const prevBtn = document.getElementById("prevThumb");
 
-    let scrollAmount = 0;
+        // 1. Safety Exit: If critical elements aren't found, stop script
+        if (!featuredImage || !track) return;
 
-    // 1. Thumbnail Switching Logic
-    thumbs.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        thumbs.forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        if (featuredImage) featuredImage.src = thumb.dataset.full || '';
-      });
-    });
+        // 2. Thumbnail Switching
+        thumbs.forEach((thumb) => {
+            thumb.onclick = () => {
+                thumbs.forEach((t) => t.classList.remove("active"));
+                thumb.classList.add("active");
+                featuredImage.src = thumb.dataset.full || "";
+            };
+        });
 
-    // 2. Pagination Logic (Horizontal Scroll)
-    nextBtn?.addEventListener('click', () => {
-      if (track) {
-        track.scrollBy({ left: 150, behavior: 'smooth' });
-      }
-    });
+        // 3. Navigation Arrows
+        nextBtn?.addEventListener("click", () => {
+            track.scrollBy({ left: 100, behavior: "smooth" });
+        });
 
-    prevBtn?.addEventListener('click', () => {
-      if (track) {
-        track.scrollBy({ left: -150, behavior: 'smooth' });
-      }
-    });
+        prevBtn?.addEventListener("click", () => {
+            track.scrollBy({ left: -100, behavior: "smooth" });
+        });
 
-    // 3. Modal Logic
-    featuredImage?.addEventListener('click', () => {
-      if (modal && modalImg) {
-        modal.style.display = "flex";
-        modalImg.src = featuredImage.src;
-        document.body.style.overflow = "hidden";
-      }
-    });
+        // 4. Modal Logic
+        featuredImage.addEventListener("click", () => {
+            if (modal && modalImg) {
+                modal.style.display = "flex";
+                modalImg.src = featuredImage.src;
+                document.body.style.overflow = "hidden";
+            }
+        });
 
-    closeModal?.addEventListener('click', () => {
-      if (modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "";
-      }
-    });
+        const hideModal = () => {
+            if (modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "";
+            }
+        };
 
-    // Close modal on background click
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal?.dispatchEvent(new Event('click'));
-    });
-  }
+        closeModal?.addEventListener("click", hideModal);
+        modal?.addEventListener("click", (e) => {
+            if (e.target === modal) hideModal();
+        });
+    }
 
-  // Initialize on load
-  initGallery();
-  // Initialize on Astro page transitions
-  document.addEventListener('astro:after-swap', initGallery);
+    // Run on first load
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initGallery);
+    } else {
+        initGallery();
+    }
+
+    // Run on Astro View Transitions
+    document.addEventListener("astro:after-swap", initGallery);
 </script>
