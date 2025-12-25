@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <a href="tel:+19059609947" class="cta-button">
+    <a href="tel:+19059609947" class="cta-button" aria-label="Call York Garage Pros at 905-960-9947">
       <span class="phone-icon">📞</span> CALL FOR SAME-DAY REPAIR
     </a>
 

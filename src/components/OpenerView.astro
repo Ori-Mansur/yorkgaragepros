@@ -4,7 +4,6 @@ import Gallery from "./Gallery.astro";
 import { Phone } from "@lucide/astro";
 // Pass the JSON data as a prop named 'opener'
 const { opener } = Astro.props;
-
 ---
 
 <div class="opener-page">
@@ -31,7 +30,11 @@ const { opener } = Astro.props;
                 <div class="price-notice">
                     Professional Installation Available
                 </div>
-                <a href="tel:+19059609947" class="call-now-btn">
+                <a
+                    href="tel:+19059609947"
+                    class="call-now-btn"
+                    aria-label="Call York Garage Pros at 905-960-9947"
+                >
                     <Phone />
                     Get a Quote for {opener.model}
                 </a>
@@ -125,7 +128,9 @@ const { opener } = Astro.props;
     }
 
     /* Header */
-    .opener-header { margin-bottom: 2rem; }
+    .opener-header {
+        margin-bottom: 2rem;
+    }
     .brand-tag {
         color: var(--gold);
         font-weight: 700;
@@ -157,12 +162,18 @@ const { opener } = Astro.props;
         .main-grid {
             grid-template-columns: 1.2fr 0.8fr; /* Visual column slightly wider */
         }
-        .opener-page { padding: 3rem 1rem; }
-        h1 { font-size: 2.8rem; }
+        .opener-page {
+            padding: 3rem 1rem;
+        }
+        h1 {
+            font-size: 2.8rem;
+        }
     }
 
     /* Visual Column */
-    .image-gallery { margin-bottom: 2rem; }
+    .image-gallery {
+        margin-bottom: 2rem;
+    }
     .product-description p {
         line-height: 1.7;
         color: #334155;
@@ -200,12 +211,20 @@ const { opener } = Astro.props;
         transition: all 0.2s ease;
     }
 
-    .call-now-btn:active { transform: scale(0.98); }
+    .call-now-btn:active {
+        transform: scale(0.98);
+    }
 
-    .quick-specs h3 { font-size: 1.1rem; margin-top: 1.5rem; }
-    .quick-specs ul { padding: 0; list-style: none; }
-    .quick-specs li { 
-        padding: 0.5rem 0; 
+    .quick-specs h3 {
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+    }
+    .quick-specs ul {
+        padding: 0;
+        list-style: none;
+    }
+    .quick-specs li {
+        padding: 0.5rem 0;
         border-bottom: 1px solid var(--border);
         font-size: 0.9rem;
     }
@@ -231,8 +250,11 @@ const { opener } = Astro.props;
     }
 
     /* Responsive Table Fix */
-    .specs-table { width: 100%; border-collapse: collapse; }
-    
+    .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
     .specs-table td {
         display: block; /* Stack on mobile */
         width: 100% !important;
@@ -266,7 +288,9 @@ const { opener } = Astro.props;
     }
 
     @media (min-width: 640px) {
-        .box-list { grid-template-columns: repeat(2, 1fr); }
+        .box-list {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
 
     .box-list li {

@@ -5,11 +5,14 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
 <div class="top-banner">
     <div class="top-banner-inner">
         <!-- Emergency Info -->
-        <div >
-            <a href="tel:+19059609947" class="emergency-box" >
-
+        <div>
+            <a
+                href="tel:+19059609947"
+                class="emergency-box"
+                aria-label="Call York Garage Pros at 905-960-9947"
+            >
                 <CircleAlert />
-    
+
                 <span class="emergency-text">24/7 EMERGENCY REPAIR</span>
             </a>
         </div>
@@ -23,10 +26,14 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
             >
                 <MessageCircleMore class="whatsapp-icon" />
                 <span class="call-label">Chat on</span>
-                 WhatsApp
+                WhatsApp
             </a>
 
-            <a href="tel:+19059609947" class="call-button">
+            <a
+                href="tel:+19059609947"
+                class="call-button"
+                aria-label="Call York Garage Pros at 905-960-9947"
+            >
                 <span class="call-label"> <Phone />CALL NOW:</span> (905) 960-9947
             </a>
         </div>
@@ -40,7 +47,7 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
         font-size: 0.9rem;
         padding: 12px 16px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-          position: sticky;
+        position: sticky;
         top: 0;
         z-index: 50;
     }
@@ -60,7 +67,7 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
         align-items: center;
         flex-wrap: wrap-reverse;
     }
-    .top-banner-inner div{
+    .top-banner-inner div {
         margin-bottom: 10px;
     }
 
@@ -73,7 +80,7 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
         background: rgba(185, 28, 28, 0.95);
         color: white;
         font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
-         text-decoration: none;
+        text-decoration: none;
         border-radius: 6px;
         animation: pulse 1.8s infinite;
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
@@ -86,7 +93,7 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
 
     .emergency-text {
         text-transform: uppercase;
-       
+
         letter-spacing: 1px;
     }
 
@@ -108,9 +115,9 @@ import { MessageCircleMore, Phone, CircleAlert } from "@lucide/astro";
         align-items: center;
         gap: 18px;
     }
-     @media (max-width: 640px) {
+    @media (max-width: 640px) {
         .right-links {
-           width: 100%;
+            width: 100%;
         }
     }
 

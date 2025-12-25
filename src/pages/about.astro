@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 import Newmarket from "../assets/newmarket.webp";
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import UtilityNav from "../components/UtilityNav.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -12,7 +12,7 @@ import {
     MapPin,
     Thermometer,
     Wrench,
-    ShieldCheck
+    ShieldCheck,
 } from "@lucide/astro";
 const title = "About York Garage Pros | Your Local Garage Door Experts";
 const description =
@@ -163,7 +163,12 @@ const description =
             </p>
             <div class="cta-actions">
                 <a class="btn-gold" href="/#estimator">Use Estimator Tool</a>
-                <a class="btn-white" href="tel:+19059609947">Call Us Today</a>
+                <a
+                    class="btn-white"
+                    href="tel:+19059609947"
+                    aria-label="Call York Garage Pros at 905-960-9947"
+                    >Call Us Today</a
+                >
             </div>
         </div>
     </section>
@@ -416,7 +421,7 @@ const description =
         }
         .cta-footer h2 {
             color: var(--navy);
-              font-family: "Montserrat-Bold", sans-serif;
+            font-family: "Montserrat-Bold", sans-serif;
             font-size: 32px;
             margin-bottom: 12px;
         }
