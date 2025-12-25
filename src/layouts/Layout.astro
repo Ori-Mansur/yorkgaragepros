@@ -174,8 +174,11 @@ const {
 	</head>
 
 	<body>
+		<a href="#main-content" class="skip-link">Skip to main content</a>
 		<Call />
-		<slot />
+		<main id="main-content">
+			<slot />
+		</main>
 		<!-- ✅ GTM noscript fallback -->
 		<noscript>
 			<iframe
@@ -185,4 +188,19 @@ const {
 				style="display:none;visibility:hidden"></iframe>
 		</noscript>
 	</body>
+	<style>
+		.skip-link {
+			position: absolute;
+			top: -100px;
+			left: 0;
+			background: var(--gold);
+			color: var(--navy);
+			padding: 8px;
+			z-index: 1000;
+			transition: top 0.3s;
+		}
+		.skip-link:focus {
+			top: 0;
+		}
+	</style>
 </html>

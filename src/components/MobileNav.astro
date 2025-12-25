@@ -15,7 +15,7 @@ import { ArrowDown } from "@lucide/astro";
         <nav class="mobile-nav">
             <a href="/" class="mobile-link" data-close>Home</a>
             <!-- <a href="/services" class="mobile-link" data-close>Services</a> -->
-            <li class="dropdown-service-mobile" id="dropdown-service-mobile">
+            <div class="dropdown-service-mobile" id="dropdown-service-mobile">
                 <div class="service-toggle-container">
                     <a href="/services" class="mobile-link">Services </a>
                     <span class="arrow mobile-link" id="mobile-service-toggle"
@@ -31,8 +31,8 @@ import { ArrowDown } from "@lucide/astro";
                         <a href="/garage-door-opener">Garage Door Opener</a>
                     </li>
                 </ul>
-            </li>
-            <li class="dropdown-service-mobile" id="dropdown-area-mobile">
+            </div>
+            <div class="dropdown-service-mobile" id="dropdown-area-mobile">
                 <div class="service-toggle-container">
                     <a href="/garage-door-repair" class="mobile-link">Service areas </a>
                     <span class="arrow mobile-link" id="mobile-area-toggle"
@@ -51,7 +51,7 @@ import { ArrowDown } from "@lucide/astro";
                     <li><a href="/bradford">Bradford</a></li>
                     <li><a href="/innisfil">Innisfil</a></li>
                 </ul>
-            </li>
+            </div>
             <a href="/about" class="mobile-link" data-close>About</a>
             <a href="/contact" class="mobile-link" data-close>Contact Us</a>
             <a href="/#roi-analysis" class="mobile-link" data-close
