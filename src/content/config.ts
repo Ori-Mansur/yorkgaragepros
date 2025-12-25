@@ -84,8 +84,8 @@ const openers = defineCollection({
         height: z.string(),
         installedLength: z.string(),
         maxOpening: z.string(),
-      })),
-      headroomRequired: z.string(),
+      })).optional(),
+      headroomRequired: z.string().optional(),
       warranties: z.object({
         motor: z.string().optional(),
         parts: z.string().optional(),

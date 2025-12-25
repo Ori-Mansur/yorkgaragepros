@@ -1,247 +1,297 @@
 ---
 import "../styles/global.css";
 import { Picture } from "astro:assets";
-import {
-    Phone
-} from "@lucide/astro";
+import Gallery from "./Gallery.astro";
+import { Phone } from "@lucide/astro";
 // Pass the JSON data as a prop named 'opener'
 const { opener } = Astro.props;
 
 // Find the hero image or fallback to the first image
-const heroImage = opener.images.find(img => img.type === 'hero') || opener.images[0];
+const heroImage =
+    opener.images.find((img) => img.type === "hero") || opener.images[0];
 ---
 
 <div class="opener-page">
-  <header class="opener-header">
-    <div class="brand-tag">{opener.brand} Expert Installation</div>
-    <h1>{opener.brand} {opener.model}</h1>
-    <p class="tagline">{opener.name}</p>
-  </header>
+    <header class="opener-header">
+        <div class="brand-tag">{opener.brand} Expert Installation</div>
+        <h1>{opener.brand} {opener.model}</h1>
+        <p class="tagline">{opener.name}</p>
+    </header>
 
-  <div class="main-grid">
-    <div class="visual-column">
-      <div class="image-gallery">
-        <img src={heroImage.url} alt={heroImage.alt} class="main-image" />
-        <div class="thumbnail-grid">
-          {opener.images.slice(1, 5).map((img) => (
-            <img src={img.url} alt={img.alt} class="thumb" />
-          ))}
+    <div class="main-grid">
+        <div class="visual-column">
+            <div class="image-gallery">
+                <Gallery images={opener.images} />
+            </div>
+
+            <div class="product-description">
+                <h2>Overview</h2>
+                <p>{opener.description}</p>
+            </div>
         </div>
-      </div>
 
-      <div class="product-description">
-        <h2>Overview</h2>
-        <p>{opener.description}</p>
-      </div>
+        <aside class="cta-column">
+            <div class="sticky-box">
+                <div class="price-notice">
+                    Professional Installation Available
+                </div>
+                <a href="tel:YOUR-PHONE-NUMBER" class="call-now-btn">
+                    <Phone />
+                    Get a Quote for {opener.model}
+                </a>
+                <p class="service-note">Same-day service in York Region</p>
+
+                <div class="quick-specs">
+                    <h3>Quick Specs</h3>
+                    <ul>
+                        <li><strong>Drive:</strong> Belt Drive (Quiet)</li>
+                        <li>
+                            <strong>Motor:</strong>
+                            {opener.specifications.motor.split(",")[0]}
+                        </li>
+                        <li>
+                            <strong>Warranty:</strong>
+                            {opener.specifications.warranties.motor} Motor
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
     </div>
 
-    <aside class="cta-column">
-      <div class="sticky-box">
-        <div class="price-notice">Professional Installation Available</div>
-        <a href="tel:YOUR-PHONE-NUMBER" class="call-now-btn">
-          <Phone/>
-          Get a Quote for {opener.model}
-        </a>
-        <p class="service-note">Same-day service in York Region</p>
+    <section class="details-section">
+        <div class="tabs-container">
+            <div class="tab-content">
+                <h3>Premium Features</h3>
+                <div class="features-grid">
+                    {
+                        opener.features.map((feature) => {
+                            const [title, desc] = feature.split(":");
+                            return (
+                                <div class="feature-card">
+                                    <strong>{title}</strong>
+                                    <span>{desc}</span>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
 
-        <div class="quick-specs">
-          <h3>Quick Specs</h3>
-          <ul>
-            <li><strong>Drive:</strong> Belt Drive (Quiet)</li>
-            <li><strong>Motor:</strong> {opener.specifications.motor.split(',')[0]}</li>
-            <li><strong>Warranty:</strong> {opener.specifications.warranties.motor} Motor</li>
-          </ul>
+            <div class="tab-content specs">
+                <h3>Technical Specifications</h3>
+                <div></div>
+                <table class="specs-table">
+                    <tr
+                        ><td>Mechanism</td><td
+                            >{opener.specifications.mechanics}</td
+                        ></tr
+                    >
+                    <tr><td>Speed</td><td>{opener.specifications.speed}</td></tr
+                    >
+                    <tr
+                        ><td>Lighting</td><td
+                            >{opener.specifications.lighting}</td
+                        ></tr
+                    >
+                    <tr
+                        ><td>Warranties</td><td
+                            >Motor: {opener.specifications.warranties.motor} / Parts:
+                            {opener.specifications.warranties.parts}</td
+                        ></tr
+                    >
+                </table>
+            </div>
+
+            <div class="tab-content box">
+                <h3>In The Box</h3>
+                <ul class="box-list">
+                    {opener.inTheBox.map((item) => <li>{item}</li>)}
+                </ul>
+            </div>
         </div>
-      </div>
-    </aside>
-  </div>
-
-  <section class="details-section">
-    <div class="tabs-container">
-      <div class="tab-content">
-        <h3>Premium Features</h3>
-        <div class="features-grid">
-          {opener.features.map(feature => {
-            const [title, desc] = feature.split(':');
-            return (
-              <div class="feature-card">
-                <strong>{title}</strong>
-                <span>{desc}</span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      <div class="tab-content specs">
-        <h3>Technical Specifications</h3>
-        <div></div>
-        <table class="specs-table">
-          <tr><td>Mechanism</td><td>{opener.specifications.mechanics}</td></tr>
-          <tr><td>Speed</td><td>{opener.specifications.speed}</td></tr>
-          <tr><td>Lighting</td><td>{opener.specifications.lighting}</td></tr>
-          <tr><td>Warranties</td><td>Motor: {opener.specifications.warranties.motor} / Parts: {opener.specifications.warranties.parts}</td></tr>
-        </table>
-      </div>
-      
-      <div class="tab-content box">
-        <h3>In The Box</h3>
-        <ul class="box-list">
-          {opener.inTheBox.map(item => <li>{item}</li>)}
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
 </div>
 
 <style>
-  :root {
-    --gold: #e8a900;
-    --navy: #1c2a44;
-    --light-gray: #f8f9fa;
-    --border: #e2e8f0;
-  }
+    :root {
+        --gold: #e8a900;
+        --navy: #1c2a44;
+        --light-gray: #f8f9fa;
+        --border: #e2e8f0;
+    }
 
-  .opener-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    font-family: 'Inter', sans-serif;
-  }
+    .opener-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        font-family: "Inter", sans-serif;
+    }
 
-  /* Header */
-  .opener-header { margin-bottom: 2rem; }
-  .brand-tag { color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
-  h1 { font-size: 2.5rem; color: var(--navy); margin: 0.5rem 0; }
-  .tagline { font-size: 1.2rem; color: #64748b; }
+    /* Header */
+    .opener-header {
+        margin-bottom: 2rem;
+    }
+    .brand-tag {
+        color: var(--gold);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-size: 2.5rem;
+        color: var(--navy);
+        margin: 0.5rem 0;
+    }
+    .tagline {
+        font-size: 1.2rem;
+        color: #64748b;
+    }
 
-  /* Layout Grid */
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 3rem;
-    margin-bottom: 4rem;
-  }
+    /* Layout Grid */
+    .main-grid {
+        display: grid;
+        grid-template-columns: 50% 1fr;
+        gap: 2rem;
+        margin-bottom: 4rem;
+    }
 
-  @media (max-width: 968px) {
-    .main-grid { grid-template-columns: 1fr; }
-  }
+    @media (max-width: 968px) {
+        .main-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 
-  /* Gallery */
-  .main-image {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    background: white;
-    padding: 20px;
-    border: 1px solid var(--border);
-  }
+    /* Gallery */
+    .main-image {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        background: white;
+        padding: 20px;
+        border: 1px solid var(--border);
+    }
 
-  .thumbnail-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 1rem;
-  }
+    .thumbnail-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin-top: 1rem;
+    }
 
-  .thumb {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-  }
+    .thumb {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        cursor: pointer;
+    }
 
-  /* CTA Sidebar */
-  .sticky-box {
-    position: sticky;
-    top: 2rem;
-    background: white;
-    border: 2px solid var(--navy);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-  }
+    /* CTA Sidebar */
+    .sticky-box {
+        position: sticky;
+        top: 2rem;
+        background: white;
+        border: 2px solid var(--navy);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
 
-  .price-notice { font-weight: bold; margin-bottom: 1rem; color: var(--navy); }
+    .price-notice {
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: var(--navy);
+    }
 
-  .call-now-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: var(--gold);
-    color: var(--navy);
-    text-decoration: none;
-    padding: 1.2rem;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 1.1rem;
-    transition: transform 0.2s;
-  }
+    .call-now-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: var(--gold);
+        color: var(--navy);
+        text-decoration: none;
+        padding: 1.2rem;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 1.1rem;
+        transition: transform 0.2s;
+    }
 
-  .call-now-btn:hover { transform: translateY(-2px); }
+    .call-now-btn:hover {
+        transform: translateY(-2px);
+    }
 
-  .service-note {
-    font-size: 0.85rem;
-    text-align: center;
-    margin-top: 0.8rem;
-    color: #64748b;
-  }
+    .service-note {
+        font-size: 0.85rem;
+        text-align: center;
+        margin-top: 0.8rem;
+        color: #64748b;
+    }
 
-  /* Details & Features */
-  h2, h3 { color: var(--navy); margin-bottom: 1.5rem; }
-  
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
+    /* Details & Features */
+    h2,
+    h3 {
+        color: var(--navy);
+        margin-bottom: 1.5rem;
+    }
 
-  .feature-card {
-    background: var(--light-gray);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--gold);
-  }
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
 
-  .feature-card strong { display: block; margin-bottom: 0.5rem; color: var(--navy); }
+    .feature-card {
+        background: var(--light-gray);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--gold);
+    }
 
-  /* Table */
-  .specs-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-  }
-  .specs-table tr{
-    /* display: flex;
+    .feature-card strong {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--navy);
+    }
+
+    /* Table */
+    .specs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    .specs-table tr {
+        /* display: flex;
     flex-wrap: wrap; */
-  }
+    }
 
-  .specs-table td {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border);
-    line-height: 1.6;
-  }
+    .specs-table td {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+        line-height: 1.6;
+    }
 
-  .specs-table td:first-child {
-    font-weight: bold;
-    color: var(--navy);
-    width: 20%;
-  }
+    .specs-table td:first-child {
+        font-weight: bold;
+        color: var(--navy);
+        width: 20%;
+    }
 
-  .box-list {
-    list-style: none;
-    padding: 0;
-    gap: 10px;
-  }
+    .box-list {
+        list-style: none;
+        padding: 0;
+        gap: 10px;
+    }
 
-  .box-list li::before {
-    content: "✓";
-    color: var(--gold);
-    margin-right: 10px;
-    font-weight: bold;
-  }
+    .box-list li::before {
+        content: "✓";
+        color: var(--gold);
+        margin-right: 10px;
+        font-weight: bold;
+    }
 </style>

@@ -1,0 +1,77 @@
+{
+  "model": "98022",
+  "service": "garage-door-opener",
+  "name": "Improved DC Battery Backup Wall Mount Wi-Fi Garage Door Opener, Space-Saving, no Cable Tension Monitor, Heavy Lifting, LED Lighting System",
+  "brand": "LiftMaster",
+  "description": "The LiftMaster 98022 is an advanced wall-mount garage door opener featuring a space-saving design, ultra-quiet DC motor, integrated battery backup for power outages, built-in Wi-Fi and Bluetooth for easy connectivity, and myQ app integration for remote control and monitoring. It supports heavy doors up to 850 lbs and includes smart safety features like automatic door locking and motion detection.",
+  "shortDescription": "Wall-mount DC battery backup Wi-Fi opener with ultra-quiet operation, space-saving design, heavy lifting, and myQ connectivity.",
+  "features": [
+    "Smart: Space-saving wall-mount design opens up ceiling space; Built-in Wi-Fi and Bluetooth for easy connection; myQ Remote LED Light for maintenance-free illumination; myQ Mobile App for alerts and remote control",
+    "Quiet Operation: Wall-mount design with powerful ultra-quiet DC motor eliminates noise and vibrations through the ceiling",
+    "Reliable: Integrated battery backup for access during power outages; Lifetime motor warranty, 5-year parts, 1-year battery and accessories",
+    "Safe and Secure: Timer-to-Close (1, 5, 10 min or custom); Security+ 2.0 sends new code with every click; Motion detector turns on lights; Protector System auto-reverses on obstruction"
+  ],
+  "specifications": {
+    "motor": "Medium-Duty 12V DC, automatic thermal protection, permanent lubrication",
+    "mechanics": "Steel chassis and plastic cover, internal chain and sprocket drive (63:1 gear reduction), auto-force adjustment, DC Wi-Fi logic with built-in Bluetooth and surge suppressor, up to 850 lbs lift capacity",
+    "power": "120V AC, 60 Hz, 1.5A current rating, UL Listed, 6' power cord (3-prong)",
+    "speed": "8.5 inches per second upward, 7.6 inches per second downward",
+    "lighting": "myQ Remote LED Light - 1,500 lumens",
+    "dimensions": {
+      "head": "22\" L x 7.25\" W x 7.5\" H",
+      "maxDoorHeight": "14 ft",
+      "maxDoorWidth": "18 ft",
+      "headroomRequired": "3 in from center of torsion bar",
+      "maxDoorWeight": "850 lbs"
+    },
+    "warranties": {
+      "motor": "Lifetime",
+      "parts": "5 Years",
+      "batteryAndAccessories": "1 Year"
+    }
+  },
+  "inTheBox": [
+    "Garage Door Opener Head (98022)",
+    "Smart Control Panel (880LMW)",
+    "3-Button Remote Control (893MAX)",
+    "Automatic Garage Door Lock (841LM)",
+    "myQ Remote LED Light (827LM)",
+    "Garage Door Opener Battery (485LM)"
+  ],
+  "images": [
+    {
+      "url": "https://luxgaragedoors.com/cdn/shop/products/LiftMasterJackshaft8500WDCBatteryBackupWallMountWi-FiGarageDoorOpener5_600x450.jpg?v=1629837296",
+      "alt": "LiftMaster 98022 wall mount garage door opener installed view",
+      "type": "hero"
+    },
+    {
+      "url": "https://i.ebayimg.com/images/g/DucAAOSww~Rld2dX/s-l400.jpg",
+      "alt": "LiftMaster 98022 Elite Series DC Battery Backup Wall Mount opener",
+      "type": "main"
+    },
+    {
+      "url": "http://allsecurityequipment.com/cdn/shop/articles/LiftMaster-98022-VKP1-blog-post.jpg?v=1679063598",
+      "alt": "LiftMaster 98022-VKP1 garage door opener feature image",
+      "type": "detail"
+    },
+    {
+      "url": "https://luxgaragedoors.com/cdn/shop/products/Jackshaft_2_480x360.jpg?v=1630022445",
+      "alt": "Side view of LiftMaster 98022 jackshaft opener",
+      "type": "side"
+    },
+    {
+      "url": "https://www.affordableopeners.com/media/catalog/product/cache/d978f8994d65c5baf2200649918b6538/9/8/98022.jpg",
+      "alt": "LiftMaster 98022 wall mount opener with battery backup",
+      "type": "product"
+    },
+    {
+      "url": "https://door-house.com/wp-content/uploads/2017/03/8500-installed.jpg",
+      "alt": "Installed LiftMaster 98022 jackshaft garage opener",
+      "type": "installed"
+    }
+  ],
+  "pdfGuide": "98022_Product_Guide_EN.pdf",
+  "category": "garage-door-openers",
+  "tags": ["wall-mount", "battery-backup", "wi-fi", "bluetooth", "myq", "quiet", "led-lighting", "heavy-lifting"],
+  "available": true
+}
