@@ -1,9 +1,20 @@
 ---
-import { Picture } from "astro:assets";
+import "../styles/global.css";
+import { Picture, getImage } from "astro:assets";
 import { MapPin } from "@lucide/astro";
 import heroPic from "../assets/heropage.webp";
 import heroPicMobile from "../assets/heropagemobile.webp";
-import "../styles/global.css";
+// Optimize the mobile version
+const mobileImg = await getImage({
+    src: heroPicMobile,
+    format: "webp",
+});
+
+// Optimize the desktop version
+const desktopImg = await getImage({
+    src: heroPic,
+    format: "webp",
+});
 ---
 
 <section class="section-garage">
@@ -56,7 +67,7 @@ import "../styles/global.css";
         </div>
 
         <div class="garage-image-container">
-            <Picture
+            <!-- <Picture
                 loading="eager"
                 fetchpriority="high"
                 decoding="sync"
@@ -64,16 +75,19 @@ import "../styles/global.css";
                 formats={["avif", "webp"]}
                 src={heroPic}
                 alt="A premium insulated dark wood garage door with a vintage red car parked outside."
-            />
-            <Picture
-                loading="eager"
-                fetchpriority="high"
-                decoding="sync"
-                class={"mobile"}
-                formats={["avif", "webp"]}
-                src={heroPicMobile}
-                alt="A premium insulated dark wood garage door with a vintage red car parked outside."
-            />
+            /> -->
+            <picture>
+                <source media="(max-width: 600px)" srcset={mobileImg.src} />
+                <source media="(min-width: 601px)" srcset={desktopImg.src} />
+
+                <img
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="sync"
+                    src={heroPicMobile.src}
+                    alt="A premium insulated dark wood garage door with a vintage red car parked outside."
+                />
+            </picture>
         </div>
 
         <div class="value-strip">
