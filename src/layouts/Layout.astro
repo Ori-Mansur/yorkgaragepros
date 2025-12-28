@@ -29,14 +29,9 @@ const {
 <!doctype html>
 <html lang="en">
 	<head>
-		<title>{title}</title>
-		<meta name="description" content={description} />
-		{
-			noIndex && (
-				// If noIndex is true, inject the meta tag
-				<meta name="robots" content="noindex, follow" />
-			)
-		}
+		<meta charset="utf-8" />
+		<!-- Mobile -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 		<!-- Fonts -->
 		<link
@@ -67,7 +62,26 @@ const {
 			type="font/woff2"
 			crossorigin="anonymous"
 		/>
-		
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		{
+			noIndex && (
+				// If noIndex is true, inject the meta tag
+				<meta name="robots" content="noindex, follow" />
+			)
+		}
+		<style is:inline>
+			h1 {
+				visibility: visible !important;
+				opacity: 1 !important;
+				display: block !important;
+			}
+			.skip-link {
+				position: absolute;
+				top: -100px;
+			}
+		</style>
+
 		<!-- Sitemap -->
 		<link rel="sitemap" href="/sitemap-0.xml" />
 		<!-- Canonical -->
@@ -86,19 +100,14 @@ const {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={image} />
 
-		<!-- Mobile -->
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-
 		<!-- Favicon -->
 		<link rel="icon" href="/favicon.ico" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<meta charset="utf-8" />
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
 
-		
 		<!-- Google Tag Manager -->
 
-		<script is:inline>
+		<script>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
 				w[l].push({
