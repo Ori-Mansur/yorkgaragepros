@@ -291,6 +291,7 @@ const business = {
   phone: "(905) 960-9947", // Update with your real business phone
   email: "info@yorkgaragepros.com",
   website: "yorkgaragepros.com",
+  address: "Newmarket, ON L3X 2B1"
 };
 
 // --- Computed ---
@@ -375,7 +376,8 @@ const generateAndSave = async () => {
   doc.text("YORK GARAGE PROS", textStartX, 50);
 
   doc.setFontSize(8).setTextColor(200, 200, 200);
-  doc.text(`${business.phone} | ${business.email} | ${business.website}`, textStartX, 63);
+  doc.text(`${business.website} | ${business.email}`, textStartX, 63);
+  doc.text(`${business.phone} | ${business.address}`, textStartX, 73);
 
   // Business Contacts in Header
   //   doc.setFontSize(9).setTextColor(245, 158, 11); // Amber
