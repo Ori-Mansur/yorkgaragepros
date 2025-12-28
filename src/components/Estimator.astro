@@ -195,9 +195,11 @@
     }
 
     // Fire immediately and on load
-    initEstimator();
-    document.addEventListener("DOMContentLoaded", initEstimator);
-    window.onload = initEstimator;
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initEstimator);
+    } else {
+        initEstimator();
+    }
 </script>
 <style>
     /* ===============================
