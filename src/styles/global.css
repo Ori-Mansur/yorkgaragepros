@@ -5,6 +5,7 @@
 		height: 100%;
 		font-family: 'Montserrat', 'Inter', 'Arial Black', 'Impact', sans-serif;
 		background-color: #F7F8FC;
+		box-sizing: border-box;
 	}
 
 	* {
@@ -74,12 +75,14 @@
 		/* In case it's a link styled as a button */
 		box-shadow: none;
 		/* Remove any default box-shadow */
+		box-sizing: border-box;
 	}
 
 	input,
 	select,
 	textarea {
 		font-family: 'Montserrat', 'Inter';
+		box-sizing: border-box;
 	}
 
 	select {

@@ -1,0 +1,14 @@
+---
+// src/pages/admin/dashboard.astro
+import "../../styles/global.css";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import CrmDashboard from "../../components/vue/CrmDashboard.vue";
+import InvoiceCreator from "../../components/vue/InvoiceCreator.vue";
+
+// Note: Middleware handles the password check before this page even renders
+---
+
+<AdminLayout title="Lead Management">
+    <InvoiceCreator client:only="vue" />
+    <!-- <CrmDashboard client:only="vue" /> -->
+</AdminLayout>

@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /booking/
 Disallow: /thank-you/
+Disallow: /admin/
 
 # Use the index if Astro generated multiple sitemaps
 Sitemap: https://yorkgaragepros.com/sitemap-index.xml

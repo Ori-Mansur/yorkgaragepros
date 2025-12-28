@@ -1,0 +1,21 @@
+---
+// src/layouts/AdminLayout.astro
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | York Garage Pros Private</title>
+    <meta name="robots" content="noindex, nofollow" />
+</head>
+<body>
+    <slot />
+</body>
+</html>
+
+<style is:global>
+  /* Zero tracking or public CSS leakage */
+  body { font-family: system-ui, sans-serif; }
+</style>

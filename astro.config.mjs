@@ -28,7 +28,14 @@ export default defineConfig({
 
       return true;
     }
-  }), vue(), mdx()],
+  }), vue({
+      template: {
+        compilerOptions: {
+          // Tell Astro's Vue compiler to treat gmp- tags as custom elements
+          isCustomElement: (tag) => tag.startsWith('gmp-')
+        }
+      }
+    }), mdx()],
 
   output: "static",
   adapter: cloudflare(),
