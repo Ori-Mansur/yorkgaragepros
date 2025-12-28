@@ -5,18 +5,18 @@ import { MapPin } from "@lucide/astro";
 import heroPic from "../assets/heropage.webp";
 import heroPicMobile from "../assets/heropagemobile.webp";
 // Optimize the mobile version
-const mobileImg = await getImage({
-    src: heroPicMobile,
-    format: "webp",
-    width: 665,
-    height: 665,
-});
+// const mobileImg = await getImage({
+//     src: heroPicMobile,
+//     format: "webp",
+//     width: 665,
+//     height: 665,
+// });
 
-// Optimize the desktop version
-const desktopImg = await getImage({
-    src: heroPic,
-    format: "webp",
-});
+// // Optimize the desktop version
+// const desktopImg = await getImage({
+//     src: heroPic,
+//     format: "webp",
+// });
 ---
 
 <section class="section-garage">
@@ -78,7 +78,17 @@ const desktopImg = await getImage({
                 src={heroPic}
                 alt="A premium insulated dark wood garage door with a vintage red car parked outside."
             /> -->
-            <picture>
+            <Picture
+                src={heroPic}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
+                formats={["avif", "webp"]}
+                alt="Premium Garage Door"
+                loading="eager"
+                fetchpriority="high"
+                class="hero-img"
+            />
+            <!-- <picture>
                 <source media="(max-width: 600px)" srcset={mobileImg.src} />
                 <source media="(min-width: 601px)" srcset={desktopImg.src} />
 
@@ -89,7 +99,7 @@ const desktopImg = await getImage({
                     src={heroPicMobile.src}
                     alt="A premium insulated dark wood garage door with a vintage red car parked outside."
                 />
-            </picture>
+            </picture> -->
         </div>
 
         <div class="value-strip">
@@ -176,7 +186,7 @@ const desktopImg = await getImage({
         .section-garage h1 {
             font-size: 2.25rem; /* text-4xl */
             font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
-            
+
             margin-bottom: 1rem;
             line-height: 1.2;
             color: var(--primary-color);
