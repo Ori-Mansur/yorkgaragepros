@@ -17,9 +17,9 @@
 
         <div class="next-steps">
             <h3>While you wait...</h3>
-            <a href="/gallery" class="cta-button primary">
+            <!-- <a href="/gallery" class="cta-button primary">
                 View Our Garage Transformation Gallery
-            </a>
+            </a> -->
             
             <a href="/services" class="cta-button secondary">
                 Explore More Services
