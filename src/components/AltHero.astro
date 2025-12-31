@@ -1,7 +1,12 @@
 ---
 import "../styles/global.css";
 import { Picture, getImage } from "astro:assets";
-import { MapPin } from "@lucide/astro";
+import {
+    MapPin,
+    PanelTopBottomDashed,
+    Wrench,
+    RadioReceiver,
+} from "@lucide/astro";
 import heroPic from "../assets/heropage.webp";
 import heroPicMobile from "../assets/heropagemobile.webp";
 // Optimize the mobile version
@@ -42,9 +47,13 @@ import heroPicMobile from "../assets/heropagemobile.webp";
             >
         </p> -->
         <p class="lead">
-            Fast, 24/7 emergency
-            <strong
-                >repair, professional installation, and opener service</strong
+            Fast, Same-day
+            <strong class="key-service">Garage Door Repair<Wrench /></strong>
+            <strong class="key-service"
+                >Garage Door Installation <PanelTopBottomDashed /></strong
+            >
+            <strong class="key-service"
+                >Opener Repair & Installation<RadioReceiver /></strong
             >
             in Newmarket, Aurora, Richmond Hill, Vaughan, Markham, Stouffville, King
             City, Barrie, Bradford, and Innisfil. Elevate your home’s curb appeal
@@ -162,6 +171,15 @@ import heroPicMobile from "../assets/heropagemobile.webp";
         margin: 0 auto;
         padding: 0 1rem; /* px-4 */
     }
+    .key-service {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .key-service svg {
+        color: var(--gold);
+        margin-left: 5px;
+    }
 
     @media (min-width: 640px) {
         .section-garage .container {
@@ -169,6 +187,9 @@ import heroPicMobile from "../assets/heropagemobile.webp";
         }
         .mobile {
             display: none;
+        }
+        .key-service {
+            display: inline-flex;
         }
     }
 
