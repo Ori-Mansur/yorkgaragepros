@@ -20,10 +20,10 @@
                                 >Garage Size</label
                             >
                             <select id="garageSizeEst" class="form-select">
-                                <option value="2"
-                                    >2 Car (Standard Double)</option
-                                >
                                 <option value="1">1 Car (Single Door)</option>
+                                <option value="2">
+                                    2 Car (Standard Double)
+                                </option>
                                 <option value="3">3+ Car / Custom</option>
                             </select>
                         </div>
@@ -34,13 +34,15 @@
 
                             <div class="checkbox-row">
                                 <input
-                                    id="doorService"
+                                    id="repairService"
                                     type="checkbox"
                                     checked
                                     class="checkbox"
                                 />
-                                <label for="doorService" class="checkbox-label"
-                                    >Door Installation (Standard Steel)</label
+                                <label
+                                    for="repairService"
+                                    class="checkbox-label"
+                                    >Emergency Repair (Springs, Cables, etc.)</label
                                 >
                             </div>
 
@@ -53,11 +55,21 @@
                                 <label
                                     for="openerService"
                                     class="checkbox-label"
-                                    >Opener Installation/Replacement</label
+                                    >Opener Installation/Replacement (Standard)</label
+                                >
+                            </div>
+                            <div class="checkbox-row">
+                                <input
+                                    id="doorService"
+                                    type="checkbox"
+                                    class="checkbox"
+                                />
+                                <label for="doorService" class="checkbox-label"
+                                    >Garage Door Installation (Standard Steel)</label
                                 >
                             </div>
 
-                            <div class="checkbox-row">
+                            <!-- <div class="checkbox-row">
                                 <input
                                     id="epoxyService"
                                     type="checkbox"
@@ -66,20 +78,7 @@
                                 <label for="epoxyService" class="checkbox-label"
                                     >Epoxy Floor Coating</label
                                 >
-                            </div>
-
-                            <div class="checkbox-row">
-                                <input
-                                    id="repairService"
-                                    type="checkbox"
-                                    class="checkbox"
-                                />
-                                <label
-                                    for="repairService"
-                                    class="checkbox-label"
-                                    >Emergency Repair (Springs, Cables, etc.)</label
-                                >
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- Estimated Range -->
@@ -95,11 +94,18 @@
                         </p>
                     </div>
                 </section>
-                <a href="/booking">
-                    <button type="button" class="cta-button">
-                        SCHEDULE OFFICIAL CONSULTATION
-                    </button>
-                </a>
+                <div class="cta-container">
+                    <a href="/tel:+19059609947">
+                        <button type="button" class="cta-button-call">
+                            CALL US NOW
+                        </button>
+                    </a>
+                    <a href="/booking">
+                        <button type="button" class="cta-button-book">
+                            SCHEDULE OFFICIAL CONSULTATION
+                        </button>
+                    </a>
+                </div>
             </form>
         </div>
     </div>
@@ -108,18 +114,18 @@
 <script is:inline>
     // --- Pricing Constants ---
     const PRICING = {
-        door: { base: 1800, minMultiplier: 1.0, maxMultiplier: 1.5, days: 1 },
+        door: { base: 1200, minMultiplier: 1.0, maxMultiplier: 1.5, days: 1 },
         opener: {
-            base: 600,
+            base: 550,
             minMultiplier: 1.0,
-            maxMultiplier: 1.6,
+            maxMultiplier: 2.0,
             days: 0.5,
         },
         epoxy: { base: 1500, minMultiplier: 1.0, maxMultiplier: 2.0, days: 2 },
         repair: {
-            base: 350,
+            base: 250,
             minMultiplier: 1.0,
-            maxMultiplier: 2.5,
+            maxMultiplier: 2.2,
             days: 0.5,
         },
     };
@@ -129,7 +135,7 @@
         const sizeSelect = document.getElementById("garageSizeEst");
         const doorChecked = document.getElementById("doorService");
         const openerChecked = document.getElementById("openerService");
-        const epoxyChecked = document.getElementById("epoxyService");
+        // const epoxyChecked = document.getElementById("epoxyService");
         const repairChecked = document.getElementById("repairService");
 
         if (!sizeSelect || !doorChecked) return; // Safety check
@@ -145,17 +151,15 @@
             totalDays += PRICING.door.days;
         }
         if (openerChecked.checked) {
-            minPrice +=
-                PRICING.opener.base * PRICING.opener.minMultiplier * size;
-            maxPrice +=
-                PRICING.opener.base * PRICING.opener.maxMultiplier * size;
+            minPrice += PRICING.opener.base * PRICING.opener.minMultiplier;
+            maxPrice += PRICING.opener.base * PRICING.opener.maxMultiplier;
             totalDays += PRICING.opener.days;
         }
-        if (epoxyChecked.checked) {
-            minPrice += PRICING.epoxy.base * PRICING.epoxy.minMultiplier * size;
-            maxPrice += PRICING.epoxy.base * PRICING.epoxy.maxMultiplier * size;
-            totalDays += PRICING.epoxy.days;
-        }
+        // if (epoxyChecked.checked) {
+        //     minPrice += PRICING.epoxy.base * PRICING.epoxy.minMultiplier * size;
+        //     maxPrice += PRICING.epoxy.base * PRICING.epoxy.maxMultiplier * size;
+        //     totalDays += PRICING.epoxy.days;
+        // }
         if (repairChecked.checked) {
             minPrice += PRICING.repair.base * PRICING.repair.minMultiplier;
             maxPrice += PRICING.repair.base * PRICING.repair.maxMultiplier;
@@ -380,19 +384,30 @@
     }
 
     /* CTA Button */
-    .cta-button {
+    .cta-container {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+    .cta-container button {
         width: 100%;
         text-align: center;
-        background: var(--brand-gold);
-        color: var(--brand-navy);
         border: none;
         padding: 0.9rem 1.5rem;
         font-size: 1rem;
-        font-family: "Montserrat-SemiBold", "Inter", sans-serif;
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
         border-radius: 10px;
         cursor: pointer;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         transition: 0.3s ease;
+    }
+    .cta-button-call {
+        background: var(--brand-gold);
+        color: var(--brand-navy);
+    }
+    .cta-button-book {
+        background: var(--brand-navy);
+        color: var(--brand-gold);
     }
 
     .cta-button:hover {
