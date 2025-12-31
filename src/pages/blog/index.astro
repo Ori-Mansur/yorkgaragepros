@@ -3,10 +3,10 @@ import "../../styles/global.css";
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import SubLayout from "../../layouts/SubLayout.astro";
-import UtilityNav from "../../components/UtilityNav.astro";
+import BeforeAfter from "../../components/BeforeAfter.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import { Image } from "astro:assets";
+import { Image, Picture } from "astro:assets";
 
 // 1. Fetch all blog posts and sort by most recent
 const allPosts = await getCollection("blog", ({ data }) => {
@@ -41,12 +41,12 @@ const description =
                         sortedPosts.map((post) => (
                             <a href={`/blog/${post.slug}`} class="post-card">
                                 <div class="image-wrapper">
-                                    {/* <Image 
-								src={post.data.images[0].url} 
-								alt={post.data.images[0].alt} 
-								width={400} 
-								height={250}
-							/> */}
+                                    <BeforeAfter
+                                        beforeImg={post.data.images[0].url}
+                                        afterImg={post.data.images[2].url}
+                                        beforeAlt={post.data.images[0].alt}
+                                        afterAlt={post.data.images[2].alt}
+                                    />
                                     <span class="category-badge">
                                         {post.data.category}
                                     </span>
@@ -132,7 +132,8 @@ const description =
     }
     .image-wrapper {
         position: relative;
-        height: 220px;
+        padding: 24px 30px 0 30px;
+        /* height: 220px; */
     }
     .image-wrapper img {
         width: 100%;

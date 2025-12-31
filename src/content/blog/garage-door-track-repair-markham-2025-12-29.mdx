@@ -6,15 +6,15 @@ draft: false
 author: "York Garage PROS"
 images: [
   {
-    url: "../../assets/blog/rotted-track-1.jfif",
+    url: "/src/assets/blog/rotted-track-1.jfif",
     alt: "Close up of rusted garage door track at the base showing metal fatigue"
   },
   {
-    url: "../../assets/blog/rotted-track-2.jfif",
+    url: "/src/assets/blog/rotted-track-2.jfif",
     alt: "Wide shot of the garage door track showing instability before repair"
   },
   {
-    url: "../../assets/blog/new-track-2.jfif",
+    url: "/src/assets/blog/new-track-2.jfif",
     alt: "New track after replacement"
   }
 ]
@@ -25,23 +25,14 @@ serviceType: "Track Replacement"
 ---
 import Gallery from '../../components/Gallery.astro';
 import BeforeAfter from '../../components/BeforeAfter.astro';
-import img1 from '../../assets/blog/rotted-track-1.jfif';
-import img2 from '../../assets/blog/rotted-track-2.jfif';
-import img3 from '../../assets/blog/new-track-2.jfif';
-
-export const manualImages = [
-  { url: img1, alt: frontmatter.images[0].alt  },
-  { url: img2, alt: frontmatter.images[1].alt  },
-  { url: img3, alt: frontmatter.images[2].alt }
-];
 
 ## The Problem: Dangerous Track Corrosion
 We recently visited a home in **Markham** where the homeowner noticed the garage door was shaking during operation. Upon inspection, we found a severe safety hazard: the base of the tracks had completely rotted through.
-<BeforeAfter 
-  beforeImg={manualImages[0].url} 
-  afterImg={manualImages[2].url} 
-  beforeAlt="Rusted, dangerous garage door track"
-  afterAlt="New galvanized steel track installation"
+<BeforeAfter
+beforeImg={frontmatter.images[0].url}
+afterImg={frontmatter.images[2].url}
+beforeAlt="Rusted, dangerous garage door track"
+afterAlt="New galvanized steel track installation"
 />
 
 ### Why Garage Door Tracks Rot in Ontario
