@@ -1,0 +1,94 @@
+---
+import "../../styles/global.css";
+import { getCollection } from "astro:content";
+import BlogPostLayout from "../../layouts/BlogPostLayout.astro";
+
+// 1. Generate paths for all entries in the 'blog' collection
+export async function getStaticPaths() {
+    const blogEntries = await getCollection("blog");
+    return blogEntries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
+}
+
+// 2. Get the entry from props
+const { entry } = Astro.props;
+
+// 3. Render the MDX content to HTML
+const { Content } = await entry.render();
+---
+
+<BlogPostLayout frontmatter={entry.data}>
+    <section class="post-container">
+        <header class="post-header">
+            <div class="meta-info">
+                <span class="category-tag">{entry.data.category}</span>
+                <time datetime={entry.data.publishDate.toISOString()}>
+                    {
+                        entry.data.publishDate.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })
+                    }
+                </time>
+            </div>
+
+            <h1>{entry.data.title}</h1>
+            <p class="location-badge">📍 Service Area: {entry.data.location}</p>
+        </header>
+
+        <hr />
+
+        <div class="prose-content">
+            <Content />
+        </div>
+
+        <footer class="post-footer">
+            <h3>Need help in {entry.data.location}?</h3>
+            <p>
+                Our team specializes in {entry.data.serviceType}. Contact us
+                today for a professional inspection.
+            </p>
+            <!-- <a href="/booking" class="cta-button">Book a Service Now</a> -->
+        </footer>
+    </section>
+</BlogPostLayout>
+
+<style>
+    .post-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+    .category-tag {
+        background: #007bff;
+        color: white;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .location-badge {
+        font-weight: 600;
+        color: #555;
+        margin-top: 0.5rem;
+    }
+    .prose-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    /* Style your MDX images via the gallery component we made earlier */
+    .cta-button {
+        display: inline-block;
+        background: #28a745;
+        color: white;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-top: 1rem;
+    }
+</style>

@@ -1,0 +1,76 @@
+---
+import "../styles/global.css";
+const {
+    title = "Ready to Start Your Project?",
+    desc = "Let's discuss how we can transform your garage space. Free, no-obligation consultations available.",
+} = Astro.props;
+---
+
+<section class="cta-footer">
+    <div class="container center">
+        <h2>{title}</h2>
+        <p>
+            {desc}
+        </p>
+        <div class="cta-actions">
+            <a class="btn-gold" href="/booking">Book a Service Now</a>
+            <a
+                class="btn-white"
+                href="tel:+19059609947"
+                aria-label="Call York Garage Pros at 905-960-9947"
+                >Call Us Today</a
+            >
+        </div>
+    </div>
+</section>
+<style>
+    :root {
+        --navy: #1c2a44;
+        --gold: #e8a900;
+        --neutral-bg: #f3f4f6;
+        --text: #343d46;
+        --muted: #6b7280;
+        --white: #ffffff;
+        --shadow-lg: 0 16px 40px rgba(10, 20, 40, 0.12);
+    }
+    /* ========== CTA Footer ========== */
+    .cta-footer {
+        background: var(--neutral-bg);
+        color: #555;
+        padding: 48px 20px;
+        text-align: center;
+    }
+    .cta-footer h2 {
+        color: var(--navy);
+        font-family: "Montserrat-Bold", sans-serif;
+        font-size: 32px;
+        margin-bottom: 12px;
+    }
+    .cta-footer p {
+        margin-top: 0px;
+        margin-bottom: 30px;
+    }
+    .cta-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 16px;
+        flex-wrap: wrap;
+    }
+    .btn-gold {
+        background: var(--gold);
+        color: var(--navy);
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-family: "Montserrat-ExtraBold", sans-serif;
+    }
+    .btn-white {
+        background: var(--navy);
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-family: "Montserrat-Bold", sans-serif;
+    }
+</style>

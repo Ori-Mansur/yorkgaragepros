@@ -1,0 +1,185 @@
+---
+import "../../styles/global.css";
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import SubLayout from "../../layouts/SubLayout.astro";
+import UtilityNav from "../../components/UtilityNav.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { Image } from "astro:assets";
+
+// 1. Fetch all blog posts and sort by most recent
+const allPosts = await getCollection("blog", ({ data }) => {
+    return data.draft !== true; // Filter out drafts
+});
+
+const sortedPosts = allPosts.sort(
+    (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
+
+const title = "Recent Garage Door Projects | York Garage Pros";
+const description =
+    "Browse our recent garage door repairs, spring replacements, and installations in Newmarket, Markham, and across the York Region.";
+---
+
+<Layout title={title} description={description}>
+    <SubLayout>
+        <section class="blog-index-header">
+            <div class="container">
+                <h1>Our Recent Work</h1>
+                <p>
+                    Real jobs, real results. See how we help homeowners across
+                    the GTA keep their garage doors safe and functional.
+                </p>
+            </div>
+        </section>
+
+        <section class="posts-grid-section">
+            <div class="container">
+                <div class="posts-grid">
+                    {
+                        sortedPosts.map((post) => (
+                            <a href={`/blog/${post.slug}`} class="post-card">
+                                <div class="image-wrapper">
+                                    {/* <Image 
+								src={post.data.images[0].url} 
+								alt={post.data.images[0].alt} 
+								width={400} 
+								height={250}
+							/> */}
+                                    <span class="category-badge">
+                                        {post.data.category}
+                                    </span>
+                                </div>
+                                <div class="post-content">
+                                    <div class="post-meta">
+                                        <span>📍 {post.data.location}</span>
+                                        <span>•</span>
+                                        <time>
+                                            {post.data.publishDate.toLocaleDateString(
+                                                "en-CA",
+                                                {
+                                                    year: "numeric",
+                                                    month: "short",
+                                                    day: "numeric",
+                                                },
+                                            )}
+                                        </time>
+                                    </div>
+                                    <h2>{post.data.title}</h2>
+                                    <p>
+                                        {post.data.description.substring(
+                                            0,
+                                            100,
+                                        )}
+                                        ...
+                                    </p>
+                                    <span class="read-more">
+                                        View Project &rarr;
+                                    </span>
+                                </div>
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+    </SubLayout>
+</Layout>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+    .blog-index-header {
+        background-color: #001f3f; /* Your Navy theme */
+        color: white;
+        padding: 5rem 0;
+        text-align: center;
+    }
+    .blog-index-header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #d4af37; /* Your Gold theme */
+    }
+    .posts-grid-section {
+        padding: 4rem 0;
+        background: #fdfdfd;
+    }
+    .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+    }
+    .post-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    .post-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    .image-wrapper {
+        position: relative;
+        height: 220px;
+    }
+    .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .category-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #d4af37;
+        color: #001f3f;
+        padding: 0.3rem 0.8rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .post-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .post-meta {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 0.75rem;
+        display: flex;
+        gap: 8px;
+    }
+    .post-content h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        line-height: 1.4;
+        color: #001f3f;
+    }
+    .post-content p {
+        font-size: 0.95rem;
+        color: #444;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    .read-more {
+        margin-top: auto;
+        font-weight: 700;
+        color: #d4af37;
+        font-size: 0.9rem;
+    }
+</style>

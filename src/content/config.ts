@@ -103,11 +103,35 @@ const openers = defineCollection({
     available: z.boolean(),
   }),
 });
+const blog = defineCollection({
+  type: 'content',
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string().max(160),
+    publishDate: z.date(),
+    author: z.string().default('Your Company Name'),
+
+    // Updated: Array of objects with image validation and alt text
+    images: z.array(
+      z.object({
+        url: image(), // Validates the file path
+        alt: z.string(), // Ensures you provide SEO alt text
+      })
+    ).min(1),
+
+    category: z.enum(['Repair', 'Installation', 'Maintenance', 'Safety']),
+    location: z.string(),
+    serviceType: z.string(),
+    tags: z.array(z.string()).optional(),
+    draft: z.boolean()
+  }),
+});
 
 
 // 3. Export both collections
 export const collections = {
   openers: openers,
   'service-areas': serviceAreaCollection,
-  'service-catalogs': serviceCatalogsCollection, // <-- The new collection
+  'service-catalogs': serviceCatalogsCollection,
+  blog
 };

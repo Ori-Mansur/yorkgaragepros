@@ -19,6 +19,9 @@ import broken_spring from '../assets/doorTypes/broken-spring.webp'
 import broken_lift_cable from '../assets/doorTypes/broken-lift-cable.webp'
 import door_off_track from '../assets/doorTypes/door-off-track.webp'
 import roller from '../assets/doorTypes/rusty-roller.webp'
+import belt_drive from '../assets/belt-drive-rail.webp'
+import chain_drive from '../assets/chain-drive-rail.webp'
+import wall_mount from '../assets/wall-mount.webp'
 
 const cityLogoMap = {
     'vaughan': vaughan,
@@ -43,6 +46,9 @@ const doorTypeImage = {
     'lift-cables': broken_lift_cable,
     'off-track-door': door_off_track,
     'worn-rollers': roller,
+    'chain-drive': chain_drive,
+    'belt-drive': belt_drive,
+    'wall-mount': wall_mount,
     'default': ribbed_panels
 }
 const openerImage = {

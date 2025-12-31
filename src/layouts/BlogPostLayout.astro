@@ -1,0 +1,149 @@
+---
+import Layout from "./Layout.astro";
+import SubLayout from "./SubLayout.astro";
+import CTAFooter from "../components/CTAFooter.astro";
+
+// 1. Get the data from the MDX frontmatter
+const { frontmatter } = Astro.props;
+
+// 2. Prepare SEO props for the Layout
+// We use the first image in your array as the main social media share image
+const postTitle = `${frontmatter.title} | York Garage Pros`;
+const postImage =
+    frontmatter.images && frontmatter.images.length > 0
+        ? frontmatter.images[0].url.src
+        : undefined;
+---
+
+<Layout
+    title={postTitle}
+    description={frontmatter.description}
+    image={postImage}
+>
+    <script
+        type="application/ld+json"
+        slot="head"
+        set:html={JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: frontmatter.title,
+            description: frontmatter.description,
+            image: postImage,
+            author: {
+                "@type": "Organization",
+                name: "York Garage Pros",
+            },
+            datePublished: frontmatter.publishDate,
+            areaServed: {
+                "@type": "City",
+                name: frontmatter.location,
+            },
+            mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": Astro.url,
+            },
+        })}
+    />
+    <SubLayout>
+        <article class="blog-container">
+            <header class="post-header">
+                <div class="meta-tags">
+                    <span class="category">{frontmatter.category}</span>
+                    <span class="location">📍 {frontmatter.location}</span>
+                </div>
+                <h1>{frontmatter.title}</h1>
+                <time datetime={frontmatter.publishDate}>
+                    {
+                        new Date(frontmatter.publishDate).toLocaleDateString(
+                            "en-CA",
+                            {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            },
+                        )
+                    }
+                </time>
+            </header>
+
+            <hr class="divider" />
+
+            <div class="content">
+                <slot />
+            </div>
+            <CTAFooter
+                title={`Need ${frontmatter.serviceType} in ${frontmatter.location}?`}
+                desc="Don't let a faulty garage door compromise your safety. York Garage Pros provides 24/7 emergency service across the York Region."
+            />
+        </article>
+    </SubLayout>
+</Layout>
+
+<style>
+    .blog-container {
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+        font-family: "Montserrat", sans-serif;
+    }
+    .post-header {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    .meta-tags {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .category {
+        background: #f4f4f4;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    .location {
+        font-weight: 600;
+        color: #d4af37; /* Matching a 'Gold' theme if you have one */
+    }
+    h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        line-height: 1.2;
+        color: #001f3f; /* Navy theme */
+        margin: 1rem 0;
+    }
+    .divider {
+        border: 0;
+        height: 1px;
+        background: #eee;
+        margin: 3rem 0;
+    }
+    .content {
+        line-height: 1.8;
+        font-size: 1.15rem;
+        color: #333;
+    }
+    .post-footer {
+        margin-top: 5rem;
+        background: #f9f9f9;
+        padding: 3rem;
+        border-radius: 12px;
+        text-align: center;
+    }
+    .blog-cta {
+        display: inline-block;
+        background: #d4af37; /* Gold */
+        color: #001f3f; /* Navy */
+        padding: 15px 30px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+        margin-top: 1.5rem;
+        transition: transform 0.2s;
+    }
+    .blog-cta:hover {
+        transform: scale(1.05);
+    }
+</style>
