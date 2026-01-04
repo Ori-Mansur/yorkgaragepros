@@ -121,11 +121,12 @@ import heroPic from "../assets/heropagemobile.webp";
         border-radius: 99px;
         font-size: 0.7rem;
         font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         margin-bottom: 0.75rem;
     }
 
     h1 {
-        font-family: "Montserrat-ExtraBold", sans-serif;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         font-size: clamp(1.85rem, 6vw, 3.5rem);
         line-height: 1.1;
         color: #1c2a44;
@@ -143,6 +144,7 @@ import heroPic from "../assets/heropagemobile.webp";
         font-size: clamp(1rem, 3.5vw, 1.4rem);
         color: #4b5563;
         font-weight: 700;
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
         margin-bottom: 1rem;
     }
 
@@ -170,6 +172,7 @@ import heroPic from "../assets/heropagemobile.webp";
         border-radius: 10px;
         text-decoration: none;
         font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -204,6 +207,7 @@ import heroPic from "../assets/heropagemobile.webp";
         margin: 0 auto;
         display: block;
         object-fit: cover;
+        object-position: center; /* default for mobile */
     }
 
     /* VALUE STRIP GRID */
@@ -211,13 +215,13 @@ import heroPic from "../assets/heropagemobile.webp";
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         gap: 8px;
-        margin-top: -2rem;
+        margin-top: -3rem;
         position: relative;
         z-index: 10;
     }
     .value-box-inner {
         background: white;
-        padding: 1rem 0.25rem;
+        padding: 1rem 0.5rem;
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         border-top: 4px solid #e8a900;
@@ -227,8 +231,9 @@ import heroPic from "../assets/heropagemobile.webp";
         margin-bottom: 0.25rem;
     }
     .value {
-        font-size: 0.8rem;
+        font-size: 0.875rem;
         font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         color: #1c2a44;
         margin: 0;
     }
@@ -238,14 +243,15 @@ import heroPic from "../assets/heropagemobile.webp";
             padding: 3rem 0;
         }
         .hero-img {
-            max-width: 450px;
+            /* aspect-ratio: 12 / 5; */
+            /* max-width: 450px; */
         }
         .value-strip {
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
             margin-top: -3rem;
-            max-width: 800px;
-            margin: 0 auto;
+            /* max-width: 800px; */
+            /* margin: 0 auto; */
         }
         .value {
             font-size: 1.3rem;
@@ -254,6 +260,22 @@ import heroPic from "../assets/heropagemobile.webp";
         .btn-white-quote {
             max-width: 280px;
             font-size: 1.25rem;
+        }
+        .garage-image-container {
+            aspect-ratio: 12 / 5;
+            /* aspect-ratio: 16 / 9; */
+            width: 100%;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .garage-image-container img {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            object-fit: cover;
+            object-position: center; /* default for mobile */
         }
     }
 </style>
