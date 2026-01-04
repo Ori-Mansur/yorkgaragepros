@@ -9,6 +9,7 @@ import {
     CalendarCheck,
     Star,
 } from "@lucide/astro";
+// Using your optimized 665x665 image
 import heroPic from "../assets/heropagemobile.webp";
 ---
 
@@ -25,8 +26,8 @@ import heroPic from "../assets/heropagemobile.webp";
         <h2>Newmarket, Vaughan, Richmond Hill, Bradford & Barrie</h2>
 
         <p class="lead">
-            <strong>Local technicians</strong> ready to fix broken springs and openers.
-            Fully stocked trucks for same-day service.
+            <strong>Fast Local Service:</strong> We fix broken springs, cables, and
+            openers today. Fully stocked trucks ready to serve you.
         </p>
 
         <div class="cta-actions">
@@ -47,12 +48,13 @@ import heroPic from "../assets/heropagemobile.webp";
         <div class="garage-image-container">
             <Picture
                 src={heroPic}
-                widths={[400, 800, 1200]}
-                sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
+                widths={[350, 665]}
+                sizes="(max-width: 600px) 350px, 665px"
                 formats={["avif", "webp"]}
-                alt="Garage Door Repair in Vaughan, Newmarket and Barrie"
+                alt="Professional Garage Door Repair in Vaughan, Barrie and Newmarket"
                 loading="eager"
                 fetchpriority="high"
+                decoding="sync"
                 class="hero-img"
             />
         </div>
@@ -62,7 +64,9 @@ import heroPic from "../assets/heropagemobile.webp";
                 <div class="value-box-inner">
                     <div class="icon-circle"><Clock size={24} /></div>
                     <p class="value">Same Day</p>
-                    <p class="desc">Expert service guaranteed for calls placed before 2 PM.</p>
+                    <p class="desc">
+                        Expert service guaranteed for calls placed before 2 PM.
+                    </p>
                 </div>
             </div>
 
@@ -70,7 +74,9 @@ import heroPic from "../assets/heropagemobile.webp";
                 <div class="value-box-inner">
                     <div class="icon-circle"><ShieldCheck size={24} /></div>
                     <p class="value">Top Warranty</p>
-                    <p class="desc">All repairs include a full warranty on parts and labor.</p>
+                    <p class="desc">
+                        All repairs include a full warranty on parts and labor.
+                    </p>
                 </div>
             </div>
 
@@ -78,7 +84,10 @@ import heroPic from "../assets/heropagemobile.webp";
                 <div class="value-box-inner">
                     <div class="icon-circle"><MapPin size={24} /></div>
                     <p class="value">Local Pros</p>
-                    <p class="desc">Proudly serving Vaughan, York & Simcoe for over 10 years.</p>
+                    <p class="desc">
+                        Proudly serving Vaughan, York & Simcoe for over 10
+                        years.
+                    </p>
                 </div>
             </div>
         </div>
@@ -86,11 +95,16 @@ import heroPic from "../assets/heropagemobile.webp";
 </section>
 
 <style>
+    /* PERFORMANCE FIX: font-display swap should be in your global.css for the Montserrat font */
+
     .section-garage {
         background: #ffffff;
         padding: 1rem 0 2.5rem;
         text-align: center;
+        /* Reserved space to prevent Layout Shift */
+        min-height: 550px;
     }
+
     .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -107,17 +121,18 @@ import heroPic from "../assets/heropagemobile.webp";
         border-radius: 99px;
         font-size: 0.7rem;
         font-weight: 800;
-        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         margin-bottom: 0.75rem;
     }
 
     h1 {
-        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        font-family: "Montserrat-ExtraBold", sans-serif;
         font-size: clamp(1.85rem, 6vw, 3.5rem);
         line-height: 1.1;
         color: #1c2a44;
         margin-bottom: 0.5rem;
         font-weight: 900;
+        /* Fix for FCP: ensures text space is ready */
+        min-height: 1.2em;
     }
 
     .highlight {
@@ -128,20 +143,20 @@ import heroPic from "../assets/heropagemobile.webp";
         font-size: clamp(1rem, 3.5vw, 1.4rem);
         color: #4b5563;
         font-weight: 700;
-        font-family: "Montserrat-Bold", "Inter", sans-serif;
         margin-bottom: 1rem;
     }
 
     .lead {
-        font-size: 1rem;
+        font-size: 1.05rem;
         color: #374151;
         margin-bottom: 1.5rem;
+        font-weight: 500;
     }
 
-    /* --- THE FONT SIZE FIX --- */
+    /* CTA BOXES */
     .cta-actions {
         display: flex;
-        flex-wrap: wrap; /* Allows stacking on tiny screens */
+        flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
         margin-bottom: 1.5rem;
@@ -150,40 +165,48 @@ import heroPic from "../assets/heropagemobile.webp";
     .btn-gold-call,
     .btn-white-quote {
         flex: 1;
-        min-width: 160px; /* If the screen is narrower than ~340px, they stack */
+        min-width: 155px;
         padding: 16px 10px;
         border-radius: 10px;
         text-decoration: none;
         font-weight: 800;
-        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-size: 1.05rem; /* Increased from 0.85rem for better accessibility */
+        font-size: 1.1rem;
     }
 
     .btn-gold-call {
         background: #e8a900;
         color: #1c2a44;
+        box-shadow: 0 4px 12px rgba(232, 169, 0, 0.3);
     }
     .btn-white-quote {
         background: #1c2a44;
         color: #ffffff;
     }
 
+    /* IMAGE OPTIMIZATION */
     .garage-image-container {
         border-radius: 12px;
         overflow: hidden;
         margin-bottom: 1rem;
+        background: #f3f4f6;
     }
+
     .hero-img {
         width: 100%;
         height: auto;
-        max-height: 220px;
+        /* Prevents Cumulative Layout Shift (CLS) */
+        aspect-ratio: 1 / 1;
+        max-width: 500px;
+        margin: 0 auto;
+        display: block;
         object-fit: cover;
     }
 
+    /* VALUE STRIP GRID */
     .value-strip {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
@@ -204,25 +227,28 @@ import heroPic from "../assets/heropagemobile.webp";
         margin-bottom: 0.25rem;
     }
     .value {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         font-weight: 800;
-        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         color: #1c2a44;
+        margin: 0;
     }
 
     @media (min-width: 768px) {
         .section-garage {
-            padding: 4rem 0;
+            padding: 3rem 0;
         }
         .hero-img {
-            max-height: 450px;
+            max-width: 450px;
         }
         .value-strip {
-            gap: 24px;
-            margin-top: -4rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: -3rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
         .value {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
         .btn-gold-call,
         .btn-white-quote {
