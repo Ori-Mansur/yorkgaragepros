@@ -10,7 +10,7 @@ import {
     Star,
 } from "@lucide/astro";
 // Using your optimized 665x665 image
-import heroPic from "../assets/heropage.webp";
+import heroPic from "../assets/heropagemobile.webp";
 ---
 
 <section class="section-garage">
@@ -48,8 +48,8 @@ import heroPic from "../assets/heropage.webp";
         <div class="garage-image-container">
             <Picture
                 src={heroPic}
-                widths={[350, 665]}
-                sizes="(max-width: 600px) 350px, 665px"
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
                 formats={["avif", "webp"]}
                 alt="Professional Garage Door Repair in Vaughan, Barrie and Newmarket"
                 loading="eager"
