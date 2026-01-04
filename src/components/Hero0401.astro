@@ -1,0 +1,233 @@
+---
+import "../styles/global.css";
+import { Picture } from "astro:assets";
+import {
+    MapPin,
+    Phone,
+    Clock,
+    ShieldCheck,
+    CalendarCheck,
+    Star,
+} from "@lucide/astro";
+import heroPic from "../assets/heropage.webp";
+---
+
+<section class="section-garage">
+    <div class="container">
+        <div class="location-badge">
+            <MapPin size={12} /> YORK REGION & SIMCOE COUNTY
+        </div>
+
+        <h1>
+            Same-Day <span class="highlight">Garage Door Repair</span> & Installation
+        </h1>
+
+        <h2>Newmarket, Vaughan, Richmond Hill, Bradford & Barrie</h2>
+
+        <p class="lead">
+            <strong>Local technicians</strong> ready to fix broken springs and openers.
+            Fully stocked trucks for same-day service.
+        </p>
+
+        <div class="cta-actions">
+            <a
+                class="btn-gold-call"
+                href="tel:+19059609947"
+                aria-label="Call Now"
+            >
+                <Phone size={22} />
+                <span>Call Now</span>
+            </a>
+            <a class="btn-white-quote" href="/booking">
+                <CalendarCheck size={22} />
+                <span>Get Quote</span>
+            </a>
+        </div>
+
+        <div class="garage-image-container">
+            <Picture
+                src={heroPic}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
+                formats={["avif", "webp"]}
+                alt="Garage Door Repair in Vaughan, Newmarket and Barrie"
+                loading="eager"
+                fetchpriority="high"
+                class="hero-img"
+            />
+        </div>
+
+        <div class="value-strip">
+            <div class="value-box">
+                <div class="value-box-inner">
+                    <div class="icon-circle"><Clock size={24} /></div>
+                    <p class="value">Same Day</p>
+                    <p class="desc">Expert service guaranteed for calls placed before 2 PM.</p>
+                </div>
+            </div>
+
+            <div class="value-box">
+                <div class="value-box-inner">
+                    <div class="icon-circle"><ShieldCheck size={24} /></div>
+                    <p class="value">Top Warranty</p>
+                    <p class="desc">All repairs include a full warranty on parts and labor.</p>
+                </div>
+            </div>
+
+            <div class="value-box">
+                <div class="value-box-inner">
+                    <div class="icon-circle"><MapPin size={24} /></div>
+                    <p class="value">Local Pros</p>
+                    <p class="desc">Proudly serving Vaughan, York & Simcoe for over 10 years.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .section-garage {
+        background: #ffffff;
+        padding: 1rem 0 2.5rem;
+        text-align: center;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    .location-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background-color: #eff6ff;
+        color: #1e40af;
+        padding: 6px 14px;
+        border-radius: 99px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        margin-bottom: 0.75rem;
+    }
+
+    h1 {
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        font-size: clamp(1.85rem, 6vw, 3.5rem);
+        line-height: 1.1;
+        color: #1c2a44;
+        margin-bottom: 0.5rem;
+        font-weight: 900;
+    }
+
+    .highlight {
+        color: #e8a900;
+    }
+
+    h2 {
+        font-size: clamp(1rem, 3.5vw, 1.4rem);
+        color: #4b5563;
+        font-weight: 700;
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
+        margin-bottom: 1rem;
+    }
+
+    .lead {
+        font-size: 1rem;
+        color: #374151;
+        margin-bottom: 1.5rem;
+    }
+
+    /* --- THE FONT SIZE FIX --- */
+    .cta-actions {
+        display: flex;
+        flex-wrap: wrap; /* Allows stacking on tiny screens */
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-gold-call,
+    .btn-white-quote {
+        flex: 1;
+        min-width: 160px; /* If the screen is narrower than ~340px, they stack */
+        padding: 16px 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 1.05rem; /* Increased from 0.85rem for better accessibility */
+    }
+
+    .btn-gold-call {
+        background: #e8a900;
+        color: #1c2a44;
+    }
+    .btn-white-quote {
+        background: #1c2a44;
+        color: #ffffff;
+    }
+
+    .garage-image-container {
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+    }
+    .hero-img {
+        width: 100%;
+        height: auto;
+        max-height: 220px;
+        object-fit: cover;
+    }
+
+    .value-strip {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 8px;
+        margin-top: -2rem;
+        position: relative;
+        z-index: 10;
+    }
+    .value-box-inner {
+        background: white;
+        padding: 1rem 0.25rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #e8a900;
+    }
+    .icon-circle {
+        color: #e8a900;
+        margin-bottom: 0.25rem;
+    }
+    .value {
+        font-size: 0.75rem;
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        color: #1c2a44;
+    }
+
+    @media (min-width: 768px) {
+        .section-garage {
+            padding: 4rem 0;
+        }
+        .hero-img {
+            max-height: 450px;
+        }
+        .value-strip {
+            gap: 24px;
+            margin-top: -4rem;
+        }
+        .value {
+            font-size: 1.4rem;
+        }
+        .btn-gold-call,
+        .btn-white-quote {
+            max-width: 280px;
+            font-size: 1.25rem;
+        }
+    }
+</style>
