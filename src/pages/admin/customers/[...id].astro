@@ -1,0 +1,26 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import CustomerForm from "../../../components/vue/customers/CustomerForm.vue";
+import { db, Customers, eq } from 'astro:db';
+
+const { id } = Astro.params;
+let initialData = null;
+
+// If we have an ID, fetch the real data from Astro DB
+if (id) {
+  const results = await db.select().from(Customers).where(eq(Customers.id, id));
+  if (results.length > 0) {
+    initialData = results[0];
+  }
+}
+---
+
+<Layout title={id ? "Edit Customer" : "Add Customer"}>
+  <div class="max-w-4xl mx-auto p-6">
+    <CustomerForm 
+      client:load 
+      initialData={initialData} 
+      customerId={id} 
+    />
+  </div>
+</Layout>

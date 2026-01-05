@@ -1,7 +1,8 @@
 // This file assumes window.db (your Firestore instance) and window.storage (Firebase Storage) 
 // has been initialized and exported by your local firebase.js file.
-import { db, storage } from './firebase.js' // <-- ADJUSTED IMPORT: Added 'storage'
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db, storage } from './firebase' // <-- ADJUSTED IMPORT: Added 'storage'
+import { collection, addDoc, query, getDocs, orderBy, startAt, endAt, limit, serverTimestamp, where } from "firebase/firestore";
+
 import {
     ref,
     uploadBytes,
@@ -156,5 +157,66 @@ export async function sendNotificationEmail(subject, formData, recipients = 'ori
     } catch (e) {
         console.error("Error creating email trigger document: ", e);
         throw new Error(`Failed to send email notification trigger: ${e.message}`);
+    }
+}
+
+
+
+
+
+export async function searchContacts({ search }) {
+    if (!search || search.length < 2) return [];
+
+    // 1. Setup the range for "starts with"
+    // Using \uf8ff tells Firestore to find everything starting with the string
+    const strSearch = search;
+    const end = strSearch + '\uf8ff';
+
+    try {
+        // 2. Build both queries
+        const contactsQuery = query(
+            collection(db, "contacts"),
+            orderBy("name"),
+            where('name','>=',strSearch),
+            limit(5)
+        );
+
+        const bookingsQuery = query(
+            collection(db, "bookings"),
+            orderBy("name"),
+            where('name','>=',strSearch),
+            limit(5)
+        );
+
+        // 3. Run them in parallel
+        const dd = await getDocs(contactsQuery)
+        console.log(dd);
+        const [contactsSnap, bookingsSnap] = await Promise.all([
+            getDocs(contactsQuery),
+            getDocs(bookingsQuery)
+        ]);
+        
+
+        // 4. Map the results
+        const contacts = contactsSnap.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            sourceType: 'contact',
+            icon: '👤'
+        }));
+
+        const bookings = bookingsSnap.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+            sourceType: 'booking',
+            icon: '📅'
+        }));
+
+        // 5. Merge and return
+        return [...contacts, ...bookings];
+
+    } catch (error) {
+        console.error("Search error:", error);
+        return [];
     }
 }

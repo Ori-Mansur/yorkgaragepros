@@ -13,6 +13,11 @@ import mdx from '@astrojs/mdx';
 
 
 
+import db from '@astrojs/db';
+
+
+
+
 export default defineConfig({
   site: 'https://yorkgaragepros.com',
 
@@ -22,7 +27,7 @@ export default defineConfig({
 
   integrations: [sitemap({
     filter: (page) => {
-      if (page.includes('/booking') || page.includes('/thank-you')) {
+      if (page.includes('/booking') || page.includes('/thank-you') || page.includes('/admin')) {
         return false;
       }
 
@@ -35,9 +40,9 @@ export default defineConfig({
           isCustomElement: (tag) => tag.startsWith('gmp-')
         }
       }
-    }), mdx()],
+    }), mdx(), db()],
 
-  output: "static",
+  output: 'server',
   adapter: cloudflare(),
   build: {
     // Inline all CSS into the HTML if it's smaller than 10kb
