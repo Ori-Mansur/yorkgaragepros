@@ -23,7 +23,10 @@ import heroPic from "../assets/heropagemobile.webp";
             Same-Day <span class="highlight">Garage Door Repair</span> & Installation
         </h1>
 
-        <h2>Newmarket, Aurora, Bradford, Vaughan,  Richmond Hill, Markham & Barrie</h2>
+        <h2>
+            Newmarket, Aurora, Bradford, Vaughan, Richmond Hill, Markham &
+            Barrie
+        </h2>
 
         <p class="lead">
             <strong>Fast Local Service:</strong> We fix broken springs, cables, and
@@ -46,7 +49,7 @@ import heroPic from "../assets/heropagemobile.webp";
         </div>
 
         <div class="garage-image-container">
-            <Picture
+            <!-- <Picture
                 src={heroPic}
                 widths={[400, 800, 1200]}
                 sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
@@ -56,6 +59,19 @@ import heroPic from "../assets/heropagemobile.webp";
                 fetchpriority="high"
                 decoding="sync"
                 class="hero-img"
+            /> -->
+            <Picture
+                src={heroPic}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
+                formats={["avif", "webp"]}
+                alt="Professional Garage Door Repair in Vaughan, Barrie and Newmarket"
+                width={400}
+                height={400}
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="hero-img"
             />
         </div>
 
@@ -64,9 +80,7 @@ import heroPic from "../assets/heropagemobile.webp";
                 <div class="value-box-inner">
                     <div class="icon-circle"><Clock size={24} /></div>
                     <p class="value">Same Day</p>
-                    <p class="desc">
-                        Fast, Expert service guaranteed.
-                    </p>
+                    <p class="desc">Fast, Expert service guaranteed.</p>
                 </div>
             </div>
 
@@ -101,7 +115,8 @@ import heroPic from "../assets/heropagemobile.webp";
         padding: 1rem 0 2.5rem;
         text-align: center;
         /* Reserved space to prevent Layout Shift */
-        min-height: 550px;
+        /* min-height: 550px; */
+        min-height: auto;
     }
 
     .container {
