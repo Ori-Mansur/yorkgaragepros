@@ -79,25 +79,25 @@ import MobileNav from "./MobileNav.astro";
 </header>
 <MobileNav />
 <script type="module">
-  requestIdleCallback(() => {
-    const menu = document.getElementById("mobileMenu");
-    const navBtn = document.getElementById("nav-btn");
-    const header = document.querySelector("header");
+    requestIdleCallback(() => {
+        const menu = document.getElementById("mobileMenu");
+        const navBtn = document.getElementById("nav-btn");
+        const header = document.querySelector("header");
 
-    if (!menu || !navBtn || !header) return;
+        if (!menu || !navBtn || !header) return;
 
-    navBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+        navBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-      const headerBottom = header.getBoundingClientRect().bottom;
-      menu.style.top = `${headerBottom}px`;
-      menu.style.height = `calc(100vh - ${headerBottom}px)`;
+            const headerBottom = header.getBoundingClientRect().bottom;
+            menu.style.top = `${headerBottom}px`;
+            menu.style.height = `calc(100vh - ${headerBottom}px)`;
 
-      const isOpen = menu.classList.toggle("open");
-      document.body.style.overflow = isOpen ? "hidden" : "";
+            const isOpen = menu.classList.toggle("open");
+            document.body.style.overflow = isOpen ? "hidden" : "";
+        });
     });
-  });
 </script>
 
 <!-- <script type="module">
@@ -164,12 +164,12 @@ import MobileNav from "./MobileNav.astro";
     }
 
     .logo img {
-        height: 56px; 
-        aspect-ratio: 1 / 1.07;
-        width: 56px; 
-        border-radius: 9999px; /* rounded-full */
-        background-color: #ffffff; /* bg-white */
+        height: 55px;
+        width: auto; /* ✅ preserve aspect ratio */
+        border-radius: 9999px;
+        background-color: #ffffff;
         padding: 1px;
+        contain: paint;
     }
 
     .logo span {
