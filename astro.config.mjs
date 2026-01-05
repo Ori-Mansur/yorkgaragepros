@@ -22,7 +22,7 @@ export default defineConfig({
 
   integrations: [sitemap({
     filter: (page) => {
-      if (page.includes('/booking') || page.includes('/thank-you')) {
+      if (page.includes('/booking') || page.includes('/thank-you') || page.includes('/admin')) {
         return false;
       }
 
