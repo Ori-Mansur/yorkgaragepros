@@ -115,7 +115,7 @@ import heroPic from "../assets/heropagemobile.webp";
         padding: 1rem 0 2.5rem;
         text-align: center;
         /* Reserved space to prevent Layout Shift */
-        min-height: 550px;
+        /* min-height: 550px; */
         contain: layout paint;
         content-visibility: auto;
         contain-intrinsic-size: 600px;
@@ -225,6 +225,8 @@ import heroPic from "../assets/heropagemobile.webp";
         display: block;
         object-fit: cover;
         object-position: center; /* default for mobile */
+        content-visibility: visible;
+        contain-intrinsic-size: 400px 400px;
     }
 
     /* VALUE STRIP GRID */
