@@ -79,6 +79,28 @@ import MobileNav from "./MobileNav.astro";
 </header>
 <MobileNav />
 <script type="module">
+  requestIdleCallback(() => {
+    const menu = document.getElementById("mobileMenu");
+    const navBtn = document.getElementById("nav-btn");
+    const header = document.querySelector("header");
+
+    if (!menu || !navBtn || !header) return;
+
+    navBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const headerBottom = header.getBoundingClientRect().bottom;
+      menu.style.top = `${headerBottom}px`;
+      menu.style.height = `calc(100vh - ${headerBottom}px)`;
+
+      const isOpen = menu.classList.toggle("open");
+      document.body.style.overflow = isOpen ? "hidden" : "";
+    });
+  });
+</script>
+
+<!-- <script type="module">
     function openMobileMenu() {
         const menu = document.getElementById("mobileMenu");
         const navBtn = document.getElementById("nav-btn");
@@ -105,7 +127,7 @@ import MobileNav from "./MobileNav.astro";
         navBtn.addEventListener("click", handleToggle);
     }
     openMobileMenu();
-</script>
+</script> -->
 
 <style>
     /* Header */
