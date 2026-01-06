@@ -40,7 +40,8 @@ import heroPic from "../assets/heropagemobile.webp";
                 aria-label="Call Now"
             >
                 <Phone size={22} />
-                <span>Call Now</span>
+                <span class="call-mobile">Call Now</span>
+                <span class="call-text-desktop">905-960-9947</span>
             </a>
             <a class="btn-white-quote" href="/booking">
                 <CalendarCheck size={22} />
@@ -252,6 +253,12 @@ import heroPic from "../assets/heropagemobile.webp";
         color: #1c2a44;
         margin: 0;
     }
+    .call-text-desktop {
+        display: none;
+    }
+    .call-mobile {
+        display: inline;
+    }
 
     @media (min-width: 768px) {
         .section-garage {
@@ -260,6 +267,12 @@ import heroPic from "../assets/heropagemobile.webp";
         .hero-img {
             /* aspect-ratio: 12 / 5; */
             /* max-width: 450px; */
+        }
+        .call-text-desktop {
+            display: inline;
+        }
+        .call-mobile {
+            display: none;
         }
         .value-strip {
             grid-template-columns: repeat(3, 1fr);
