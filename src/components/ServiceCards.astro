@@ -1,6 +1,7 @@
 ---
-import { Shield, Layers, ArrowRight, Cog } from "@lucide/astro";
 import "../styles/global.css";
+import { Shield, PanelTopBottomDashed, ArrowRight, Cog ,  Wrench,
+    RadioReceiver,} from "@lucide/astro";
 ---
 
 <section id="services-home-section" class="services-section">
@@ -9,42 +10,45 @@ import "../styles/global.css";
 
         <div class="services-grid">
             <!-- Garage Doors -->
+
             <div class="service-card">
-                <Shield class="service-icon" />
-                <h3 class="service-heading">Garage Doors</h3>
+                <Wrench class="service-icon" />
+                <h3 class="service-heading">Garage Door Repair</h3>
                 <p class="service-text">
-                    Full-service door solutions from high-end installations to
-                    24/7 emergency spring and cable repairs.
+                    Fast, same-day repair for broken springs, snapped cables,
+                    and off-track doors. Reliable 24/7 emergency service
+                    throughout York & Simcoe Regions.
                 </p>
-                <a href="/services" data-page="services" class="service-link">
-                    View Door Services
-                    <ArrowRight class="link-icon" />
-                </a>
-            </div>
-            <!-- Door Openers -->
-            <div class="service-card">
-                <Cog class="service-icon" />
-                <h3 class="service-heading">Door Openers</h3>
-                <p class="service-text">
-                    Installation and repair of ultra-quiet belt-drive systems,
-                    smart openers (Wi-Fi), and heavy-duty commercial units.
-                </p>
-                <a href="/services" data-page="services" class="service-link">
-                    View Door Openers
+                <a href="/services#repair" data-page="services" class="service-link">
+                    Fix My Door
                     <ArrowRight class="link-icon" />
                 </a>
             </div>
 
-            <!-- Epoxy Flooring -->
             <div class="service-card">
-                <Layers class="service-icon" />
-                <h3 class="service-heading">Epoxy Flooring</h3>
+                <PanelTopBottomDashed class="service-icon" />
+                <h3 class="service-heading">New Garage Door</h3>
                 <p class="service-text">
-                    Durable, stain-resistant industrial-grade epoxy coatings
-                    that protect your concrete against salt and oil.
+                    Professional installation of high-quality, insulated garage
+                    doors. Upgrade your home's curb appeal with the latest
+                    styles and durable materials.
                 </p>
-                <a href="/services" data-page="services" class="service-link">
-                    View Flooring Details
+                <a href="/services#garage-door" data-page="services" class="service-link">
+                    Get a New Door
+                    <ArrowRight class="link-icon" />
+                </a>
+            </div>
+
+            <div class="service-card">
+                <RadioReceiver class="service-icon" />
+                <h3 class="service-heading">Garage Door Opener</h3>
+                <p class="service-text">
+                    Installation and repair of smart, ultra-quiet Wi-Fi openers.
+                    Expert service for LiftMaster, Chamberlain, and Genie
+                    systems.
+                </p>
+                <a href="/services#opener" data-page="services" class="service-link">
+                    Opener Services
                     <ArrowRight class="link-icon" />
                 </a>
             </div>
