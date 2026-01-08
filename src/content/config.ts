@@ -35,6 +35,8 @@ const serviceCatalogsCollection = defineCollection({
     cardTitle: z.string().optional(),
     h1: z.string(),
     metaDescription: z.string(),
+    rating: z.number().optional(),
+    reviewCount: z.number().optional(),
 
     // Specific Product Data (using the Dornett PDF data)
     features: z.array(z.object({
@@ -46,6 +48,7 @@ const serviceCatalogsCollection = defineCollection({
       color: z.string(),
     })).optional(),
     glassStyles: z.array(z.string()).optional(),
+    windowStyles: z.array(z.string()).optional(),
   }),
 });
 const openersCollection = defineCollection({
