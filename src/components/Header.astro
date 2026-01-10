@@ -79,7 +79,7 @@ import MobileNav from "./MobileNav.astro";
     </div>
 </header>
 <MobileNav />
-<script type="module">
+<!-- <script type="module">
     requestIdleCallback(() => {
         const menu = document.getElementById("mobileMenu");
         const navBtn = document.getElementById("nav-btn");
@@ -99,9 +99,9 @@ import MobileNav from "./MobileNav.astro";
             document.body.style.overflow = isOpen ? "hidden" : "";
         });
     });
-</script>
+</script> -->
 
-<!-- <script type="module">
+<script type="module">
     function openMobileMenu() {
         const menu = document.getElementById("mobileMenu");
         const navBtn = document.getElementById("nav-btn");
@@ -128,7 +128,7 @@ import MobileNav from "./MobileNav.astro";
         navBtn.addEventListener("click", handleToggle);
     }
     openMobileMenu();
-</script> -->
+</script>
 
 <style>
     /* Header */
