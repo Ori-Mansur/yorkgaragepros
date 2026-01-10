@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+
+// Expecting an object that matches your schema
+interface Props {
+  imageObj: {
+    url: ImageMetadata; // Astro automatically types imported images as ImageMetadata
+    alt: string;
+  };
+  width?: number;
+}
+
+const { imageObj, width = 800 } = Astro.props;
+---
+
+<div class="blog-image-wrapper">
+  <Image 
+    src={imageObj.url} 
+    alt={imageObj.alt} 
+    width={width}
+    quality="mid"
+    class="blog-optimized-img"
+  />
+</div>
+
+<style>
+  .blog-image-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 2.5rem 0;
+  }
+  .blog-optimized-img {
+    height: auto;
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+</style>
