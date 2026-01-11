@@ -40,7 +40,8 @@ import heroPic from "../assets/heropagemobile.webp";
                 aria-label="Call Now"
             >
                 <Phone size={22} />
-                <span>Call Now</span>
+                <span class="call-mobile">Call Now</span>
+                <span class="call-text-desktop">905-960-9947</span>
             </a>
             <a class="btn-white-quote" href="/booking">
                 <CalendarCheck size={22} />
@@ -63,7 +64,7 @@ import heroPic from "../assets/heropagemobile.webp";
             <Picture
                 src={heroPic}
                 widths={[400, 800, 1200]}
-                sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px"
+                sizes="(max-width: 600px) 90vw, (max-width: 1200px) 800px, 1200px"
                 formats={["avif", "webp"]}
                 alt="Professional Garage Door Repair in Vaughan, Barrie and Newmarket"
                 width={400}
@@ -114,11 +115,7 @@ import heroPic from "../assets/heropagemobile.webp";
         background: #ffffff;
         padding: 1rem 0 2.5rem;
         text-align: center;
-        /* Reserved space to prevent Layout Shift */
-        min-height: 550px;
         contain: layout paint;
-        content-visibility: auto;
-        contain-intrinsic-size: 600px;
     }
 
     .container {
@@ -150,6 +147,7 @@ import heroPic from "../assets/heropagemobile.webp";
         font-weight: 900;
         /* Fix for FCP: ensures text space is ready */
         min-height: 1.2em;
+        contain: paint;
     }
 
     .highlight {
@@ -224,6 +222,8 @@ import heroPic from "../assets/heropagemobile.webp";
         display: block;
         object-fit: cover;
         object-position: center; /* default for mobile */
+        content-visibility: visible;
+        contain-intrinsic-size: 400px 400px;
     }
 
     /* VALUE STRIP GRID */
@@ -253,6 +253,12 @@ import heroPic from "../assets/heropagemobile.webp";
         color: #1c2a44;
         margin: 0;
     }
+    .call-text-desktop {
+        display: none;
+    }
+    .call-mobile {
+        display: inline;
+    }
 
     @media (min-width: 768px) {
         .section-garage {
@@ -261,6 +267,12 @@ import heroPic from "../assets/heropagemobile.webp";
         .hero-img {
             /* aspect-ratio: 12 / 5; */
             /* max-width: 450px; */
+        }
+        .call-text-desktop {
+            display: inline;
+        }
+        .call-mobile {
+            display: none;
         }
         .value-strip {
             grid-template-columns: repeat(3, 1fr);

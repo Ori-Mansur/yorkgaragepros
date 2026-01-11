@@ -1,41 +1,24 @@
 ---
 export const prerender = true;
 import "../../styles/global.css";
-
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import UtilityNav from "../../components/UtilityNav.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import Sidebar from "../../components/Sidebar.astro";
-import ProductCard from "../../components/ProductCard.astro"; // Assuming you create this component
-import { capitalizeWords } from "../../utils/helpers"; // Assuming a simple helper function
-
-// 1. Get all entries from the new service-catalogs collection
-type CatalogEntry = Awaited<
-  ReturnType<typeof getCollection<"service-catalogs">>
->[number];
-
-// Inside src/pages/[serviceSlug]/[typeSlug].astro
+import { capitalizeWords } from "../../utils/helpers";
 
 export async function getStaticPaths() {
   const catalogEntries = await getCollection("service-catalogs");
-
-  return catalogEntries.map((entry) => {
-    return {
-      params: {
-        service: entry.data.service, // <-- Parameter name defined as 'service'
-        type: entry.data.type, // <-- Parameter name defined as 'type'
-      },
-      props: { entry },
-    };
-  });
+  return catalogEntries.map((entry) => ({
+    params: { service: entry.data.service, type: entry.data.type },
+    props: { entry },
+  }));
 }
 
-// 2. Destructure props and render the MDX content
-const { entry } = Astro.props as { entry: CatalogEntry };
+const { entry } = Astro.props;
 const { Content } = await entry.render();
-
 const {
   title,
   h1,
@@ -45,145 +28,238 @@ const {
   features,
   colors,
   glassStyles,
+  windowStyles,
+  rating,
+  reviewCount,
 } = entry.data;
 
-const safeService = service || "undefined-service";
-const safeSlug = type || "undefined-slug";
+const serviceName = capitalizeWords(service.replace(/-/g, " "));
+const typeName = capitalizeWords(type.replace(/-/g, " "));
 
-// Use the safe variables in the helper functions
-const serviceName = capitalizeWords(safeService.replace(/-/g, " "));
-const typeName = capitalizeWords(safeSlug.replace(/-/g, " "));
-
-// const canonicalURL = `https://yorkgaragepros.com/${service}/${type}`;
+// SEO Schema
+const productSchema = {
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  name: h1,
+  description: metaDescription,
+  brand: { "@type": "Brand", name: "York Garage Pros" },
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: rating || "5.0",
+    reviewCount: reviewCount || "100",
+  },
+};
 ---
 
 <Layout title={title} description={metaDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <UtilityNav />
   <Header />
 
-  <section class="product-page">
-    <div class="container">
-      <h1 class="page-title">{h1}</h1>
+  <main class="product-page">
+    <header class="product-hero">
+      <div class="container hero-wrapper">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> / <a href={`/${service}`}>{serviceName}</a> / <span
+            class="active">{typeName}</span
+          >
+        </nav>
+        <h1 class="hero-title">{h1}</h1>
+        <div class="trust-bar">
+          <div class="stars">★★★★★</div>
+          <span class="rating-text"
+            >{rating || "5.0"} Rating based on {reviewCount || "100"}+ GTA
+            Installations</span
+          >
+        </div>
+      </div>
+    </header>
 
-      <p class="page-intro">
-        A comprehensive look at our <strong>{typeName}</strong> options for your
-        {serviceName} needs across the GTA.
-      </p>
-
+    <div class="container content-wrapper">
       <div class="layout-grid">
-        <div class="content">
-          <div class="card">
-            <Content />
-          </div>
+        <section class="main-column">
+          <article class="content-card shadow-sm">
+            <div class="prose">
+              <Content />
+            </div>
+          </article>
 
           {
-            features && features.length > 0 && (
-              <section class="features">
-                <h2>Key Product Specifications</h2>
-
-                <ul class="feature-list">
-                  {features.map((feature) => (
-                    <li>
-                      <svg viewBox="0 0 20 20" aria-hidden="true">
-                        <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.7-9.3a1 1 0 00-1.4-1.4L9 10.6 7.7 9.3a1 1 0 00-1.4 1.4l2 2a1 1 0 001.4 0l4-4z" />
-                      </svg>
-                      <strong>{feature.name}:</strong>
-                      <span>{feature.value}</span>
-                    </li>
+            features && (
+              <section class="specs-section">
+                <h2 class="section-heading">Technical Specifications</h2>
+                <div class="specs-grid">
+                  {features.map((f) => (
+                    <div class="spec-tile">
+                      <span class="spec-label">{f.name}</span>
+                      <span class="spec-value">{f.value}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </section>
             )
           }
 
-          <div class="options-grid">
-            {
-              colors && colors.length > 0 && (
-                <div class="option-card">
-                  <h3>Available Color Options</h3>
-                  <ul class="pill-list">
-                    {colors.map((color) => (
-                      <li>
-                        {color.name}
-                        <span
-                          class="color-buble"
-                          style={`background-color: ${color.color};`}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            }
+          <section class="options-container">
+            <h2 class="section-heading">Finish & Style Options</h2>
 
-            {
-              glassStyles && glassStyles.length > 0 && (
-                <div class="option-card">
-                  <h3>Glass Styles</h3>
-                  <ul class="pill-list">
-                    {glassStyles.map((style) => (
-                      <li>{style}</li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            }
+            <div class="options-grid">
+              {
+                colors && (
+                  <div class="option-card">
+                    <h3>Available Colors</h3>
+                    <div class="swatch-grid">
+                      {colors.map((c) => (
+                        <div class="swatch-item" title={c.name}>
+                          <div
+                            class="swatch-circle"
+                            style={`background-color: ${c.color}`}
+                          />
+                          <span class="swatch-name">{c.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              }
+
+              <div class="option-card">
+                <h3>Glass & Windows</h3>
+                {
+                  windowStyles && (
+                    <div class="sub-option">
+                      <span class="sub-label">Panel Designs:</span>
+                      <ul class="pill-list">
+                        {windowStyles.map((style) => (
+                          <li>{style}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
+                }
+                {
+                  glassStyles && (
+                    <div class="sub-option">
+                      <span class="sub-label">Glass Privacy:</span>
+                      <ul class="pill-list">
+                        {glassStyles.map((glass) => (
+                          <li>{glass}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
+                }
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <aside class="sidebar-column">
+          <div class="sticky-sidebar">
+            <div class="cta-card">
+              <div class="cta-badge">Instant Quote</div>
+              <h3>Free Estimate</h3>
+              <p>
+                Expert {typeName} installation service across the York Region.
+              </p>
+              <div class="cta-buttons">
+                <a href="/booking" class="btn-gold">Get Started</a>
+                <a href="tel:+19059609947" class="btn-outline-white"
+                  >Call (905) 960-9947</a
+                >
+              </div>
+            </div>
+            <Sidebar serviceSlug={service} typeSlug={type} />
           </div>
-        </div>
-
-        <aside class="sidebar">
-          <Sidebar serviceSlug={service} typeSlug={type} />
         </aside>
       </div>
     </div>
-  </section>
+  </main>
+
   <Footer />
 </Layout>
 
 <style>
-  /* ========== Variables ========== */
   :root {
     --navy: #1c2a44;
-    --navy-dark: #141f33;
+    --navy-light: #2d3e5d;
     --gold: #e8a900;
-    --bg: #f7f8fc;
-    --text: #343d46;
-    --muted: #6b7280;
+    --gold-hover: #cf9600;
     --white: #ffffff;
-    --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-  }
-  * {
-    box-sizing: border-box;
+    --slate-50: #f8fafc;
+    --slate-200: #e2e8f0;
+    --slate-600: #475569;
+    --slate-900: #0f172a;
+    --container-width: 1200px;
+    --section-spacing: 4rem;
   }
 
-  /* ========== Layout ========== */
+  /* Base Layout & Padding */
   .product-page {
-    background: var(--bg);
-    padding: 3rem 1rem;
+    background-color: var(--slate-50);
+    color: var(--slate-900);
+    line-height: 1.6;
   }
 
   .container {
-    max-width: 1200px;
+    max-width: var(--container-width);
     margin: 0 auto;
+    padding: 0 1.5rem; /* Standard gutter padding */
   }
 
-  .page-title {
-    font-size: 2.25rem;
+  /* Hero Section */
+  .product-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: var(--white);
+    padding: 5rem 0 7rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 800;
-    color: var(--navy-dark);
-    margin-bottom: 1rem;
+    margin: 1rem 0;
+    line-height: 1.2;
   }
 
-  .page-intro {
+  .breadcrumbs {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .breadcrumbs a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .breadcrumbs a:hover {
+    color: var(--gold);
+  }
+  .breadcrumbs .active {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .trust-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 1.5rem;
+  }
+  .stars {
+    color: var(--gold);
+    letter-spacing: 2px;
     font-size: 1.2rem;
-    color: var(--muted);
-    margin-bottom: 3rem;
   }
 
-  /* ========== Grid ========== */
+  /* Main Grid */
+  .content-wrapper {
+    margin-top: -4rem; /* Overlap effect for UI depth */
+    padding-bottom: var(--section-spacing);
+  }
+
   .layout-grid {
     display: grid;
-    gap: 3rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 
   @media (min-width: 1024px) {
@@ -192,56 +268,60 @@ const typeName = capitalizeWords(safeSlug.replace(/-/g, " "));
     }
   }
 
-  /* ========== Cards ========== */
-  .card {
+  /* Cards */
+  .content-card {
     background: var(--white);
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    font-size: 1.05rem;
-    line-height: 1.7;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
   }
 
-  .prose {
+  .section-heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 3rem 0 1.5rem;
+    color: var(--navy);
   }
 
-  /* ========== Features ========== */
-  .features {
-    background: #fff9e6;
-    border-left: 5px solid var(--gold);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-  }
-
-  .features h2 {
-    color: var(--navy-dark);
-    margin-bottom: 1.5rem;
-  }
-
-  .feature-list {
+  /* Technical Specs */
+  .specs-grid {
     display: grid;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.25rem;
   }
 
-  .feature-list li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+  .spec-tile {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--slate-200);
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .spec-tile:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+  }
+  .spec-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--slate-600);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .spec-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--navy);
   }
 
-  .feature-list svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--gold);
-  }
-
-  /* ========== Options ========== */
+  /* Options Grid */
   .options-grid {
     display: grid;
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-
   @media (min-width: 768px) {
     .options-grid {
       grid-template-columns: 1fr 1fr;
@@ -250,50 +330,152 @@ const typeName = capitalizeWords(safeSlug.replace(/-/g, " "));
 
   .option-card {
     background: var(--white);
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: 12px;
-    box-shadow: var(--shadow);
+    border: 1px solid var(--slate-200);
   }
-
   .option-card h3 {
-    margin-bottom: 1rem;
-    color: var(--navy);
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    border-bottom: 2px solid var(--slate-50);
+    padding-bottom: 0.5rem;
   }
 
+  /* Swatches */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 1rem;
+  }
+  .swatch-item {
+    text-align: center;
+  }
+  .swatch-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 auto 0.5rem;
+    border: 1px solid var(--slate-200);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .swatch-name {
+    font-size: 0.7rem;
+    font-weight: 500;
+    display: block;
+    color: var(--slate-600);
+    line-height: 1.2;
+  }
+
+  /* Pill Lists */
+  .sub-option {
+    margin-bottom: 1.25rem;
+  }
+  .sub-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--slate-600);
+  }
   .pill-list {
+    list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    /* gap: 0.5rem; */
-    list-style: none;
+    gap: 0.5rem;
   }
-
   .pill-list li {
-    /* background: #e5e7eb; */
-    padding: 0.4rem 0.4rem;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.85rem;
+  }
 
+  /* Sidebar CTA */
+  .sticky-sidebar {
+    position: sticky;
+    top: 2rem;
+  }
+  .cta-card {
+    background: var(--navy);
+    color: var(--white);
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
     text-align: center;
-    font-size: 0.8rem;
-    width: 105px;
-  }
-  .color-buble {
-    margin: 0 auto;
-    border: 1px solid var(--navy);
-    border-radius: 999px;
-    display: block;
-    height: 30px;
-    width: 70px;
-  }
-
-  /* ========== Sidebar ========== */
-  .sidebar {
+    margin-bottom: 2rem;
+    overflow: hidden;
     position: relative;
   }
+  .cta-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.3rem 1rem;
+    border-radius: 99px;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+  .cta-card p {
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
 
-  @media (min-width: 1024px) {
-    .sidebar {
-      position: sticky;
-      top: 2rem;
-    }
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .btn-gold {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-gold:hover {
+    background: var(--gold-hover);
+  }
+  .btn-outline-white {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--white);
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-outline-white:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Prose Overrides */
+  .prose :global(h2) {
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-top: 2rem;
+  }
+  .prose :global(p) {
+    margin-bottom: 1.25rem;
+    color: var(--slate-600);
+  }
+  .prose :global(img) {
+    border-radius: 12px;
+    margin: 2rem 0;
+    width: 100%;
+  }
+  /* Add this to your <style> tag in [type].astro */
+  .prose :global(img) {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: block;
   }
 </style>

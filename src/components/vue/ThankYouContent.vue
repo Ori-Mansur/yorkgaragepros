@@ -27,7 +27,7 @@
 
             <div class="contact-footer">
                 <p>Need urgent help? Call us now:</p>
-                <a href="tel:+19059609941" class="phone-link">(905) 960-9947</a>
+                <a href="tel:+19059609947" class="phone-link">(905) 960-9947</a>
             </div>
         </div>
     </div>

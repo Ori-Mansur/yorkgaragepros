@@ -2,28 +2,62 @@
 import { Phone } from "@lucide/astro";
 ---
 
-<a class="phone-btn" href="tel:+19059609947" aria-label="Call York Garage Pros at 905-960-9947">
+<a
+    class="phone-btn"
+    href="tel:+19059609947"
+    aria-label="Call York Garage Pros at 905-960-9947"
+>
     <Phone />
 </a>
 <style>
-    .phone-btn {
+    /* .phone-btn {
         display: flex;
         align-items: center;
         justify-content: center;
         position: sticky;
-        z-index: 100000;
+        z-index: 1500;
         height: 50px;
         width: 50px;
         border-radius: 999px;
         background-color: #e8a900;
         color: #1c2a44;
-        position: fixed; /* Changed from sticky to fixed for a floating effect */
-        bottom: 30px; /* Distance from the bottom of the screen */
-        right: 20px; /* Distance from the right side of the screen */
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Makes it pop off the background */
-        cursor: pointer; /* Shows the user it is clickable */
-        text-decoration: none; /* If using an <a> tag, this removes the underline */
+        position: fixed; 
+        bottom: 30px; 
+        right: 20px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        text-decoration: none; 
         transition: transform 0.2s ease;
+        contain: layout paint;
+        will-change: transform;
+    } */
+    .phone-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+
+        height: 50px;
+        width: 50px;
+        border-radius: 999px;
+
+        background-color: #e8a900;
+        color: #1c2a44;
+
+        z-index: 1500;
+
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        text-decoration: none;
+
+        transition: transform 0.2s ease;
+
+        /* Performance isolation */
+        contain: layout paint;
+        will-change: transform;
     }
     .phone-btn:hover {
         transform: scale(1.1); /* Feedback when hovered */
