@@ -84,6 +84,7 @@ export async function saveLeadToFirestore(collectionName, formData, source) {
     try {
         const docRef = await addDoc(collection(db, collectionName), {
             ...formData,
+            searchName: formData.name.toLowerCase(),
             status: "New Lead",
             source,
             userTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -169,7 +170,7 @@ export async function searchContacts({ search }) {
 
     // 1. Setup the range for "starts with"
     // Using \uf8ff tells Firestore to find everything starting with the string
-    const strSearch = search;
+    const strSearch = search.toLowerCase();
     const end = strSearch + '\uf8ff';
 
     try {
@@ -177,14 +178,14 @@ export async function searchContacts({ search }) {
         const contactsQuery = query(
             collection(db, "contacts"),
             orderBy("name"),
-            where('name','>=',strSearch),
+            where('searchName', '>=', strSearch),
             limit(5)
         );
 
         const bookingsQuery = query(
             collection(db, "bookings"),
             orderBy("name"),
-            where('name','>=',strSearch),
+            where('searchName', '>=', strSearch),
             limit(5)
         );
 
@@ -195,7 +196,8 @@ export async function searchContacts({ search }) {
             getDocs(contactsQuery),
             getDocs(bookingsQuery)
         ]);
-        
+        console.log('contactsSnap', contactsSnap);
+
 
         // 4. Map the results
         const contacts = contactsSnap.docs.map(doc => ({
@@ -213,7 +215,8 @@ export async function searchContacts({ search }) {
         }));
 
         // 5. Merge and return
-        return [...contacts, ...bookings];
+        console.log('contacts', contacts);
+        return { success: true, data: [...contacts, ...bookings], error: null };
 
     } catch (error) {
         console.error("Search error:", error);
