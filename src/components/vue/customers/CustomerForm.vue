@@ -1,6 +1,7 @@
 <template>
   <div class="customer-card">
     <h2 class="card-title">{{ isEdit ? "Update" : "Register New" }} Customer</h2>
+    
     <SearchContacts @select="populateFields" />
 
     <form @submit.prevent="save" class="customer-form">
@@ -48,7 +49,7 @@
       <transition name="fade">
         <div v-if="hasLocation" class="span-2">
           <div class="form-group mb-4">
-            <label>Search Address</label>
+            <label>Search Address (Google Maps)</label>
             <gmp-place-autocomplete
               @gmp-select="onPlaceSelect"
               requested-region="CA"
@@ -58,15 +59,15 @@
           <div class="location-fields grid-inner">
             <div class="form-group span-2">
               <label>Street Address</label>
-              <input v-model="form.address" type="text" required />
+              <input v-model="form.address" type="text" :required="hasLocation" />
             </div>
             <div class="form-group span-1">
               <label>City</label>
-              <input v-model="form.city" type="text" required />
+              <input v-model="form.city" type="text" :required="hasLocation" />
             </div>
             <div class="form-group span-1">
               <label>Postal Code</label>
-              <input v-model="form.postalCode" type="text" required />
+              <input v-model="form.postalCode" type="text" :required="hasLocation" />
             </div>
           </div>
         </div>
@@ -83,11 +84,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"; // Added onMounted
+import { ref, onMounted } from "vue";
 import { actions } from "astro:actions";
-// Import the Google Maps loader helpers
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
-import SearchContacts from './SearchContacts.vue'
+import SearchContacts from './SearchContacts.vue';
 
 const props = defineProps(["initialData", "customerId"]);
 const loading = ref(false);
@@ -101,15 +101,15 @@ const form = ref({
   type: props.initialData?.type || "residential",
   hstNumber: props.initialData?.hstNumber || "",
   address: props.initialData?.address || "",
-  city: props.initialData?.city || "Newmarket",
+  city: props.initialData?.city || "",
   postalCode: props.initialData?.postalCode || "",
 });
+
 function populateFields(data) {
   form.value.name = data.name;
   form.value.email = data.email || "";
   form.value.phone = data.phone || "";
 
-  // If the record has address data, enable location and fill it
   if (data.address) {
     hasLocation.value = true;
     form.value.address = data.address;
@@ -124,34 +124,21 @@ const onPlaceSelect = async (event) => {
 
   try {
     const place = await placePrediction.toPlace();
-    // Fetch specifically what we need
     await place.fetchFields({
       fields: ["addressComponents", "formattedAddress"],
     });
 
-    // 1. Set the main street address (removing the City/Country part if possible)
-    // Most people prefer just the street name in the first box
-    const streetNumber =
-      place.addressComponents.find((c) => c.types.includes("street_number"))?.longText ||
-      "";
-    const route =
-      place.addressComponents.find((c) => c.types.includes("route"))?.longText || "";
+    const streetNumber = place.addressComponents.find((c) => c.types.includes("street_number"))?.longText || "";
+    const route = place.addressComponents.find((c) => c.types.includes("route"))?.longText || "";
 
-    form.value.address = streetNumber
-      ? `${streetNumber} ${route}`
-      : place.formattedAddress;
-
-    // 2. Extract City
-    const city = place.addressComponents.find((c) => c.types.includes("locality"))
-      ?.longText;
+    form.value.address = streetNumber ? `${streetNumber} ${route}` : place.formattedAddress;
+    
+    const city = place.addressComponents.find((c) => c.types.includes("locality"))?.longText;
     if (city) form.value.city = city;
 
-    // 3. Extract Postal Code
-    const postCode = place.addressComponents.find((c) => c.types.includes("postal_code"))
-      ?.longText;
+    const postCode = place.addressComponents.find((c) => c.types.includes("postal_code"))?.longText;
     if (postCode) form.value.postalCode = postCode;
 
-    // Open the location section automatically if they picked an address
     hasLocation.value = true;
   } catch (error) {
     console.error("Error fetching place details:", error);
@@ -163,7 +150,7 @@ onMounted(async () => {
   if (!apiKey) return;
 
   setOptions({
-    key: apiKey, // Note: standard loader uses 'apiKey', check your library version
+    key: apiKey,
     version: "beta",
   });
 
@@ -177,6 +164,7 @@ onMounted(async () => {
 async function save() {
   loading.value = true;
   const submissionData = { ...form.value };
+  
   if (!hasLocation.value) {
     submissionData.address = "";
     submissionData.city = "";
@@ -203,21 +191,48 @@ function goBack() {
 
 <style scoped>
 @import "../../../styles/global.css";
-/* Grid Layout Improvements */
+/* Grid Layout */
 .customer-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
-.span-1 {
-  grid-column: span 1;
-}
-.span-2 {
-  grid-column: span 2;
+/* 📱 Mobile Responsive Rules */
+@media (max-width: 640px) {
+  .customer-card {
+    padding: 15px;
+  }
+  .customer-form {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .span-1, .span-2 {
+    grid-column: span 1 !important;
+  }
+  .grid-inner {
+    grid-template-columns: 1fr !important;
+    padding: 15px !important;
+  }
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .btn {
+    width: 100%;
+    padding: 14px;
+  }
+  .form-group input, .form-group select {
+    font-size: 16px; /* Prevents mobile zoom on focus */
+  }
 }
 
-/* Section Divider for Address */
+/* Desktop Spans */
+@media (min-width: 641px) {
+  .span-1 { grid-column: span 1; }
+  .span-2 { grid-column: span 2; }
+}
+
 .section-divider {
   margin-top: 15px;
   padding-top: 15px;
@@ -227,19 +242,18 @@ function goBack() {
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
-  font-family: "Montserrat-Bold", sans-serif;
+  font-weight: 700;
   color: #2563eb;
+  padding: 10px 0;
 }
 
 .checkbox-label input {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
+  width: 20px;
+  height: 20px;
 }
 
-/* Gray box for the address fields */
 .grid-inner {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -250,23 +264,20 @@ function goBack() {
   border: 1px solid #e2e8f0;
 }
 
-/* Animations */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* Standardizing Form Styles */
 .customer-card {
   background: white;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #0f172a;
 }
 
 .form-group label {
@@ -284,6 +295,20 @@ function goBack() {
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 15px;
+  background-color: #fff;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .btn {
@@ -292,14 +317,27 @@ function goBack() {
   font-weight: 700;
   cursor: pointer;
   border: none;
+  transition: all 0.2s;
 }
 
 .btn.primary {
   background: #2563eb;
   color: white;
 }
+
 .btn.secondary {
   background: #f1f5f9;
   color: #475569;
+}
+
+.mb-4 { margin-bottom: 1rem; }
+
+/* Transitions */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

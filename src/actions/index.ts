@@ -1,9 +1,9 @@
 import { defineAction } from 'astro:actions';
-import { randomUUID } from 'node:crypto';
 import { z } from 'astro:schema';
-import { db } from '../db'; // Your new Turso connection
+import { db } from '../db';
 import { Customers, Locations, DocumentItems, Documents } from '../db/schema';
-import { eq, and, count } from 'drizzle-orm';
+import { eq, count } from 'drizzle-orm';
+import { randomUUID } from 'node:crypto'; // Safer for server-side environments
 
 export const server = {
     saveCustomer: defineAction({
@@ -21,16 +21,14 @@ export const server = {
         }),
         handler: async (input) => {
             const { id, address, city, postalCode, ...customerData } = input;
-            const customerId = id || crypto.randomUUID();
+            const customerId = id || randomUUID();
 
             if (id) {
-                // UPDATE EXISTING
                 await db.update(Customers)
                     .set({ ...customerData })
                     .where(eq(Customers.id, id));
 
                 if (address) {
-                    // Check if location exists to update or insert
                     const [existingLoc] = await db.select().from(Locations).where(eq(Locations.customerId, id));
                     if (existingLoc) {
                         await db.update(Locations)
@@ -38,15 +36,14 @@ export const server = {
                             .where(eq(Locations.customerId, id));
                     } else {
                         await db.insert(Locations).values({
-                            id: crypto.randomUUID(),
-                            customerId: customerId,
+                            id: randomUUID(),
+                            customerId: id,
                             address, city: city || 'Newmarket', postalCode: postalCode || '',
                             isBillingAddress: true
                         });
                     }
                 }
             } else {
-                // INSERT NEW
                 await db.insert(Customers).values({
                     id: customerId,
                     ...customerData,
@@ -54,7 +51,7 @@ export const server = {
 
                 if (address) {
                     await db.insert(Locations).values({
-                        id: crypto.randomUUID(),
+                        id: randomUUID(),
                         customerId: customerId,
                         address,
                         city: city || 'Newmarket',
@@ -73,37 +70,41 @@ export const server = {
             customerId: z.string(),
             locationId: z.string().optional().nullable(),
             parentDocumentId: z.string().optional().nullable(),
-            type: z.enum(['quote', 'invoice', 'receipt']),
+            type: z.enum(['QUOTE', 'INVOICE', 'RECEIPT', 'REFUND']),
             status: z.string().default('draft'),
             pdfUrl: z.string().optional(),
             promoLabel: z.string().optional(),
+            // Changed to match your Frontend: qty and price
             items: z.array(z.object({
                 title: z.string(),
-                description: z.string().optional().default(''),
-                quantity: z.number(),
-                unitPrice: z.number(),
+                desc: z.string().optional().default(''),
+                qty: z.number(),
+                price: z.number(),
                 isTaxable: z.boolean().default(true)
             })),
             notes: z.string().optional(),
-            discountAmount: z.number().default(0)
+            discountValue: z.number().default(0),
+            taxRate: z.number().default(13), // Added this
         }),
         handler: async (input) => {
-            const docId = crypto.randomUUID();
+            const docId = randomUUID();
 
-            // 1. Calculate Financials
-            const subtotal = input.items.reduce((sum, i) => sum + (i.quantity * i.unitPrice), 0);
+            // 1. Calculate Financials using the taxRate from the UI
+            const subtotal = input.items.reduce((sum, i) => sum + (i.qty * i.price), 0);
             const taxableAmount = input.items
                 .filter(i => i.isTaxable)
-                .reduce((sum, i) => sum + (i.quantity * i.unitPrice), 0);
+                .reduce((sum, i) => sum + (i.qty * i.price), 0);
 
-            const hstRate = 0.13;
-            const taxAmount = Math.max(0, (taxableAmount - input.discountAmount) * hstRate);
-            const totalAmount = subtotal - input.discountAmount + taxAmount;
+            // TRUST the input taxRate (convert 13 to 0.13)
+            const hstRate = input.taxRate / 100;
 
-            // 2. Generate Number (Count existing of this type)
-            const result = await db.select({ value: count() }).from(Documents).where(eq(Documents.type, input.type));
-            const existingCount = result[0].value;
-            const prefix = input.type === 'quote' ? 'Q' : input.type === 'invoice' ? 'INV' : 'REC';
+            const taxAmount = Math.max(0, (taxableAmount - input.discountValue) * hstRate);
+            const totalAmount = subtotal - input.discountValue + taxAmount;
+
+            // 2. Generate Number 
+            const countRes = await db.select({ value: count() }).from(Documents).where(eq(Documents.type, input.type));
+            const existingCount = countRes[0]?.value ?? 0;
+            const prefix = input.type === 'QUOTE' ? 'Q' : input.type === 'INVOICE' ? 'INV' : 'REC';
             const docNum = `${prefix}-${1000 + existingCount + 1}`;
 
             // 3. Insert Document Header
@@ -117,30 +118,24 @@ export const server = {
                 pdfUrl: input.pdfUrl,
                 subtotal,
                 taxAmount,
-                discountAmount: input.discountAmount,
-                totalAmount,
+                discountAmount: input.discountValue,
+                taxRate: input.taxRate, // Save the specific rate used
+                totalAmount: input.type === 'REFUND' ? -Math.abs(totalAmount) : totalAmount,
                 notes: input.notes,
                 promoLabel: input.promoLabel,
                 status: input.status,
                 issueDate: new Date()
             });
 
-            // Logic: If this is a Receipt, mark the parent Invoice as Paid
-            if (input.type === 'receipt' && input.parentDocumentId) {
-                await db.update(Documents)
-                    .set({ status: 'paid', paidAt: new Date() })
-                    .where(eq(Documents.id, input.parentDocumentId));
-            }
-
-            // 4. Insert Items
+            // 4. Insert Items (Mapping qty -> quantity and price -> unitPrice for DB)
             if (input.items.length > 0) {
                 const lineItems = input.items.map(item => ({
                     documentId: docId,
                     title: item.title,
-                    description: item.description,
-                    quantity: item.quantity,
-                    unitPrice: item.unitPrice,
-                    lineTotal: item.quantity * item.unitPrice,
+                    description: item.desc,
+                    quantity: item.qty,
+                    unitPrice: item.price,
+                    lineTotal: item.qty * item.price,
                     isTaxable: item.isTaxable
                 }));
                 await db.insert(DocumentItems).values(lineItems);
@@ -149,68 +144,70 @@ export const server = {
             return { success: true, id: docId, documentNumber: docNum };
         }
     }),
-
     updateDocument: defineAction({
         accept: 'json',
         input: z.object({
-            id: z.string(),
-            status: z.string().optional(),
+            id: z.string(), // Required for updates
             customerId: z.string(),
             locationId: z.string().optional().nullable(),
-            type: z.string(),
-            subtotal: z.number(),
-            taxAmount: z.number(),
-            discountAmount: z.number(),
-            totalAmount: z.number(),
+            type: z.enum(['QUOTE', 'INVOICE', 'RECEIPT', 'REFUND']),
+            status: z.string(),
             pdfUrl: z.string().optional(),
-            notes: z.string().optional(),
             promoLabel: z.string().optional(),
             items: z.array(z.object({
                 title: z.string(),
-                description: z.string().optional().default(''),
-                quantity: z.number(),
-                unitPrice: z.number(),
-                isTaxable: z.boolean()
-            }))
+                desc: z.string().optional().default(''),
+                qty: z.number(),
+                price: z.number(),
+                isTaxable: z.boolean().default(true)
+            })),
+            notes: z.string().optional(),
+            discountValue: z.number().default(0),
+            taxRate: z.number().default(13),
         }),
         handler: async (input) => {
-            const [existing] = await db.select().from(Documents).where(eq(Documents.id, input.id));
-            if (!existing) throw new Error("Document not found");
-            
-            if (existing.status !== 'draft' && !input.status) {
-                throw new Error("Only Draft documents can be modified.");
-            }
+            // 1. Re-calculate Financials based on updated input
+            const subtotal = input.items.reduce((sum, i) => sum + (i.qty * i.price), 0);
+            const taxableAmount = input.items
+                .filter(i => i.isTaxable)
+                .reduce((sum, i) => sum + (i.qty * i.price), 0);
 
+            const hstRate = input.taxRate / 100;
+            const taxAmount = Math.max(0, (taxableAmount - input.discountValue) * hstRate);
+            const totalAmount = subtotal - input.discountValue + taxAmount;
+
+            // 2. Update Document Header
             await db.update(Documents)
                 .set({
-                    locationId: input.locationId,
-                    status: input.status || existing.status,
-                    subtotal: input.subtotal,
-                    taxAmount: input.taxAmount,
-                    discountAmount: input.discountAmount,
-                    totalAmount: input.totalAmount,
                     pdfUrl: input.pdfUrl,
+                    subtotal,
+                    taxAmount,
+                    taxRate: input.taxRate,
+                    discountAmount: input.discountValue,
+                    totalAmount: input.type === 'REFUND' ? -Math.abs(totalAmount) : totalAmount,
                     notes: input.notes,
-                    // updatedAt can be added to schema if needed
+                    promoLabel: input.promoLabel,
+                    status: input.status,
+                    updatedAt: new Date()
                 })
                 .where(eq(Documents.id, input.id));
 
-            // Clean and replace items
+            // 3. Sync Line Items (Delete existing and re-insert new ones)
             await db.delete(DocumentItems).where(eq(DocumentItems.documentId, input.id));
 
             if (input.items.length > 0) {
-                const newLineItems = input.items.map(item => ({
+                const lineItems = input.items.map(item => ({
                     documentId: input.id,
                     title: item.title,
-                    description: item.description,
-                    quantity: item.quantity,
-                    unitPrice: item.unitPrice,
-                    lineTotal: item.quantity * item.unitPrice,
+                    description: item.desc,
+                    quantity: item.qty,
+                    unitPrice: item.price,
+                    lineTotal: item.qty * item.price,
                     isTaxable: item.isTaxable
                 }));
-                await db.insert(DocumentItems).values(newLineItems);
+                await db.insert(DocumentItems).values(lineItems);
             }
-            
+
             return { success: true };
         }
     })

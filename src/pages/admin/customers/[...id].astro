@@ -2,13 +2,17 @@
 import "../../../styles/global.css";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import CustomerForm from "../../../components/vue/customers/CustomerForm.vue";
-import { db, Customers, eq } from 'astro:db';
+
+// 1. IMPORTANT: Change these imports to your custom DB folder
+import { db } from '../../../db'; 
+import { Customers } from '../../../db/schema';
+import { eq } from 'drizzle-orm';
 
 const { id } = Astro.params;
 let initialData = null;
 
-// If we have an ID, fetch the real data from Astro DB
-if (id) {
+// 2. Fetch the data from your real Turso DB
+if (id && id !== 'new') {
   const results = await db.select().from(Customers).where(eq(Customers.id, id));
   if (results.length > 0) {
     initialData = results[0];
@@ -16,12 +20,12 @@ if (id) {
 }
 ---
 
-<AdminLayout title={id ? "Edit Customer" : "Add Customer"}>
+<AdminLayout title={id && id !== 'new' ? "Edit Customer" : "Add Customer"}>
   <div class="max-w-4xl mx-auto p-6">
     <CustomerForm 
       client:load 
       initialData={initialData} 
-      customerId={id} 
+      customerId={id === 'new' ? null : id} 
     />
   </div>
 </AdminLayout>

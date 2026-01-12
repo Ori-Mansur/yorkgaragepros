@@ -2,54 +2,103 @@
 import "../../../styles/global.css";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import CustomerTable from "../../../components/vue/customers/CustomerTable.vue";
-import { db, Customers, Locations, Documents, eq, desc } from "astro:db";
 
-// Fetch joined data
+// 1. Updated Imports (Removing astro:db)
+import { db } from "../../../db";
+import { Customers, Locations, Documents } from "../../../db/schema";
+import { eq, desc } from "drizzle-orm";
+
+// 2. Fetch Joined Data from Turso
 const result = await db
   .select()
   .from(Customers)
-  .leftJoin(Locations, eq(Customers.id, Locations.customerId))
-  .all();
+  .leftJoin(Locations, eq(Customers.id, Locations.customerId));
 
-// Fetch documents
-const allDocs = await db.select().from(Documents).orderBy(desc(Documents.issueDate)).all();
+// 3. Fetch all documents ordered by newest
+const allDocs = await db.select().from(Documents).orderBy(desc(Documents.issueDate));
 
-// Format data for Vue: Group docs inside the customer object
-const customersWithDocs = result.map(({ Customers: c, Locations: l }) => ({
-  ...c,
-  location: l,
-  documents: allDocs.filter(d => d.customerId === c.id)
-}));
+// 4. Format data for Vue
+// Drizzle result format is: [{ customers: {...}, locations: {...} }]
+const customersWithDocs = result.map((row) => {
+  const c = row.customers; // Using the table variable name
+  const l = row.locations;
+  
+  return {
+    ...c,
+    location: l,
+    documents: allDocs.filter(d => d.customerId === c.id)
+  };
+});
 ---
 
 <AdminLayout title="Customer Directory">
   <main class="admin-container">
     <div class="list-header">
-      <h1>Customer Directory</h1>
-      <a href="/admin/customers" class="btn-primary">+ Add New Customer</a>
+      <div class="header-text">
+        <h1>Customer Directory</h1>
+        <p>{customersWithDocs.length} total records found</p>
+      </div>
+      <a href="/admin/customers/new" class="btn-primary">+ New Customer</a>
     </div>
 
     <CustomerTable client:load initialCustomers={customersWithDocs} />
   </main>
 </AdminLayout>
+
 <style>
   .admin-container {
-    padding: 40px;
+    padding: 20px; /* Reduced for mobile */
     max-width: 1200px;
     margin: 0 auto;
   }
+  
   .list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    gap: 15px;
   }
-   .btn-primary {
+
+  .header-text h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #0f172a;
+  }
+
+  .header-text p {
+    margin: 4px 0 0 0;
+    color: #64748b;
+    font-size: 0.875rem;
+  }
+
+  .btn-primary {
     background: #2563eb;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
-    font-family: 'Montserrat-Bold', sans-serif;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #1d4ed8;
+  }
+
+  /* 📱 Mobile Specific Header */
+  @media (max-width: 640px) {
+    .admin-container {
+      padding: 15px;
+    }
+    .list-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .btn-primary {
+      width: 100%;
+      text-align: center;
+    }
   }
 </style>

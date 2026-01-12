@@ -3,30 +3,47 @@
 import "../../../styles/global.css";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import InvoiceCreator from "../../../components/vue/InvoiceCreator.vue";
+
+// 1. Update Imports for Custom Drizzle Setup
+import { db } from "../../../db";
 import {
-  db,
   Customers,
   Locations,
   Documents,
   DocumentItems,
-  eq,
-} from "astro:db";
+} from "../../../db/schema";
+import { eq, and } from "drizzle-orm";
+import { type InferSelectModel } from "drizzle-orm";
+
+// This automatically creates types based on your schema
+type Customer = InferSelectModel<typeof Customers>;
+type Location = InferSelectModel<typeof Locations>;
+type Document = InferSelectModel<typeof Documents> & { items?: any[] };
+
+interface PrefilledData {
+  type: string;
+  customer: any | null;
+  location: any | null;
+  document: (any & { items?: any[] }) | null; // Added items here
+}
 
 const { id } = Astro.params;
-const isEdit = id && id !== "new";
+// Handle the catch-all parameter: id might be undefined, "new", or a UUID
+const isEdit = id && id !== "new" && id !== "";
 
 const customerId = Astro.url.searchParams.get("customerId");
 const locId = Astro.url.searchParams.get("locId");
 const type = Astro.url.searchParams.get("type") || "quote";
 const sourceId = Astro.url.searchParams.get("sourceId");
 
-let prefilledData = {
+let prefilledData: PrefilledData = {
   type: type,
   customer: null,
   location: null,
   document: null,
 };
 
+// 2. FETCH FOR EDIT MODE
 if (isEdit) {
   const rows = await db
     .select()
@@ -34,69 +51,70 @@ if (isEdit) {
     .where(eq(Documents.id, id))
     .leftJoin(DocumentItems, eq(Documents.id, DocumentItems.documentId))
     .leftJoin(Customers, eq(Documents.customerId, Customers.id))
-    .leftJoin(Locations, eq(Documents.locationId, Locations.id))
-    .all();
+    .leftJoin(Locations, eq(Documents.locationId, Locations.id));
 
   if (rows.length > 0) {
     prefilledData = {
-      type: rows[0].Documents.type,
-      customer: rows[0].Customers,
-      location: rows[0].Locations,
+      // Drizzle returns lowercase keys based on table names
+      type: rows[0].documents.type,
+      customer: rows[0].customers,
+      location: rows[0].locations,
       document: {
-        ...rows[0].Documents,
-        items: rows.map((r) => r.DocumentItems).filter(Boolean),
+        ...rows[0].documents,
+        // Group all items from the join results
+        items: rows.map((r) => r.document_items).filter(Boolean),
       },
     };
   }
-} else {
-  // 1. Fetch Customer & Location details (Standard for all new docs)
+}
+// 3. FETCH FOR NEW MODE
+else {
+  // A. Fetch Customer & Location details from URL Params
   if (customerId) {
-    const result = await db
+    const results = await db
       .select()
       .from(Customers)
       .where(eq(Customers.id, customerId))
-      .leftJoin(Locations, eq(Locations.id, locId || ""))
-      .get();
+      .leftJoin(Locations, eq(Locations.id, locId || ""));
 
-    if (result) {
-      prefilledData.customer = result.Customers;
-      prefilledData.location = result.Locations;
+    if (results.length > 0) {
+      prefilledData.customer = results[0].customers;
+      prefilledData.location = results[0].locations;
     }
   }
 
-  // 2. If cloning (Quote -> Invoice), fetch items AND ensure location is linked
+  // B. If cloning (Quote -> Invoice), fetch source data
   if (sourceId) {
     const sourceRows = await db
       .select()
       .from(Documents)
       .where(eq(Documents.id, sourceId))
       .leftJoin(DocumentItems, eq(Documents.id, DocumentItems.documentId))
-      .leftJoin(Locations, eq(Documents.locationId, Locations.id)) // Added Location Join
-      .all();
+      .leftJoin(Locations, eq(Documents.locationId, Locations.id));
 
     if (sourceRows.length > 0) {
-      // Create a clean clone of the document metadata
-      const clonedDoc = { ...sourceRows[0].Documents };
+      const firstRow = sourceRows[0];
 
-      // Store the original ID as the parent before we delete it from the main object
-      const originalId = clonedDoc.id;
-
-      // Remove identifiers so it's treated as a brand new record
-      delete clonedDoc.id;
-      delete clonedDoc.documentNumber;
-      delete clonedDoc.type;
-      delete clonedDoc.pdfUrl;
+      // 1. Destructure: Pull out the keys you want to REMOVE
+      // 2. Use 'rest' to collect everything else into a new object
+      const {
+        id: oldId,
+        documentNumber,
+        pdfUrl,
+        type: oldType,
+        ...clonedMetadata
+      } = firstRow.documents;
 
       prefilledData.document = {
-        ...clonedDoc,
-        parentDocumentId: originalId, // <--- ADD THIS HERE
+        ...clonedMetadata, // This contains everything EXCEPT id, docNum, pdfUrl, and type
+        parentDocumentId: oldId, // Link back to the original Quote
         status: "draft",
-        items: sourceRows.map((r) => r.DocumentItems).filter(Boolean),
+        type: type, // Use the new type from the URL (e.g., 'invoice')
+        items: sourceRows.map((r) => r.document_items).filter(Boolean),
       };
 
-      // Ensure location carries over if URL didn't have one
-      if (!prefilledData.location && sourceRows[0].Locations) {
-        prefilledData.location = sourceRows[0].Locations;
+      if (!prefilledData.location && firstRow.locations) {
+        prefilledData.location = firstRow.locations;
       }
     }
   }
@@ -106,7 +124,7 @@ if (isEdit) {
 <AdminLayout
   title={isEdit ? `Edit ${prefilledData.type}` : `New ${type.toUpperCase()}`}
 >
-  <div class="p-6">
+  <div class="max-w-7xl mx-auto p-4 md:p-6">
     <InvoiceCreator
       client:only="vue"
       prefilledData={prefilledData}
