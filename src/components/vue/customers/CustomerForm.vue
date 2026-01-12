@@ -189,7 +189,7 @@ async function save() {
   });
 
   if (!error) {
-    window.location.href = "/admin/customers?success=true";
+    window.location.href = "/admin/customers/list";
   } else {
     alert(`Error: ${error.message}`);
     loading.value = false;

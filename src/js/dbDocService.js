@@ -47,7 +47,7 @@ export const saveDocToCloud = async (formData, pdfBlob, fileName) => {
             searchName: formData.clientName.toLowerCase() // Useful for searching later
         });
 
-        return docRef.id;
+        return downloadURL;
     } catch (error) {
         console.error("Error in dbDocService:", error);
         throw error;

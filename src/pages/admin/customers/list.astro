@@ -1,101 +1,54 @@
 ---
-import "../../../styles/global.css";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
-import { db, Customers, Locations, eq } from "astro:db";
+import CustomerTable from "../../../components/vue/customers/CustomerTable.vue";
+import { db, Customers, Locations, Documents, eq, desc } from "astro:db";
 
-// 1. Fetch all customers and join their primary location
-const customers = await db
+// Fetch joined data
+const result = await db
   .select()
   .from(Customers)
   .leftJoin(Locations, eq(Customers.id, Locations.customerId))
   .all();
 
-// Handle the "success" message from the form redirect
-const showSuccess = Astro.url.searchParams.get('success') === 'true';
+// Fetch documents
+const allDocs = await db.select().from(Documents).orderBy(desc(Documents.issueDate)).all();
+
+// Format data for Vue: Group docs inside the customer object
+const customersWithDocs = result.map(({ Customers: c, Locations: l }) => ({
+  ...c,
+  location: l,
+  documents: allDocs.filter(d => d.customerId === c.id)
+}));
 ---
 
-<AdminLayout title="Customer Directory | York Garage Pros">
+<AdminLayout title="Customer Directory">
   <main class="admin-container">
-    <header class="list-header">
-      <div>
-        <h1>Customer Directory</h1>
-        <p>Manage your Newmarket and GTA clients</p>
-      </div>
+    <div class="list-header">
+      <h1>Customer Directory</h1>
       <a href="/admin/customers" class="btn-primary">+ Add New Customer</a>
-    </header>
-
-    {showSuccess && (
-      <div class="alert-success">
-        Customer saved successfully!
-      </div>
-    )}
-
-    <div class="table-card">
-      <table class="customer-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Contact Info</th>
-            <th>Type</th>
-            <th>Service Address</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {customers.map(({ Customers: c, Locations: l }) => (
-            <tr>
-              <td class="font-bold">{c.name}</td>
-              <td>
-                <div class="text-sm">{c.email}</div>
-                <div class="text-xs text-gray-500">{c.phone}</div>
-              </td>
-              <td>
-                <span class={`badge ${c.type}`}>
-                  {c.type}
-                </span>
-              </td>
-              <td>
-                {l ? (
-                  <div class="text-sm">
-                    {l.address}, {l.city}
-                  </div>
-                ) : (
-                  <span class="text-gray-400 italic">No address on file</span>
-                )}
-              </td>
-              <td>
-                <a href={`/admin/customers/${c.id}`} class="edit-link">Edit</a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
+
+    <CustomerTable client:load initialCustomers={customersWithDocs} />
   </main>
 </AdminLayout>
-
 <style>
-  .admin-container { padding: 40px; max-width: 1200px; margin: 0 auto; }
-  .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-  
-  .table-card { 
-    background: white; 
-    border-radius: 12px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-    overflow: hidden; 
+  .admin-container {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-
-  .customer-table { width: 100%; border-collapse: collapse; text-align: left; }
-  .customer-table th { background: #f8fafc; padding: 15px; font-size: 13px; color: #64748b; text-transform: uppercase; }
-  .customer-table td { padding: 15px; border-top: 1px solid #f1f5f9; }
-
-  .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
-  .badge.residential { background: #dcfce7; color: #166534; }
-  .badge.commercial { background: #dbeafe; color: #1e40af; }
-  .badge.landlord { background: #fef9c3; color: #854d0e; }
-
-  .edit-link { color: #2563eb; text-decoration: none; font-weight: 600; }
-  .btn-primary { background: #2563eb; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; }
-  
-  .alert-success { background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+   .btn-primary {
+    background: #2563eb;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+  }
 </style>

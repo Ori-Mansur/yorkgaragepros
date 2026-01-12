@@ -80,6 +80,7 @@
       <section class="section-group">
         <label class="section-label">Products / Services</label>
         <div v-for="(item, index) in form.items" :key="index" class="item-row">
+          <input v-model="item.title" placeholder="Title" class="item-title" />
           <input v-model="item.desc" placeholder="Description" class="item-desc" />
           <input
             v-model.number="item.qty"
@@ -132,9 +133,26 @@
           </div>
         </div>
 
-        <button class="generate-btn" @click="generateAndSave">
-          GENERATE {{ form.type }} PDF
-        </button>
+        <div class="action-grid" v-if="!isLocked">
+          <button class="save-draft-btn" @click="handleAction('draft')">
+            SAVE DRAFT
+          </button>
+          <button class="generate-btn" @click="handleAction('final')">
+            GENERATE {{ form.type }} PDF
+          </button>
+        </div>
+
+        <div v-else class="locked-banner">
+          <p>This document is finalized and cannot be modified.</p>
+          <a
+            :href="props.prefilledData.document.pdfUrl"
+            target="_blank"
+            class="view-final-btn"
+            >VIEW PDF</a
+          >
+        </div>
+
+        <a class="cancel-btn" href="/admin/customers/list"> Cancel / Back </a>
       </footer>
     </div>
   </div>
@@ -142,11 +160,14 @@
 
 <script setup>
 import { onMounted, ref, reactive, computed } from "vue";
-import { jsPDF } from "jspdf";
-import autoTable from "jspdf-autotable";
+
 // Import the service we just created
-import { saveDocToCloud, getNextDocNumber } from "../../js/dbDocService";
+import { getNextDocNumber } from "../../js/dbDocService";
 import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
+import { actions } from "astro:actions";
+import { generateAndUploadPDF } from "../../js/pdfGeneratorService";
+
+const props = defineProps(["prefilledData", "documentId"]);
 
 const addressInput = ref(null);
 
@@ -171,6 +192,11 @@ onMounted(async () => {
     console.log("Google Places (New) initialized.");
   } catch (e) {
     console.error("Google Maps failed to load:", e);
+  }
+  // Auto-generate number on load
+  if (!props.documentId) {
+    await formTypeChange(form.type);
+  } else {
   }
 });
 
@@ -200,56 +226,93 @@ const onPlaceSelect = async (event) => {
   }
 };
 
-/**
- * Handles the background upload process without
- * cluttering the PDF design logic.
- */
-const uploadPdfToFirebase = async (pdfDoc) => {
-  try {
-    // 1. Prepare the Filename
-    const fileName = `${form.type}_${form.number || "NoNumber"}`;
+const saveToDatabase = async (firebaseUrl, status = "draft") => {
+  const payload = {
+    id: props.documentId,
+    customerId: form.customerId,
+    locationId: form.locationId,
+    type: form.type.toLowerCase(),
+    documentNumber: form.number,
+    status: status, // Pass the status (draft or sent)
+    subtotal: subtotal.value,
+    discountAmount: calculatedDiscount.value,
+    promoLabel: form.promoLabel,
+    taxAmount: (subtotal.value - calculatedDiscount.value) * 0.13,
+    totalAmount: grandTotal.value,
+    parentDocumentId: form.parentDocumentId,
+    pdfUrl: firebaseUrl || "",
+    notes: form.notes,
+    items: form.items.map((item) => ({
+      title: item.title,
+      description: item.desc,
+      quantity: item.qty,
+      unitPrice: item.price,
+      isTaxable: true,
+    })),
+  };
 
-    // 2. Convert jsPDF instance to a Blob (Binary Large Object)
-    // This is the actual file format needed for Firebase Storage
-    const pdfBlob = pdfDoc.output("blob");
+  const { data, error } = props.documentId
+    ? await actions.updateDocument(payload)
+    : await actions.saveDocument(payload);
 
-    // 3. Collect the data from the form state
-    const dbData = {
-      ...form, // All form fields
-      grandTotal: grandTotal.value,
-      discountValue: calculatedDiscount.value,
-    };
-
-    // 4. Call our Step 1 service
-    const cloudId = await saveDocToCloud(dbData, pdfBlob, fileName);
-
-    console.log("Cloud Upload Successful. ID:", cloudId);
-    return cloudId;
-  } catch (error) {
-    console.error("Cloud Upload Failed:", error);
-    throw error; // Pass the error up so the UI can show an alert
-  }
+  if (error) throw error;
+  return data;
 };
 
-// 1. IMPORT THE FONT FILE
-import "../../utils/Montserrat-Bold.js";
-import "../../utils/Montserrat.js";
+console.log(props.prefilledData);
+
+// Helper to determine if we are editing an existing record
+const isExistingDoc = !!props.prefilledData?.document;
 
 const form = reactive({
-  type: "RECEIPT",
-  number: "",
-  issueDate: new Date().toISOString().substr(0, 10),
-  dueDate: "",
-  paymentMethod: "Cash",
-  clientName: "John Dear",
-  address: "123 Main st, Newmarket",
-  email: "ddd@gg.v",
-  phone: "123456789",
-  notes: "6 Months",
-  promoLabel: "Boxing Day",
-  discountType: "fixed",
-  discountValue: 100,
-  items: [{ desc: "Torsion Spring", qty: 1, price: 325 }],
+  // Use existing doc type, or fall back to prefilled/default
+  type: isExistingDoc
+    ? props.prefilledData.document?.type ? props.prefilledData.document.type.toUpperCase()
+    : props.prefilledData?.type?.toUpperCase() : "RECEIPT",
+
+  number: isExistingDoc ? props.prefilledData.document.documentNumber : "",
+  issueDate: isExistingDoc
+    ? new Date(props.prefilledData.document.issueDate).toISOString().substr(0, 10)
+    : new Date().toISOString().substr(0, 10),
+
+  dueDate:
+    isExistingDoc && props.prefilledData.document.dueDate
+      ? new Date(props.prefilledData.document.dueDate).toISOString().substr(0, 10)
+      : "",
+
+  paymentMethod: props.prefilledData?.document?.paymentMethod || "Cash",
+
+  // Linked IDs
+  customerId: props.prefilledData?.customer?.id || "",
+  locationId: props.prefilledData?.location?.id || "",
+
+  // Contact Details
+  clientName: props.prefilledData?.customer?.name || "",
+  address:
+    props.prefilledData?.location?.address ||
+    props.prefilledData?.customer?.address ||
+    "",
+  email: props.prefilledData?.customer?.email || "",
+  phone: props.prefilledData?.customer?.phone || "",
+
+  notes: isExistingDoc
+    ? props.prefilledData.document.notes
+    : "1-year warranty on parts and labor",
+  promoLabel: props.prefilledData?.document?.promoLabel || "",
+  discountType: props.prefilledData?.document?.discountType || "fixed",
+  discountValue: props.prefilledData?.document?.discountAmount || 0,
+  parentDocumentId: props.prefilledData?.document?.parentDocumentId || null,
+
+  // Map database line items to form structure
+  items: isExistingDoc
+    ? props.prefilledData.document.items.map((i) => ({
+        title: i.title,
+        desc: i.description,
+        qty: i.quantity,
+        price: i.unitPrice,
+        isTaxable: i.isTaxable,
+      }))
+    : [{ title: "", desc: "", qty: 1, price: 0, isTaxable: true }],
 });
 // Email: Standard alphanumeric with @ and domain
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -286,14 +349,6 @@ const validateForm = () => {
   return Object.keys(errors.value).length === 0;
 };
 
-// --- Business Info ---
-const business = {
-  phone: "(905) 960-9947", // Update with your real business phone
-  email: "info@yorkgaragepros.com",
-  website: "yorkgaragepros.com",
-  address: "Newmarket, ON L3X 2B1"
-};
-
 // --- Computed ---
 const getPlaceholder = computed(() => {
   if (form.type === "RECEIPT") return "REC-1001";
@@ -307,8 +362,11 @@ const calculatedDiscount = computed(() => {
   return form.discountValue || 0;
 });
 const grandTotal = computed(() => Math.max(0, subtotal.value - calculatedDiscount.value));
+const isLocked = computed(() => {
+  return isExistingDoc && props.prefilledData.document.status !== "draft";
+});
 
-const addItem = () => form.items.push({ desc: "", qty: 1, price: 0 });
+const addItem = () => form.items.push({ title: "", desc: "", qty: 1, price: 0 });
 const removeItem = (index) => form.items.length > 1 && form.items.splice(index, 1);
 
 const formTypeChange = async (t) => {
@@ -316,196 +374,42 @@ const formTypeChange = async (t) => {
   const autoNumber = await getNextDocNumber(form.type);
   form.number = autoNumber; // Update the form state
 };
-formTypeChange(form.type);
-const getLogoBase64 = (url) => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.src = url;
-    img.crossOrigin = "Anonymous";
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL("image/png"));
-    };
-    img.onerror = () => resolve(null);
-  });
-};
 
-// --- PDF Generation ---
-const generateAndSave = async () => {
-  console.log(form);
-
+const handleAction = async (mode) => {
   if (!validateForm()) {
+    alert("Please fix errors first.");
+    return;
+  }
+
+  try {
+    let firebaseUrl = props.prefilledData?.document?.pdfUrl || "";
+
+    // Only generate PDF if finalizing
+    if (mode === "final") {
+      const confirmFinal = confirm(
+        "Finalizing will lock this document. Generate PDF now?"
+      );
+      if (!confirmFinal) return;
+
+      firebaseUrl = await generateAndUploadPDF(form, {
+        subtotal: subtotal.value,
+        discount: calculatedDiscount.value,
+        grandTotal: grandTotal.value,
+      });
+    }
+
+    // Save to DB
+    await saveToDatabase(firebaseUrl, mode === "final" ? "sent" : "draft");
+
     alert(
-      "Please fix the errors before generating the document." +
-        JSON.stringify(errors.value)
+      mode === "final"
+        ? "Document finalized and PDF generated!"
+        : "Draft saved successfully."
     );
-    console.table(errors.value);
-    return; // Stop the function here
-  }
-  const doc = new jsPDF({ unit: "pt", format: "a4" });
-  const primaryAmber = [245, 158, 11];
-  const deepSlate = [30, 41, 59];
-
-  // 1. HEADER & LOGO
-  doc.setFillColor(deepSlate[0], deepSlate[1], deepSlate[2]);
-  doc.rect(0, 0, 600, 120, "F");
-  doc.setFillColor(primaryAmber[0], primaryAmber[1], primaryAmber[2]);
-  doc.rect(0, 120, 600, 5, "F");
-
-  const logoData = await getLogoBase64("/logoonly-removebg-preview.png");
-  if (logoData) {
-    doc.setFillColor(220, 220, 220);
-    doc.roundedRect(38, 23, 64, 64, 8, 8, "F");
-    doc.addImage(logoData, "PNG", 40, 25, 60, 60);
-  }
-
-  // 2. FONTS & COMPANY INFO
-  try {
-    doc.setFont("Montserrat-Bold", "bold");
-  } catch (e) {
-    doc.setFont("Montserrat", "bold");
-  }
-
-  const textStartX = logoData ? 115 : 40;
-  //   doc.setFontSize(20).setTextColor(255, 255, 255);
-  doc.setFontSize(20).setTextColor(primaryAmber[0], primaryAmber[1], primaryAmber[2]);
-  doc.text("YORK GARAGE PROS", textStartX, 50);
-
-  doc.setFontSize(8).setTextColor(200, 200, 200);
-  doc.text(`${business.website} | ${business.email}`, textStartX, 63);
-  doc.text(`${business.phone} | ${business.address}`, textStartX, 73);
-
-  // Business Contacts in Header
-  //   doc.setFontSize(9).setTextColor(245, 158, 11); // Amber
-
-  //   doc.setFontSize(9).setTextColor(primaryAmber[0]);
-  //   doc.text(`Phone: ${business.phone}`, textStartX, 85);
-  //   doc.text(`Email: ${business.email}`, textStartX, 98);
-
-  doc.setFontSize(24).setTextColor(255, 255, 255);
-  doc.text(form.type, 550, 75, { align: "right" });
-
-  // 3. CLIENT DETAILS & DOCUMENT INFO
-  let clientY = 160;
-  let clientHeader = "BILL TO:"; // Default for Invoice
-  if (form.type === "RECEIPT") {
-    clientHeader = "CUSTOMER DETAILS:";
-  } else if (form.type === "QUOTE") {
-    clientHeader = "PROPOSAL FOR:";
-  }
-
-  doc.setTextColor(deepSlate[0]).setFontSize(10).setFont("Montserrat-Bold", "bold");
-  doc.text(clientHeader, 40, clientY);
-
-  doc.setFont("Montserrat-Bold", "bold").setFontSize(11).setTextColor(0);
-  doc.text(form.clientName || "Valued Customer", 40, clientY + 15);
-
-  doc.setFont("Montserrat", "normal").setFontSize(9).setTextColor(80);
-  const clientLines = [form.address, form.phone, form.email].filter(Boolean);
-  doc.text(clientLines, 40, clientY + 30);
-
-  // Right Side: Doc Info
-  const infoX = 420;
-  doc.setFont("Montserrat-Bold", "bold").setFontSize(10).setTextColor(deepSlate[0]);
-  doc.text("DOCUMENT INFO:", infoX, clientY);
-  doc.setFont("Montserrat", "normal").setFontSize(9).setTextColor(80);
-  doc.text(`${form.type} #: ${form.number || "---"}`, infoX, clientY + 15);
-  doc.text(`Date: ${form.issueDate}`, infoX, clientY + 30);
-
-  if (form.type !== "RECEIPT" && form.dueDate) {
-    const dueDateLabel = `${form.type === "QUOTE" ? "Valid Until" : "Due Date"}: ${
-      form.dueDate
-    }`;
-    doc.text(dueDateLabel, infoX, clientY + 45);
-  } else if (form.type === "RECEIPT") {
-    doc.setFont("Montserrat-Bold", "bold").setTextColor(34, 197, 94);
-    doc.text(`PAID VIA: ${form.paymentMethod.toUpperCase()}`, infoX, clientY + 45);
-  }
-
-  // 4. THE TABLE
-  autoTable(doc, {
-    startY: 300,
-    head: [["DESCRIPTION", "QTY", "PRICE", "TOTAL"]],
-    body: form.items.map((i) => [
-      i.desc,
-      i.qty,
-      `$${Number(i.price).toFixed(2)}`,
-      `$${(i.qty * i.price).toFixed(2)}`,
-    ]),
-    theme: "striped",
-    headStyles: { fillColor: deepSlate, font: "Montserrat-Bold", fontStyle: "bold" },
-    styles: { font: "Montserrat", fontSize: 9 },
-    columnStyles: {
-      1: { halign: "center" },
-      2: { halign: "right" },
-      3: { halign: "right" },
-    },
-  });
-
-  // 5. TOTALS SECTION
-  // --- 5. POSITIONING THE SUMMARY SECTION ---
-  // Get the page height (A4 is ~842pt)
-  const pageHeight = doc.internal.pageSize.height;
-  const pageMidPoint = pageHeight / 2 + 100;
-
-  // If the table ends above the midpoint, jump to the midpoint.
-  // If the table is long and goes past the midpoint, start 30pt below the table.
-  let finalY = Math.max(doc.lastAutoTable.finalY + 30, pageMidPoint);
-
-  doc.setFont("Montserrat", "normal").setFontSize(10).setTextColor(80);
-  doc.text("Subtotal:", 365, finalY + 10);
-  doc.text(`$${subtotal.value.toFixed(2)}`, 550, finalY + 10, { align: "right" });
-
-  doc.setFont("Montserrat-Bold", "bold").setFontSize(10).setTextColor(80);
-  doc.text(`Discount (${form.promoLabel || "Promo"}):`, 365, finalY + 25);
-  doc.text(`-$${calculatedDiscount.value.toFixed(2)}`, 550, finalY + 25, {
-    align: "right",
-  });
-
-  /* FUTURE HST LINE - Commented out for now
-  doc.text("HST (13%):", 400, finalY + 40);
-  doc.text(`$${(grandTotal.value * 0.13).toFixed(2)}`, 550, finalY + 40, { align: 'right' });
-  */
-
-  // Total Box
-  doc.setFillColor(primaryAmber[0], primaryAmber[1], primaryAmber[2]);
-  doc.roundedRect(350, finalY + 45, 210, 45, 8, 8, "F");
-  doc
-    .setFont("Montserrat-Bold", "bold")
-    .setFontSize(12)
-    .setTextColor(deepSlate[0], deepSlate[1], deepSlate[2]);
-  const totalLabel =
-    form.type === "RECEIPT"
-      ? "TOTAL PAID"
-      : form.type === "QUOTE"
-      ? "ESTIMATED TOTAL"
-      : "TOTAL DUE";
-  doc.text(totalLabel, 365, finalY + 73);
-  doc.text(`$${grandTotal.value.toFixed(2)}`, 550, finalY + 73, { align: "right" });
-
-  // 6. NOTES SECTION
-  if (form.notes) {
-    const notesY = finalY + 180;
-    doc.setFont("Montserrat-Bold", "bold").setFontSize(10).setTextColor(deepSlate[0]);
-    doc.text("NOTES & REMARKS:", 40, notesY);
-    doc.setFont("Montserrat", "normal").setFontSize(9).setTextColor(80);
-    const splitNotes = doc.splitTextToSize(form.notes, 520);
-    doc.text(splitNotes, 40, notesY + 15);
-  }
-
-  // 7. SAVE
-  doc.save(`${form.type}_${form.number || "Draft"}.pdf`);
-
-  // 8. Trigger the cloud upload in the background
-  try {
-    await uploadPdfToFirebase(doc);
-    alert("Document saved to cloud and downloaded!");
+    window.location.href = "/admin/customers/list";
   } catch (err) {
-    alert("Downloaded locally, but failed to save to database.");
+    console.error(err);
+    alert("Error: " + err.message);
   }
 };
 </script>
@@ -651,8 +555,11 @@ textarea:focus {
   align-items: center;
 }
 
+.item-title {
+  flex: 2;
+}
 .item-desc {
-  flex: 3;
+  flex: 4;
 }
 .item-qty {
   flex: 0.5;
@@ -758,7 +665,63 @@ textarea:focus {
 .generate-btn:active {
   transform: scale(0.99);
 }
+.cancel-btn {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin: 15px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 15px;
+  margin-top: 10px;
+}
 
+.save-draft-btn {
+  background: transparent;
+  color: #94a3b8;
+  border: 2px solid #334155;
+  padding: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save-draft-btn:hover {
+  background: #334155;
+  color: white;
+}
+
+.locked-banner {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid #22c55e;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.view-final-btn {
+  display: inline-block;
+  margin-top: 10px;
+  background: #22c55e;
+  color: #052e16;
+  padding: 10px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+/* Ensure generate-btn matches your existing style but fills its grid spot */
+.generate-btn {
+  margin-top: 0; /* Override if needed */
+}
 @media (max-width: 600px) {
   .invoice-generator {
     padding: 20px;

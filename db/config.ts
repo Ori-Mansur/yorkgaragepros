@@ -46,6 +46,7 @@ const Documents = defineTable({
     // Financials
     subtotal: column.number(),
     discountAmount: column.number({ default: 0 }),
+    promoLabel: column.text({ optional: true }), 
     taxAmount: column.number(), // HST (13% in Ontario)
     totalAmount: column.number(),
     
@@ -70,6 +71,7 @@ const DocumentItems = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     documentId: column.text({ references: () => Documents.columns.id }),
+    title: column.text(), // e.g. "LiftMaster 8500W Installation"
     description: column.text(), // e.g. "LiftMaster 8500W Installation"
     quantity: column.number({ default: 1 }),
     unitPrice: column.number(),

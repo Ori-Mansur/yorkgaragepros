@@ -1,0 +1,116 @@
+---
+// src/pages/admin/documents/[...id].astro
+import "../../../styles/global.css";
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import InvoiceCreator from "../../../components/vue/InvoiceCreator.vue";
+import {
+  db,
+  Customers,
+  Locations,
+  Documents,
+  DocumentItems,
+  eq,
+} from "astro:db";
+
+const { id } = Astro.params;
+const isEdit = id && id !== "new";
+
+const customerId = Astro.url.searchParams.get("customerId");
+const locId = Astro.url.searchParams.get("locId");
+const type = Astro.url.searchParams.get("type") || "quote";
+const sourceId = Astro.url.searchParams.get("sourceId");
+
+let prefilledData = {
+  type: type,
+  customer: null,
+  location: null,
+  document: null,
+};
+
+if (isEdit) {
+  const rows = await db
+    .select()
+    .from(Documents)
+    .where(eq(Documents.id, id))
+    .leftJoin(DocumentItems, eq(Documents.id, DocumentItems.documentId))
+    .leftJoin(Customers, eq(Documents.customerId, Customers.id))
+    .leftJoin(Locations, eq(Documents.locationId, Locations.id))
+    .all();
+
+  if (rows.length > 0) {
+    prefilledData = {
+      type: rows[0].Documents.type,
+      customer: rows[0].Customers,
+      location: rows[0].Locations,
+      document: {
+        ...rows[0].Documents,
+        items: rows.map((r) => r.DocumentItems).filter(Boolean),
+      },
+    };
+  }
+} else {
+  // 1. Fetch Customer & Location details (Standard for all new docs)
+  if (customerId) {
+    const result = await db
+      .select()
+      .from(Customers)
+      .where(eq(Customers.id, customerId))
+      .leftJoin(Locations, eq(Locations.id, locId || ""))
+      .get();
+
+    if (result) {
+      prefilledData.customer = result.Customers;
+      prefilledData.location = result.Locations;
+    }
+  }
+
+  // 2. If cloning (Quote -> Invoice), fetch items AND ensure location is linked
+  if (sourceId) {
+    const sourceRows = await db
+      .select()
+      .from(Documents)
+      .where(eq(Documents.id, sourceId))
+      .leftJoin(DocumentItems, eq(Documents.id, DocumentItems.documentId))
+      .leftJoin(Locations, eq(Documents.locationId, Locations.id)) // Added Location Join
+      .all();
+
+    if (sourceRows.length > 0) {
+      // Create a clean clone of the document metadata
+      const clonedDoc = { ...sourceRows[0].Documents };
+
+      // Store the original ID as the parent before we delete it from the main object
+      const originalId = clonedDoc.id;
+
+      // Remove identifiers so it's treated as a brand new record
+      delete clonedDoc.id;
+      delete clonedDoc.documentNumber;
+      delete clonedDoc.type;
+      delete clonedDoc.pdfUrl;
+
+      prefilledData.document = {
+        ...clonedDoc,
+        parentDocumentId: originalId, // <--- ADD THIS HERE
+        status: "draft",
+        items: sourceRows.map((r) => r.DocumentItems).filter(Boolean),
+      };
+
+      // Ensure location carries over if URL didn't have one
+      if (!prefilledData.location && sourceRows[0].Locations) {
+        prefilledData.location = sourceRows[0].Locations;
+      }
+    }
+  }
+}
+---
+
+<AdminLayout
+  title={isEdit ? `Edit ${prefilledData.type}` : `New ${type.toUpperCase()}`}
+>
+  <div class="p-6">
+    <InvoiceCreator
+      client:only="vue"
+      prefilledData={prefilledData}
+      documentId={isEdit ? id : null}
+    />
+  </div>
+</AdminLayout>
