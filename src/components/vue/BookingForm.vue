@@ -1,390 +1,307 @@
 <template>
   <div class="booking-container">
-    <div class="booking-left">
-      <div>
-        <h1>Book Your Slot</h1>
-        <p>
-          Secure your appointment with us easily. Please fill out the form to confirm your
-          reservation and provide service location details.
-        </p>
-      </div>
-      <div class="booking-left-footer">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="calendar-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="16" y1="2" x2="16" y2="6"></line>
-          <line x1="8" y1="2" x2="8" y2="6"></line>
-          <line x1="3" y1="10" x2="21" y2="10"></line>
-        </svg>
-        <p>Confirmation sent via email.</p>
+    <div class="step-header">
+      <div class="step-indicator">
+        <div v-for="step in 4" :key="step" :class="['step-dot', { active: currentStep >= step }]">
+          {{ step }}
+        </div>
+        <div class="progress-line">
+          <div class="progress-fill" :style="{ width: ((currentStep - 1) / 3) * 100 + '%' }"></div>
+        </div>
       </div>
     </div>
 
-    <div class="booking-right">
-      <form @submit.prevent="handleSubmit" id="bookingForm">
-        <div class="form-group">
-          <label for="service">Select Service <span class="required">*</span></label>
-          <select id="service" v-model="formData.service" required class="form-input">
-            <option value="">Choose a service...</option>
-            <option value="NewDoorInstall">New Garage Door Installation</option>
-            <option value="GarageDoorOpener">Garage Door Opener</option>
-            <option value="EmergencyRepair">Emergency Door Repair</option>
-            <option value="FloorCoating">Epoxy Floor Coating</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="garageSize">
-            Garage Size
-            <span v-if="isGarageSizeRequired" class="required">*</span>
-            <span v-else>(Optional for Repair)</span>
-          </label>
-          <select
-            id="garageSize"
-            v-model="formData.garageSize"
-            :required="isGarageSizeRequired"
-            class="form-input"
-          >
-            <option value="">Select size...</option>
-            <option value="1 Car">1 Car (Single Door)</option>
-            <option value="2 Car">2 Car (Standard Double)</option>
-            <option value="3+ Car">3+ Car / Custom</option>
-          </select>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="date">Date <span class="required">*</span></label>
-            <input
-              type="date"
-              id="date"
-              v-model="formData.date"
-              required
-              class="form-input"
-              :min="today"
-            />
+    <div class="form-card">
+      <form @submit.prevent="handleSubmit">
+        
+        <div v-if="currentStep === 1" class="form-step animate-in">
+          <h2 class="step-title">What's the issue?</h2>
+          <p class="step-sub">Select a service category below.</p>
+          <div class="service-grid">
+            <button type="button" v-for="opt in serviceOptions" :key="opt.val"
+              :class="['service-card', { active: formData.service === opt.val }]"
+              @click="formData.service = opt.val">
+              <span class="icon">{{ opt.icon }}</span>
+              <span class="label">{{ opt.label }}</span>
+            </button>
           </div>
-          <div class="form-group">
-            <label for="time">Time <span class="required">*</span></label>
-            <input
-              type="time"
-              id="time"
-              v-model="formData.time"
-              required
-              class="form-input"
-            />
+          <div v-if="isGarageSizeRequired" class="form-group animate-in">
+            <label>Garage Size *</label>
+            <select v-model="formData.garageSize" class="form-input">
+              <option value="1 Car">1 Car (Single)</option>
+              <option value="2 Car">2 Car (Double)</option>
+              <option value="3+ Car">3+ Car / Custom</option>
+            </select>
           </div>
+          <button type="button" class="primary-btn" :disabled="!formData.service" @click="nextStep">Continue</button>
         </div>
 
-        <div class="form-row">
+        <div v-if="currentStep === 2" class="form-step animate-in">
+          <h2 class="step-title">Where & When?</h2>
           <div class="form-group">
-            <label for="name">Full Name <span class="required">*</span></label>
-            <input
-              type="text"
-              id="name"
-              v-model="formData.name"
-              placeholder="John Doe"
-              required
-              class="form-input"
-            />
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone Number <span class="required">*</span></label>
-            <input
-              type="tel"
-              id="phone"
-              v-model="formData.phone"
-              placeholder="(555) 123-4567"
-              required
-              class="form-input"
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="address">Service Address <span class="required">*</span></label>
-          <input
-            type="text"
-            id="address"
-            v-model="formData.address"
-            placeholder="123 Main St, Anytown, ON"
-            required
-            class="form-input"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email Address <span class="required">*</span></label>
-          <input
-            type="email"
-            id="email"
-            v-model="formData.email"
-            placeholder="you@example.com"
-            required
-            class="form-input"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="photos">Upload Photos (Optional - Max 5MB per file)</label>
-          <input
-            type="file"
-            id="photos"
-            @change="handleFileSelect"
-            accept="image/*"
-            multiple
-            class="form-input"
-          />
-        </div>
-
-        <div v-if="selectedFilesArray.length > 0" class="image-preview-container">
-          <div class="image-preview">
-            <div
-              v-for="(file, index) in selectedFilesArray"
-              :key="index"
-              class="image-preview-wrapper"
-            >
-              <img :src="file.previewUrl" :alt="file.name" />
-              <button class="remove-btn" @click.prevent="removeImage(index)">X</button>
+            <label>Service Address *</label>
+            <div class="gmp-wrapper">
+              <gmp-place-autocomplete @gmp-select="onPlaceSelect" requested-region="CA"></gmp-place-autocomplete>
             </div>
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Preferred Date *</label>
+              <input type="date" v-model="formData.date" :min="todayDate" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label>Time Slot *</label>
+              <select v-model="formData.time" class="form-input" required>
+                <option v-for="slot in filteredTimeSlots" :key="slot.val" :value="slot.val">{{ slot.label }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="back-btn" @click="currentStep--">Back</button>
+            <button type="button" class="primary-btn" :disabled="!formData.address" @click="nextStep">Next</button>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="notes">Additional Notes (Optional)</label>
-          <textarea
-            id="notes"
-            v-model="formData.notes"
-            rows="3"
-            class="form-input"
-          ></textarea>
+        <div v-if="currentStep === 3" class="form-step animate-in">
+          <h2 class="step-title">Photos & Notes</h2>
+          <p class="step-sub">Optional: Show us the issue so we arrive prepared.</p>
+          
+          <div class="form-group">
+            <label>Additional Details</label>
+            <textarea v-model="formData.notes" placeholder="E.g. Gate code, sounds motor is making..." class="form-input" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Upload Photos</label>
+            <div class="upload-container">
+              <input type="file" id="photo-upload" accept="image/*" multiple @change="handleFileUpload" hidden />
+              <label for="photo-upload" class="upload-box">
+                <span class="icon">📸</span>
+                <span class="upload-text">Tap to add photos</span>
+              </label>
+            </div>
+
+            <div v-if="photoPreviews.length > 0" class="preview-grid">
+              <div v-for="(photo, idx) in photoPreviews" :key="photo.id" class="preview-item">
+                <img :src="photo.url" class="preview-img" />
+                <button type="button" @click="removePhoto(photo.id, idx)" class="remove-btn">×</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="button" class="back-btn" @click="currentStep--">Back</button>
+            <button type="button" class="primary-btn" @click="nextStep">
+              {{ formData.photos.length > 0 || formData.notes ? 'Continue' : 'Skip' }}
+            </button>
+          </div>
         </div>
 
-        <div class="form-group">
-          <button type="submit" class="submit-btn" :disabled="isSubmitting">
-            {{ isSubmitting ? "Processing..." : "Confirm Booking" }}
-          </button>
-          <a class="cancel" href="/"> Cancel </a>
+        <div v-if="currentStep === 4" class="form-step animate-in">
+          <h2 class="step-title">Contact Info</h2>
+          <div class="form-group"><label>Full Name *</label><input type="text" v-model="formData.name" placeholder="John Doe" class="form-input" required /></div>
+          <div class="form-group"><label>Phone Number *</label><input type="tel" v-model="formData.phone" @blur="savePartialLead" placeholder="(905) 555-0123" class="form-input" required /></div>
+          <div class="form-group"><label>Email Address *</label><input type="email" v-model="formData.email" placeholder="email@example.com" class="form-input" required /></div>
+          <div class="btn-group">
+            <button type="button" class="back-btn" @click="currentStep--">Back</button>
+            <button type="submit" class="submit-btn" :disabled="isSubmitting">{{ isSubmitting ? "Sending..." : "Confirm Booking" }}</button>
+          </div>
         </div>
-
-        <!-- <p v-if="message" :class="messageType">{{ message }}</p> -->
       </form>
-    </div>
-  </div>
-
-  <div v-if="isMessageVisible" class="message-box">
-    <div class="message-content">
-      <h3 :class="messageType">{{ messageTitle }}</h3>
-      <div v-html="messageContent"></div>
-      <button @click="isMessageVisible = false">Close</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref, computed, onMounted } from "vue";
-// Assuming saveLeadToFirestore handles the data submission to Firebase/backend
-// You will need to import your Firebase setup and storage functions here for file uploads
+import { reactive, ref, computed, onMounted, watch } from "vue";
+import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
 import { saveLeadToFirestore, uploadFilesToFirebase } from "/src/js/dbService.js";
-// NOTE: You will need to add file upload logic using Firebase Storage SDK here.
 
-const MAX_FILES = 5;
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const currentStep = ref(1);
+const isSubmitting = ref(false);
+const todayDate = new Date().toISOString().split("T")[0];
 
-// Reactive State
+const photoPreviews = ref([]);
 const formData = reactive({
   service: "",
   garageSize: "",
-  date: "",
+  date: todayDate,
   time: "",
+  notes: "",
+  photos: [], 
   name: "",
   phone: "",
   email: "",
   address: "",
-  notes: "",
   source: "bookingForm",
 });
 
-const selectedFilesArray = ref([]);
-const isSubmitting = ref(false);
+const serviceOptions = [
+  { val: "BrokenSpring", label: "Broken Spring", icon: "💥" },
+  { val: "StuckDoor", label: "Door Stuck", icon: "🔒" },
+  { val: "OpenerRepair", label: "Opener Issue", icon: "⚙️" },
+  { val: "NewDoorInstall", label: "New Door", icon: "🚪" },
+  { val: "CableOff", label: "Off Track", icon: "🪢" },
+  { val: "GeneralTuneUp", label: "Maintenance", icon: "🛠️" },
+];
 
-// Custom Message Box State
-const isMessageVisible = ref(false);
-const messageTitle = ref("");
-const messageContent = ref("");
-const messageType = ref(""); // e.g., 'success', 'error'
-const today = ref("");
+// --- PHOTO LOGIC ---
+const handleFileUpload = (e) => {
+  const files = Array.from(e.target.files);
+  files.forEach(file => {
+    const id = Math.random().toString(36).substr(2, 9);
+    const url = URL.createObjectURL(file);
+    photoPreviews.value.push({ id, url, file });
+    formData.photos.push(file);
+  });
+  e.target.value = '';
+};
 
-// Computed Property for conditional validation/display
-const isGarageSizeRequired = computed(() => {
-  return formData.service === "NewDoorInstall" || formData.service === "FloorCoating";
+const removePhoto = (id, index) => {
+  URL.revokeObjectURL(photoPreviews.value[index].url);
+  photoPreviews.value.splice(index, 1);
+  formData.photos.splice(index, 1);
+};
+
+// --- TIME LOGIC ---
+const filteredTimeSlots = computed(() => {
+  const slots = [];
+  const now = new Date();
+  const bufferTime = new Date(now.getTime() + 30 * 60000);
+  for (let hour = 8; hour <= 18; hour++) {
+    for (let min of ["00", "30"]) {
+      const hourStr = hour.toString().padStart(2, "0");
+      const val = `${hourStr}:${min}`;
+      if (formData.date === todayDate) {
+        const slotTime = new Date();
+        slotTime.setHours(hour, parseInt(min), 0, 0);
+        if (slotTime < bufferTime) continue;
+      }
+      const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
+      const ampm = hour >= 12 ? "PM" : "AM";
+      slots.push({ val, label: `${displayHour}:${min} ${ampm}` });
+    }
+  }
+  return slots;
 });
 
-// Watcher for conditional form fields (optional, but good practice)
-// watch(() => formData.service, (newService) => {
-//     if (!isGarageSizeRequired.value) {
-//         formData.garageSize = ''; // Clear size if not needed
-//     }
-// });
+watch(filteredTimeSlots, (newSlots) => {
+  if (newSlots.length > 0 && (!formData.time || !newSlots.find((s) => s.val === formData.time))) {
+    formData.time = newSlots[0].val;
+  }
+}, { immediate: true });
 
-// --- Methods ---
+onMounted(async () => {
+  const now = new Date();
+  if (now.getHours() >= 16) {
+    const tomorrow = new Date();
+    tomorrow.setDate(now.getDate() + 1);
+    formData.date = tomorrow.toISOString().split("T")[0];
+  }
+  const apiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY;
+  if (!apiKey) return;
+  setOptions({ key: apiKey, version: "beta" });
+  try { await importLibrary("places"); } catch (e) { console.error(e); }
+});
 
-function showMessage(title, content, type = "info") {
-  messageTitle.value = title;
-  messageContent.value = content;
-  messageType.value = type;
-  isMessageVisible.value = true;
+const onPlaceSelect = async (event) => {
+  const { placePrediction } = event;
+  if (!placePrediction) return;
+  try {
+    const place = placePrediction.toPlace();
+    await place.fetchFields({ fields: ["formattedAddress"] });
+    formData.address = place.formattedAddress;
+  } catch (error) { console.error(error); }
+};
+
+const nextStep = () => {
+  currentStep.value++;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+async function savePartialLead() {
+  if (formData.phone.length > 9) {
+    await saveLeadToFirestore("partial_leads", { ...formData, status: "step4_reached" });
+  }
 }
 
-function removeImage(index) {
-  selectedFilesArray.value.splice(index, 1);
-}
-
-function handleFileSelect(e) {
-  console.log("handleFileSelect");
-
-  const newFiles = Array.from(e.target.files);
-
-  // Clear previous files and reset input to handle new selections correctly
-  const newFilesData = [];
-  // e.target.value = ''; // Allows the same file to be selected again if needed
-
-  newFiles.forEach((file) => {
-    if (newFilesData.length >= MAX_FILES) {
-      showMessage(
-        "File Limit Reached",
-        `You can only upload a maximum of ${MAX_FILES} photos.`,
-        "error"
-      );
-      return;
-    }
-    if (!file.type.startsWith("image/")) {
-      showMessage("Invalid File Type", `File "${file.name}" is not an image.`, "error");
-      return;
-    }
-    if (file.size > MAX_FILE_SIZE) {
-      showMessage(
-        "File Too Large",
-        `File "${file.name}" exceeds the ${MAX_FILE_SIZE / 1024 / 1024}MB limit.`,
-        "error"
-      );
-      return;
-    }
-
-    // Create a URL for previewing the image
-    const previewUrl = URL.createObjectURL(file);
-    newFilesData.push({
-      file,
-      previewUrl,
-      name: file.name,
-    });
-  });
-  selectedFilesArray.value = newFilesData;
-  console.log("selectedFilesArray", selectedFilesArray.value);
-}
-
-// NOTE: This handleSubmit needs to be updated to include FILE UPLOADS
 async function handleSubmit() {
   if (isSubmitting.value) return;
-
-  // --- Vue-specific Validation ---
-  if (isGarageSizeRequired.value && !formData.garageSize) {
-    return showMessage("Error", "Please select a garage size for this service.", "error");
-  }
-  // Simple Vue Validation: Required fields check is often handled by the browser
-  // using the 'required' attribute, but a final check is always good.
-  if (
-    !formData.service ||
-    !formData.phone ||
-    !formData.date ||
-    !formData.time ||
-    !formData.address ||
-    !formData.email
-  ) {
-    return showMessage("Error", "Please fill in all required fields.", "error");
-  }
-
   isSubmitting.value = true;
-
   try {
-    // Step 1: Upload Files (Placeholder for actual Firebase Storage logic)
+    // Note: You may need to upload formData.photos to Firebase Storage first 
+    // and replace the array with the resulting URLs before this call.
+    // if(formData.photos.length){
+
+    // }
+    console.log(formData);
     const fileUrls = await uploadFilesToFirebase(
-      selectedFilesArray.value.map((f) => f.file)
+      formData.photos
     );
+    
 
     // Step 2: Prepare final lead data
     const leadData = {
       ...formData,
       fileUrls: fileUrls, // Add file URLs to the data payload
-      fileCount: selectedFilesArray.value.length,
+      fileCount: formData.photos.length,
     };
-
-    // Step 3: Save lead to Firestore
+    delete leadData.photos
     const result = await saveLeadToFirestore("bookings", leadData, "bookingForm");
-
-    if (result.success) {
-      // Success Message Content
-      let content = `Appointment: <strong>${leadData.service}</strong><br>
-                           Date: ${leadData.date} at ${leadData.time}<br>
-                           Address: ${leadData.address}<br>
-                           We will call you at ${leadData.phone}.`;
-
-      // Show confirmation modal
-      showMessage("Booking Confirmed!", content, "success");
-
-      // CRITICAL: Redirect for GA4 Conversion Tracking
-      // window.location.href = '/thank-you/';
-
-      // Clear state and form (if not redirecting)
-      Object.keys(formData).forEach((key) => (formData[key] = ""));
-      selectedFilesArray.value = [];
-      
-      window.location.href = '/thank-you/?form=booking';
-    } else {
-      showMessage(
-        "Submission Error",
-        `Failed to confirm booking: ${result.error}`,
-        "error"
-      );
-    }
-  } catch (error) {
-    console.error("Booking submission error:", error);
-    showMessage(
-      "Critical Error",
-      "An unexpected error occurred. Please call us directly.",
-      "error"
-    );
-  } finally {
-    isSubmitting.value = false;
-  }
+    if (result.success) window.location.href = "/thank-you/";
+  } catch (e) { 
+    console.error(e)
+    alert("Error submitting booking."); 
+  } 
+  finally { isSubmitting.value = false; }
 }
 
-// Set minimum date to today on component mount
-onMounted(() => {
-    // window.location.href = '/thank-you/?form=booking';
-  const now = new Date();
-  const yyyy = now.getFullYear();
-  const mm = String(now.getMonth() + 1).padStart(2, "0");
-  const dd = String(now.getDate()).padStart(2, "0");
-
-  today.value = `${yyyy}-${mm}-${dd}`;
-  formData.date = today.value;
-});
-
-// onMounted(() => {
-//     const today = new Date();
-//     const yyyy = today.getFullYear();
-//     const mm = String(today.getMonth() + 1).padStart(2, "0");
-//     const dd = String(today.getDate()).padStart(2, "0");
-//     formData.date = `${yyyy}-${mm}-${dd}`; // Set initial date to prevent empty required field
-// });
+const isGarageSizeRequired = computed(() => formData.service === "NewDoorInstall");
 </script>
 
-<style scoped src="../../styles/booking.css" />
+<style scoped>
+* { box-sizing: border-box; }
+.booking-container { max-width: 450px; margin: 1rem auto; padding: 10px; font-family: "Montserrat", sans-serif; }
+
+/* BRAND COLORS */
+.step-dot.active { background: #E8A900; }
+.progress-fill { background: #E8A900; }
+.form-card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-top: 4px solid #1C2A44; }
+.step-title { font-size: 1.25rem; color: #1C2A44; margin: 0 0 0.5rem 0; font-weight: 800; }
+.step-sub { font-size: 0.85rem; color: #343D46; margin-bottom: 1.5rem; opacity: 0.8; }
+
+/* PHOTO PREVIEW GRID */
+.preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 15px; }
+.preview-item { position: relative; aspect-ratio: 1/1; border-radius: 6px; overflow: hidden; border: 1px solid #e2e8f0; }
+.preview-img { width: 100%; height: 100%; object-fit: cover; }
+.remove-btn { position: absolute; top: 2px; right: 2px; background: #1C2A44; color: white; border: none; border-radius: 50%; width: 18px; height: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+/* STEPS & UI */
+.step-header { padding: 0 10px; margin-bottom: 2rem; }
+.step-indicator { display: flex; justify-content: space-between; align-items: center; position: relative; }
+.step-dot { width: 32px; height: 32px; background: #cbd5e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2; color: white; font-weight: 700; font-size: 0.8rem; }
+.progress-line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: #e2e8f0; z-index: 1; transform: translateY(-50%); }
+.progress-fill { height: 100%; transition: width 0.3s ease; }
+
+.service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.5rem; }
+.service-card { padding: 20px; border: 1px solid #e2e8f0; border-radius: 6px; background: #f8fafc; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.2s; }
+.service-card.active { border-color: #E8A900; background: #fffdf5; box-shadow: inset 0 0 0 1px #E8A900; }
+.service-card .label { font-size: 0.8rem; font-weight: 700; color: #1C2A44; margin-top: 4px; text-align: center; }
+
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 700; color: #1C2A44; margin-bottom: 4px; }
+.form-input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 16px; color: #343D46; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.upload-box { display: flex; flex-direction: column; align-items: center; border: 2px dashed #cbd5e1; padding: 20px; border-radius: 8px; cursor: pointer; background: #f8fafc; }
+.upload-text { font-size: 0.8rem; font-weight: 700; color: #1C2A44; margin-top: 5px; }
+
+.btn-group { display: flex; gap: 8px; margin-top: 1.5rem; }
+.primary-btn, .submit-btn { width: 100%; padding: 14px; border: none; border-radius: 4px; font-weight: 800; cursor: pointer; font-size: 0.9rem; }
+.primary-btn { background: #1C2A44; color: white; }
+.submit-btn { background: #E8A900; color: #1C2A44; }
+.back-btn { flex: 0.4; background: #f1f5f9; color: #343D46; border: none; padding: 14px; border-radius: 4px; font-weight: 600; cursor: pointer; }
+
+.animate-in { animation: fadeIn 0.2s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
