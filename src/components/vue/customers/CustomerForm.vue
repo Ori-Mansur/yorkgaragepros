@@ -100,9 +100,23 @@ const form = ref({
   phone: props.initialData?.phone || "",
   type: props.initialData?.type || "residential",
   hstNumber: props.initialData?.hstNumber || "",
-  address: props.initialData?.address || "",
-  city: props.initialData?.city || "",
+  
+  // New Detailed Location Fields
+  placeId: props.initialData?.placeId || "",
+  formattedAddress: props.initialData?.formattedAddress || "",
+  unit: props.initialData?.unit || "",
+  streetNumber: props.initialData?.streetNumber || "",
+  route: props.initialData?.route || "",
+  neighborHood: props.initialData?.neighborHood || "",
+  sublocality: props.initialData?.sublocality || "",
+  city: props.initialData?.city || "Newmarket",
+  adminAreaL1: props.initialData?.adminAreaL1 || "",
+  adminAreaL2: props.initialData?.adminAreaL2 || "",
+  adminAreaL3: props.initialData?.adminAreaL3 || "",
+  adminAreaL4: props.initialData?.adminAreaL4 || "",
   postalCode: props.initialData?.postalCode || "",
+  latitude: props.initialData?.latitude || null,
+  longitude: props.initialData?.longitude || null,
 });
 
 function populateFields(data) {
@@ -125,19 +139,45 @@ const onPlaceSelect = async (event) => {
   try {
     const place = await placePrediction.toPlace();
     await place.fetchFields({
-      fields: ["addressComponents", "formattedAddress"],
+      fields: ["addressComponents", "formattedAddress", "location", "id"],
     });
 
-    const streetNumber = place.addressComponents.find((c) => c.types.includes("street_number"))?.longText || "";
-    const route = place.addressComponents.find((c) => c.types.includes("route"))?.longText || "";
+    const getComp = (type, useShort = false) => {
+      const comp = place.addressComponents.find((c) => c.types.includes(type));
+      return useShort ? comp?.shortText : comp?.longText;
+    };
 
-    form.value.address = streetNumber ? `${streetNumber} ${route}` : place.formattedAddress;
+    // Populate the form with granular data
+    form.value.placeId = place.id;
+    form.value.formattedAddress = place.formattedAddress;
     
-    const city = place.addressComponents.find((c) => c.types.includes("locality"))?.longText;
-    if (city) form.value.city = city;
+    // Address Breakdown
+    form.value.unit = getComp("subpremise");
+    form.value.streetNumber = getComp("street_number");
+    form.value.route = getComp("route");
+    
+    // Geographical Areas
+    form.value.neighborHood = getComp("neighborhood");
+    form.value.sublocality = getComp("sublocality");
+    form.value.city = getComp("locality") || getComp("sublocality") || "Newmarket";
+    
+    // Administrative Levels
+    form.value.adminAreaL1 = getComp("administrative_area_level_1", true); // e.g., 'ON'
+    form.value.adminAreaL2 = getComp("administrative_area_level_2");       // e.g., 'York Region'
+    form.value.adminAreaL3 = getComp("administrative_area_level_3");
+    form.value.adminAreaL4 = getComp("administrative_area_level_4");
+    
+    form.value.postalCode = getComp("postal_code");
+    
+    // Coordinates (for future map features)
+    if (place.location) {
+      form.value.latitude = place.location.lat();
+      form.value.longitude = place.location.lng();
+    }
 
-    const postCode = place.addressComponents.find((c) => c.types.includes("postal_code"))?.longText;
-    if (postCode) form.value.postalCode = postCode;
+    // Set simple display address for the UI input
+    const mainStreet = `${form.value.streetNumber} ${form.value.route}`.trim();
+    form.value.address = form.value.unit ? `${form.value.unit}-${mainStreet}` : mainStreet;
 
     hasLocation.value = true;
   } catch (error) {
@@ -166,9 +206,13 @@ async function save() {
   const submissionData = { ...form.value };
   
   if (!hasLocation.value) {
-    submissionData.address = "";
-    submissionData.city = "";
-    submissionData.postalCode = "";
+    // Reset all location-related fields
+    const fieldsToReset = [
+      'placeId', 'formattedAddress', 'unit', 'streetNumber', 'route', 
+      'neighborHood', 'sublocality', 'city', 'adminAreaL1', 'adminAreaL2', 
+      'adminAreaL3', 'adminAreaL4', 'postalCode', 'latitude', 'longitude'
+    ];
+    fieldsToReset.forEach(field => submissionData[field] = "");
   }
 
   const { data, error } = await actions.saveCustomer({

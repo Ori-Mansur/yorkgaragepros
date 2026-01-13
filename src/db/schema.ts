@@ -17,12 +17,38 @@ export const Customers = sqliteTable('customers', {
 export const Locations = sqliteTable('locations', {
   id: text('id').primaryKey(),
   customerId: text('customer_id').references(() => Customers.id, { onDelete: 'cascade' }),
-  address: text('address').notNull(),
-  city: text('city').default('Newmarket'),
+  
+  // Google Core Identity
+  placeId: text('place_id'),
+  formattedAddress: text('formatted_address').notNull(),
+  
+  // Precise Location Data
+  unit: text('unit'), // Apartment, Suite, etc.
+  streetNumber: text('street_number'),
+  route: text('route'), // Street Name
+  
+  // Administrative Breakdown
+  neighborHood: text('neighborhood'),
+  sublocality: text('sublocality'),
+  city: text('city'), // locality
+  
+  // Admin Areas (State/Province/County)
+  adminAreaL1: text('admin_area_l1').default('ON'), // Province/State (e.g., Ontario)
+  adminAreaL2: text('admin_area_l2'), // County/Region (e.g., York Region)
+  adminAreaL3: text('admin_area_l3'), // Township/Municipality
+  adminAreaL4: text('admin_area_l4'), // Smaller local divisions
+  
+  country: text('country').default('Canada'),
   postalCode: text('postal_code'),
+  
+  // Geography
+  latitude: real('latitude'),
+  longitude: real('longitude'),
+  
+  // Metadata & Custom
   gateCode: text('gate_code'), 
-  // FIX: SQLite doesn't have a native 'boolean', use integer mode
   isBillingAddress: integer('is_billing_address', { mode: 'boolean' }).default(false),
+  createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
 // 3. DOCUMENTS

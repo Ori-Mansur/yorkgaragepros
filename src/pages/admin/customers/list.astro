@@ -3,32 +3,41 @@ import "../../../styles/global.css";
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import CustomerTable from "../../../components/vue/customers/CustomerTable.vue";
 
-// 1. Updated Imports (Removing astro:db)
 import { db } from "../../../db";
 import { Customers, Locations, Documents } from "../../../db/schema";
 import { eq, desc } from "drizzle-orm";
 
-// 2. Fetch Joined Data from Turso
+// 1. Fetch data with a Left Join
+// Note: If a customer has 3 locations, "result" will have 3 rows for that customer
 const result = await db
   .select()
   .from(Customers)
   .leftJoin(Locations, eq(Customers.id, Locations.customerId));
 
-// 3. Fetch all documents ordered by newest
+// 2. Fetch all documents
 const allDocs = await db.select().from(Documents).orderBy(desc(Documents.issueDate));
 
-// 4. Format data for Vue
-// Drizzle result format is: [{ customers: {...}, locations: {...} }]
-const customersWithDocs = result.map((row) => {
-  const c = row.customers; // Using the table variable name
-  const l = row.locations;
+// 3. Group Locations by Customer
+const customerMap = new Map();
+
+result.forEach((row) => {
+  const customerId = row.customers.id;
   
-  return {
-    ...c,
-    location: l,
-    documents: allDocs.filter(d => d.customerId === c.id)
-  };
+  if (!customerMap.has(customerId)) {
+    customerMap.set(customerId, {
+      ...row.customers,
+      locations: [], // Initialize as an array for multiple addresses
+      documents: allDocs.filter(d => d.customerId === customerId)
+    });
+  }
+
+  // Add location to the array if it exists
+  if (row.locations) {
+    customerMap.get(customerId).locations.push(row.locations);
+  }
 });
+
+const customersWithDocs = Array.from(customerMap.values());
 ---
 
 <AdminLayout title="Customer Directory">

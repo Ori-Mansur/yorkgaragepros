@@ -72,7 +72,7 @@
                   <div class="details-layout">
                     <div class="info-card">
                       <header class="card-title">
-                        <span class="emoji-icon">📄</span> Document History
+                        <span class="emoji-icon">📄</span> Documents
                       </header>
                       <div class="card-body">
                         <div v-if="c.documents?.length" class="history-list">
@@ -90,15 +90,15 @@
                               <a v-if="doc.pdfUrl" :href="doc.pdfUrl" target="_blank" class="btn-view">View PDF</a>
                               <a v-else :href="`/admin/documents/${doc.id}`" class="btn-edit">Edit Draft</a>
 
-                              <template v-if="doc.type === 'quote'">
-                                <button @click="handleConvert(doc, 'invoice')" class="btn-convert">Invoice</button>
+                              <template v-if="doc.type === 'QUOTE'">
+                                <button @click="handleConvert(doc, 'INVOICE')" class="btn-convert">Invoice</button>
                               </template>
 
-                              <template v-if="doc.type === 'invoice'">
-                                <button v-if="doc.status !== 'paid'" @click="handleConvert(doc, 'receipt')" class="btn-pay">Record Pay</button>
+                              <template v-if="doc.type === 'INVOICE'">
+                                <button v-if="doc.status !== 'paid'" @click="handleConvert(doc, 'RECEIPT')" class="btn-pay">Record Pay</button>
                                 <span v-else class="paid-badge">✓ PAID</span>
                               </template>
-                              <span v-if="doc.type === 'receipt'" class="paid-badge">FINALIZED</span>
+                              <span v-if="doc.type === 'RECEIPT'" class="paid-badge">FINALIZED</span>
                             </div>
                           </div>
                         </div>
@@ -106,7 +106,7 @@
                       </div>
                     </div>
 
-                    <div class="info-card">
+                    <!-- <div class="info-card">
                       <header class="card-title">
                         <span class="emoji-icon">📍</span> Service Locations
                       </header>
@@ -117,7 +117,11 @@
                         </div>
                         <a :href="`/admin/customers/${c.id}`" class="add-btn">+ Manage Locations</a>
                       </div>
-                    </div>
+                    </div> -->
+                    <LocationManager 
+                      :customerId="c.id" 
+                      :initialLocations="c.locations" 
+                      />
                   </div>
                 </div>
               </td>
@@ -131,6 +135,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
+import LocationManager from './LocationManager.vue';
 
 const props = defineProps(["initialCustomers"]);
 const expandedRows = ref([]);

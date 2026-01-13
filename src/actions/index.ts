@@ -15,52 +15,125 @@ export const server = {
             phone: z.string(),
             type: z.string(),
             hstNumber: z.string().optional().nullable(),
-            address: z.string().optional().nullable(),
+            // Support all the new Google fields
+            placeId: z.string().optional().nullable(),
+            unit: z.string().optional().nullable(),
+            formattedAddress: z.string().optional().nullable(),
+            streetNumber: z.string().optional().nullable(),
+            route: z.string().optional().nullable(),
             city: z.string().optional().nullable(),
+            adminAreaL1: z.string().optional().nullable(),
+            adminAreaL2: z.string().optional().nullable(),
+            adminAreaL3: z.string().optional().nullable(),
+            adminAreaL4: z.string().optional().nullable(),
             postalCode: z.string().optional().nullable(),
+            latitude: z.number().optional().nullable(),
+            longitude: z.number().optional().nullable(),
         }),
         handler: async (input) => {
-            const { id, address, city, postalCode, ...customerData } = input;
+            const { id, ...allData } = input;
             const customerId = id || randomUUID();
 
+            // 1. Separate Customer fields from Location fields
+            const {
+                name, email, phone, type, hstNumber,
+                ...locData
+            } = allData;
+
+            // 2. Upsert Customer (Profile)
             if (id) {
                 await db.update(Customers)
-                    .set({ ...customerData })
+                    .set({ name, email, phone, type, hstNumber, updatedAt: new Date() })
                     .where(eq(Customers.id, id));
-
-                if (address) {
-                    const [existingLoc] = await db.select().from(Locations).where(eq(Locations.customerId, id));
-                    if (existingLoc) {
-                        await db.update(Locations)
-                            .set({ address, city: city || 'Newmarket', postalCode: postalCode || '' })
-                            .where(eq(Locations.customerId, id));
-                    } else {
-                        await db.insert(Locations).values({
-                            id: randomUUID(),
-                            customerId: id,
-                            address, city: city || 'Newmarket', postalCode: postalCode || '',
-                            isBillingAddress: true
-                        });
-                    }
-                }
             } else {
                 await db.insert(Customers).values({
                     id: customerId,
-                    ...customerData,
+                    name, email, phone, type, hstNumber
                 });
+            }
 
-                if (address) {
+            // 3. Handle Location (Only if we have a formattedAddress)
+            if (locData.formattedAddress) {
+                // Check if this specific customer already has an address linked
+                const [existingLoc] = await db.select().from(Locations)
+                    .where(eq(Locations.customerId, customerId));
+
+                const locationPayload = {
+                    ...locData,
+                    customerId,
+                    isBillingAddress: true,
+                    city: locData.city || 'Newmarket',
+                };
+
+                if (existingLoc) {
+                    await db.update(Locations)
+                        .set(locationPayload)
+                        .where(eq(Locations.id, existingLoc.id));
+                } else {
                     await db.insert(Locations).values({
                         id: randomUUID(),
-                        customerId: customerId,
-                        address,
-                        city: city || 'Newmarket',
-                        postalCode: postalCode || '',
-                        isBillingAddress: true
+                        ...locationPayload
                     });
                 }
             }
+
             return { success: true, id: customerId };
+        }
+    }),
+    saveLocation: defineAction({
+        accept: 'json',
+        input: z.object({
+            id: z.string().optional().nullable(),
+            customerId: z.string(),
+            placeId: z.string().optional().nullable(),
+            unit: z.string().optional().nullable(),
+            formattedAddress: z.string(),
+            streetNumber: z.string().optional().nullable(),
+            route: z.string().optional().nullable(),
+            neighborHood: z.string().optional().nullable(),
+            sublocality: z.string().optional().nullable(),
+            city: z.string().optional().nullable(),
+            adminAreaL1: z.string().optional().nullable(),
+            adminAreaL2: z.string().optional().nullable(),
+            adminAreaL3: z.string().optional().nullable(),
+            adminAreaL4: z.string().optional().nullable(),
+            postalCode: z.string().optional().nullable(),
+            latitude: z.number().optional().nullable(),
+            longitude: z.number().optional().nullable(),
+            isBillingAddress: z.boolean().default(false),
+        }),
+        handler: async (input) => {
+            const { id, ...data } = input;
+            console.log(input);
+            
+            const locationId = id || randomUUID();
+
+            if (id) {
+                // Update existing location
+                await db.update(Locations)
+                    .set({ ...data })
+                    .where(eq(Locations.id, id));
+            } else {
+                // Insert new location (for multiple address support)
+                await db.insert(Locations).values({
+                    id: locationId,
+                    ...data
+                });
+            }
+
+            // Return the full location object so the UI can update the list immediately
+            const [savedLoc] = await db.select().from(Locations).where(eq(Locations.id, locationId));
+            return savedLoc;
+        }
+    }),
+    deleteLocation: defineAction({
+        accept: 'json',
+        input: z.object({
+            id: z.string(),
+        }),
+        handler: async (input) => {
+            await db.delete(Locations).where(eq(Locations.id, input.id));
+            return { success: true };
         }
     }),
 
