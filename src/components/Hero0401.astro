@@ -9,6 +9,7 @@ import {
     CalendarCheck,
     Star,
 } from "@lucide/astro";
+import ReviewBadge from './ReviewBadge.astro'
 // Using your optimized 665x665 image
 import heroPic from "../assets/heropagemobile.webp";
 ---
@@ -32,6 +33,7 @@ import heroPic from "../assets/heropagemobile.webp";
             <strong>Fast Local Service:</strong> We fix broken springs, cables, and
             openers today. Fully stocked trucks ready to serve you.
         </p>
+        <ReviewBadge/>
 
         <div class="cta-actions">
             <a
@@ -66,7 +68,7 @@ import heroPic from "../assets/heropagemobile.webp";
                 widths={[400, 800, 1200]}
                 sizes="(max-width: 600px) 90vw, (max-width: 1200px) 800px, 1200px"
                 formats={["avif", "webp"]}
-                alt="Professional Garage Door Repair in Vaughan, Barrie and Newmarket"
+                alt="Same-day garage door repair technician fixing broken spring in Newmarket, Vaughan, Markham"
                 width={400}
                 height={400}
                 loading="eager"
@@ -165,7 +167,7 @@ import heroPic from "../assets/heropagemobile.webp";
     .lead {
         font-size: 1.05rem;
         color: #374151;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         font-weight: 500;
     }
 
@@ -230,8 +232,8 @@ import heroPic from "../assets/heropagemobile.webp";
     .value-strip {
         display: grid;
         grid-template-columns: repeat(1, 1fr);
-        gap: 8px;
-        margin-top: -3rem;
+        gap: 10px;
+        margin-top: -1.5rem;
         position: relative;
         z-index: 10;
     }
