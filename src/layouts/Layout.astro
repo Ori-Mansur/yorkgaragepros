@@ -33,15 +33,14 @@ const {
 		<meta charset="utf-8" />
 		<!-- Mobile -->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- <link rel="preconnect" href="https://www.google.com" />
+		<link rel="preconnect" href="https://www.googletagmanager.com" /> -->
+		<!-- <link rel="preconnect" href="https://maps.googleapis.com" crossorigin /> -->
+
+		<!-- <link rel="dns-prefetch" href="https://www.google.com" /> -->
+		<link rel="preconnect" href="https://www.googletagmanager.com" />
 		<link rel="preconnect" href="https://www.google.com" />
-		<link
-			rel="preconnect"
-			href="https://www.googletagmanager.com"
-			crossorigin
-		/>
-		<link rel="preconnect" href="https://maps.googleapis.com" crossorigin />
-		
-		<link rel="dns-prefetch" href="https://www.google.com">
+		<link rel="dns-prefetch" href="https://maps.googleapis.com" />
 
 		<!-- Fonts -->
 		<link
@@ -89,13 +88,25 @@ const {
 			.skip-link {
 				position: absolute;
 				top: -100px;
+				left: 0;
+				background: var(--gold);
+				color: var(--navy);
+				padding: 8px;
+				z-index: 1000;
+				transition: top 0.3s;
+			}
+			.skip-link:focus {
+				top: 0;
 			}
 		</style>
 
 		<!-- Sitemap -->
 		<link rel="sitemap" href="/sitemap-0.xml" />
 		<!-- Canonical -->
-		<link rel="canonical" href={`https://yorkgaragepros.com${Astro.url.pathname}`} />
+		<link
+			rel="canonical"
+			href={`https://yorkgaragepros.com${Astro.url.pathname}`}
+		/>
 
 		<!-- Open Graph -->
 		<meta property="og:title" content={title} />
@@ -113,7 +124,12 @@ const {
 		<!-- Favicon -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+		<link
+			rel="icon"
+			type="image/png"
+			href="/favicon-96x96.png"
+			sizes="96x96"
+		/>
 
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 
@@ -123,8 +139,6 @@ const {
 		<link rel="manifest" href="/site.webmanifest" />
 		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
-
-		
 
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
@@ -249,7 +263,17 @@ const {
 			<slot />
 		</main>
 		<!-- Google Tag Manager -->
-		<script is:inline src="/scripts/gtm.js" defer></script>
+		<!-- <script is:inline src="/scripts/gtm.js" defer></script> -->
+		<script is:inline>
+			window.addEventListener("load", function () {
+				setTimeout(function () {
+					var script = document.createElement("script");
+					script.src = "/scripts/gtm.js";
+					script.async = true;
+					document.body.appendChild(script);
+				}, 2000);
+			});
+		</script>
 		<!-- End Google Tag Manager -->
 		<!-- ✅ GTM noscript fallback -->
 		<noscript>
@@ -260,19 +284,5 @@ const {
 				style="display:none;visibility:hidden"></iframe>
 		</noscript>
 	</body>
-	<style>
-		.skip-link {
-			position: absolute;
-			top: -100px;
-			left: 0;
-			background: var(--gold);
-			color: var(--navy);
-			padding: 8px;
-			z-index: 1000;
-			transition: top 0.3s;
-		}
-		.skip-link:focus {
-			top: 0;
-		}
-	</style>
+	<style></style>
 </html>
