@@ -39,9 +39,9 @@ import {
                         <Mail class="footer-icon" />
                         <a
                             href="mailto:info@yorkgaragepros.com"
-                            class="footer-phone"
+                            class="footer-phone email-link"
                             aria-label="Email York Garage Pros to info@yorkgaragepros.com"
-                            >info@yorkgaragepros.com
+                            >
                         </a>
                     </p>
                 </div>
@@ -188,6 +188,9 @@ import {
         --white: #ffffff;
         --footer-border: #3b4252;
     }
+    .email-link::after {
+    content: "info" "\0040" "yorkgaragepros.com";
+  }
 
     /* ========== FOOTER BASE ========== */
     .site-footer {
