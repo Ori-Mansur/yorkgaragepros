@@ -14,8 +14,10 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
 <section class="home-work-snippet">
     <div class="container">
         <div class="section-intro">
-            <h2>Recent Projects</h2>
-            <p>Real results for homeowners across the York Region.</p>
+             <span class="section-subtitle">Experts Sharing</span>
+            <h2 class="section-title">Local Garage Updates</h2>
+            <p>Pro tips, recent work, and deals for York Region and Simcoe County.</p>
+            <div class="accent-line"></div>
         </div>
 
         <div class="snippet-grid">
@@ -25,8 +27,8 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
                         <div class="img-container">
                             {/* FIX: Ensure your schema allows the Image component to resolve the URL */}
                             <Image 
-                                src={post.data.images[1].url} 
-                                alt={post.data.images[1].alt}
+                                src={post.data.images[0].url} 
+                                alt={post.data.images[0].alt}
                                 width={600} 
                                 height={400}
                                 format="webp"
@@ -45,7 +47,7 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
                             </div>
                             <h3>{post.data.title}</h3>
                             <div class="card-footer">
-                                <span class="view-link">View Project</span>
+                                <span class="view-link">View Post</span>
                                 <ArrowRight size={18} />
                             </div>
                         </div>
@@ -73,11 +75,38 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         margin-bottom: 3.5rem; 
     }
 
-    .section-intro h2 { 
+    /* .section-intro h2 { 
         color: #001f3f; 
         font-size: clamp(2rem, 5vw, 2.5rem);
         font-family: "Montserrat-Bold", sans-serif; 
         margin-bottom: 0.75rem;
+    } */
+       .section-subtitle {
+        display: block;
+        color: var(--gold);
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 0.5rem;
+    }
+    .section-title {
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        color: var(--navy);
+        font-weight: 900;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        line-height: 1.1;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+    .accent-line {
+        width: 60px;
+        height: 5px;
+        background: var(--gold);
+        margin-top: 1rem;
+        border-radius: 2px;
+        margin: 0 auto;
     }
 
     .snippet-grid { 

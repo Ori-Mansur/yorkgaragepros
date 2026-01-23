@@ -26,11 +26,22 @@ const description =
     <SubLayout>
         <section class="blog-index-header">
             <div class="container">
-                <h1>Our Recent Work</h1>
+                <span class="expert-label">Expertise from the Field</span>
+
+                <h1>Local Garage Updates</h1>
+
+                <h2>Pro Insights, Recent Projects & Hardware Deals</h2>
+
+                <h3>Serving Newmarket, York Region & Simcoe County</h3>
+
                 <p>
-                    Real jobs, real results. See how we help homeowners across
-                    the GTA keep their garage doors safe and functional.
+                    From professional installs of your latest retail finds to
+                    full door restorations, we document our recent work to help
+                    you make informed decisions for your home’s security and
+                    curb appeal.
                 </p>
+
+                <div class="accent-line"></div>
             </div>
         </section>
 
@@ -41,12 +52,22 @@ const description =
                         sortedPosts.map((post) => (
                             <a href={`/blog/${post.slug}`} class="post-card">
                                 <div class="image-wrapper">
-                                    <BeforeAfter
-                                        beforeImg={post.data.images[0].url}
-                                        afterImg={post.data.images[1].url}
-                                        beforeAlt={post.data.images[0].alt}
-                                        afterAlt={post.data.images[1].alt}
-                                    />
+                                    {/* Check if there are 2 or more images for BeforeAfter, otherwise show a single image */}
+                                    {post.data.images.length >= 2 ? (
+                                        <BeforeAfter
+                                            beforeImg={post.data.images[0].url}
+                                            afterImg={post.data.images[1].url}
+                                            beforeAlt={post.data.images[0].alt}
+                                            afterAlt={post.data.images[1].alt}
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={post.data.images[0].url}
+                                            alt={post.data.images[0].alt}
+                                            class="single-post-image"
+                                        />
+                                    )}
+
                                     <span class="category-badge">
                                         {post.data.category}
                                     </span>
@@ -93,8 +114,8 @@ const description =
         margin: 0 auto;
         padding: 0 1.5rem;
     }
-    .blog-index-header {
-        background-color: #001f3f; /* Your Navy theme */
+    /* .blog-index-header {
+        background-color: #001f3f; 
         color: white;
         padding: 5rem 0;
         text-align: center;
@@ -102,7 +123,68 @@ const description =
     .blog-index-header h1 {
         font-size: 3rem;
         margin-bottom: 1rem;
-        color: #d4af37; /* Your Gold theme */
+        color: #d4af37; 
+    } */
+    .blog-index-header {
+        padding: 60px 10px;
+        background-color: var(--primary-color); /* Or your brand color */
+        text-align: center;
+    }
+
+    .expert-label {
+        display: block;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--secondary-color); /* Subtle grey */
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .blog-index-header h1 {
+        font-size: 3rem;
+        color: #ffffff;
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+
+    .blog-index-header h2 {
+        font-size: 1.5rem;
+        color: var(--secondary-color); /* Use your brand accent color */
+        font-weight: 500;
+        margin-bottom: 10px;
+    }
+
+    .blog-index-header h3 {
+        font-size: 1.1rem;
+        color: #f4f4f4;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .blog-index-header p {
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #f4f4f4;
+    }
+
+    .accent-line {
+        width: 60px;
+        height: 4px;
+        background-color: var(--secondary-color); /* Matches H2 */
+        margin: 25px auto 0;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .blog-index-header h1 {
+            font-size: 2.2rem;
+        }
+        .blog-index-header h2 {
+            font-size: 1.25rem;
+        }
     }
     .posts-grid-section {
         padding: 4rem 0;
@@ -139,6 +221,11 @@ const description =
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+
+    .single-post-image {
+        border-radius: 12px;
+        aspect-ratio: 4 / 3;
     }
     .category-badge {
         position: absolute;

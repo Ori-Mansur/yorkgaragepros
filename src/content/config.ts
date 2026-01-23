@@ -112,7 +112,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string().max(160),
     publishDate: z.date(),
-    author: z.string().default('Your Company Name'),
+    author: z.string().default('York Garage Pros'),
 
     // Updated: Array of objects with image validation and alt text
     images: z.array(
@@ -122,7 +122,7 @@ const blog = defineCollection({
       })
     ).min(1),
 
-    category: z.enum(['Repair', 'Installation', 'Maintenance', 'Safety']),
+    category: z.enum(['Repair', 'Installation', 'Maintenance', 'Safety', 'Deal Alert']),
     location: z.string(),
     serviceType: z.string(),
     tags: z.array(z.string()).optional(),
