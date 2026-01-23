@@ -12,6 +12,7 @@ export interface Props {
   citySlug?: string;
   // The current product type (only defined on product pages, e.g., 'flush-panels')
   typeSlug?: string;
+  isForm?: Boolean
 }
 
 const { serviceSlug, citySlug, typeSlug } = Astro.props;
@@ -55,7 +56,7 @@ const serviceTitle = serviceSlug
 
 <aside class="sidebar">
   <!-- CTA / Quick Quote -->
-  <div class="service-sidebar">
+  <!-- <div class="service-sidebar">
     <h2 class="sidebar-title">
       Book Your {serviceTitle} Service {cityTitle} Today
     </h2>
@@ -68,7 +69,7 @@ const serviceTitle = serviceSlug
         <a href="tel:+19059609947" aria-label="Call York Garage Pros at 905-960-9947" >(905) 960-9947</a>
       </p>
     </div>
-  </div>
+  </div> -->
 
   <!-- Service Areas -->
   <div class="sidebar-card">

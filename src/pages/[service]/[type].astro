@@ -99,7 +99,7 @@ const productSchema = {
             )
           }
 
-          <section class="options-container">
+          { (windowStyles || colors) && <section class="options-container">
             <h2 class="section-heading">Finish & Style Options</h2>
 
             <div class="options-grid">
@@ -150,7 +150,7 @@ const productSchema = {
                 }
               </div>
             </div>
-          </section>
+          </section> }
         </section>
 
         <aside class="sidebar-column">
