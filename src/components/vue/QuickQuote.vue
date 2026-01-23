@@ -440,6 +440,9 @@ async function handleSubmit() {
   background: #1c2a44;
   color: white;
 }
+button:disabled {
+  opacity: 0.7;
+}
 .submit-btn {
   background: #e8a900;
   color: #1c2a44;
