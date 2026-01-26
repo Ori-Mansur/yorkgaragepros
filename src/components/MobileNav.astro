@@ -66,7 +66,7 @@ import { ArrowDown } from "@lucide/astro";
         </nav>
     </div>
 </div>
-<script type="module">
+<!-- <script type="module">
     function setToggle() {
         // REMOVED the "#" from the IDs
         const dropdownToggle = document.getElementById("mobile-service-toggle");
@@ -137,6 +137,37 @@ import { ArrowDown } from "@lucide/astro";
     } else {
         setToggle();
         setToggleArea()
+    }
+</script> -->
+<script type="module">
+    // Refactored: One function to handle all mobile toggles
+    function setupMobileToggle(toggleId, parentId) {
+        const toggle = document.getElementById(toggleId);
+        const parent = document.getElementById(parentId);
+
+        if (!toggle || !parent) return;
+
+        const handleToggle = (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+                parent.classList.toggle("active");
+            }
+        };
+
+        toggle.addEventListener("click", handleToggle);
+        toggle.addEventListener("touchstart", handleToggle, { passive: false });
+    }
+
+    function init() {
+        setupMobileToggle("mobile-service-toggle", "dropdown-service-mobile");
+        setupMobileToggle("mobile-area-toggle", "dropdown-area-mobile");
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
     }
 </script>
 <style>
