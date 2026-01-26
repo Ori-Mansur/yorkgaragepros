@@ -25,8 +25,13 @@ export default defineConfig({
   },
 
   integrations: [
-    sitemap({
-      filter: (page) => !['/booking', '/thank-you', '/admin'].some(path => page.includes(path))
+     sitemap({
+       filter: (page) => {
+       if (page.includes('/booking') || page.includes('/thank-you') || page.includes('/admin')) {
+          return false;
+        }
+        return true;
+    }
     }), 
     vue({
       template: {
