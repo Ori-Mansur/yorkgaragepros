@@ -10,7 +10,7 @@ export default defineConfig({
   site: 'https://yorkgaragepros.com',
   output: "server", // Enables dynamic SSR
   adapter: cloudflare({
-    imageService: 'cloudflare' // Uses Cloudflare's native resizer
+    imageService: 'passthrough' // Uses Cloudflare's native resizer
   }),
 
   vite: {
