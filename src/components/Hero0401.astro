@@ -9,9 +9,39 @@ import {
     CalendarCheck,
     Star,
 } from "@lucide/astro";
-import ReviewBadge from './ReviewBadge.astro'
+import ReviewBadge from "./ReviewBadge.astro";
 // Using your optimized 665x665 image
 import heroPic from "../assets/heropagemobile.webp";
+const { searchParams } = Astro.url;
+const utmTerm = searchParams.get("utm_term")?.toLowerCase() || "";
+
+// 1. Define your "Clean" targets based on your top spenders in the report
+let highlightText = "Garage Door Repair"; // Default
+
+if (utmTerm.includes("opener")) {
+    highlightText = "Garage Door Opener Repair";
+} else if (utmTerm.includes("spring")) {
+    highlightText = "Garage Door Spring Repair";
+} else if (utmTerm.includes("installation") || utmTerm.includes("new door")) {
+    highlightText = "Garage Door Installation";
+} else if (utmTerm.includes("emergency") || utmTerm.includes("same day")) {
+    highlightText = "Emergency Repair";
+}
+
+// 2. Location Logic (Optional: if you want the H2 to change instead)
+const cities = [
+    "newmarket",
+    "aurora",
+    "vaughan",
+    "richmond hill",
+    "markham",
+    "barrie",
+    "bradford",
+];
+const detectedCity = cities.find((city) => utmTerm.includes(city));
+const displayCity = detectedCity
+    ? detectedCity.charAt(0).toUpperCase() + detectedCity.slice(1)
+    : "York Region";
 ---
 
 <section class="section-garage">
@@ -21,19 +51,27 @@ import heroPic from "../assets/heropagemobile.webp";
         </div>
 
         <h1>
-            Same-Day <span class="highlight">Garage Door Repair</span> & Installation
+            Same-Day <span class="highlight">{highlightText}</span> & Services
         </h1>
-
         <h2>
+            {
+                detectedCity
+                    ? `Top-Rated Local Technicians Ready to Serve ${displayCity} Today`
+                    : "Newmarket, Aurora, Bradford, Vaughan, Richmond Hill, Markham & Barrie"
+            }
+        </h2>
+
+        <!-- <h2>
             Newmarket, Aurora, Bradford, Vaughan, Richmond Hill, Markham &
             Barrie
-        </h2>
+        </h2> -->
 
         <p class="lead">
             <strong>Fast Local Service:</strong> We fix broken springs, cables, and
-            openers today. Fully stocked trucks ready to serve you.
+            openers today. Our trucks are fully stocked so we can finish the job in
+            one visit.
         </p>
-        <ReviewBadge/>
+        <ReviewBadge />
 
         <div class="cta-actions">
             <a
@@ -154,6 +192,7 @@ import heroPic from "../assets/heropagemobile.webp";
 
     .highlight {
         color: #e8a900;
+        display: inline-block;
     }
 
     h2 {
@@ -236,6 +275,7 @@ import heroPic from "../assets/heropagemobile.webp";
         margin-top: -1.5rem;
         position: relative;
         z-index: 10;
+        pointer-events: none;
     }
     .value-box-inner {
         background: white;
@@ -243,6 +283,7 @@ import heroPic from "../assets/heropagemobile.webp";
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         border-top: 4px solid #e8a900;
+        pointer-events: auto;
     }
     .icon-circle {
         color: #e8a900;

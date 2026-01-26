@@ -1,47 +1,50 @@
 <div class="trust-micro">
-    <span class="stars" aria-hidden="true">★★★★★</span>
-    <span class="trust-text">
-        <strong>5.0</strong> on 
-        <a href="https://g.page/r/CUzO9_99F8FREBM" target="_blank" rel="noopener">Google Reviews</a> 
-    </span>
+    <a href="https://g.page/r/CUzO9_99F8FREBM" target="_blank" rel="noopener" class="trust-link">
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <span class="trust-text">
+            <strong>5.0</strong> on Google Reviews
+        </span>
+    </a>
 </div>
 
 <style>
     .trust-micro {
         display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 6px;
-        font-size: 0.85rem; /* Small and gentle */
-        color: #4b5563;
-        /* margin:  0; */
+        justify-content: center;
         margin-bottom: 1.1rem;
         font-family: 'Montserrat', sans-serif;
     }
+
+    .trust-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        text-decoration: none; /* Remove default underline */
+        color: #4b5563;
+        transition: transform 0.2s ease;
+    }
+
+    .trust-link:active {
+        transform: scale(0.98); /* Feedback when tapped on mobile */
+    }
+
     .stars {
         color: #e8a900;
         letter-spacing: 1px;
         font-size: 1.25rem;
+        line-height: 1;
     }
+
     .trust-text {
+        font-size: 0.85rem;
         font-weight: 500;
         letter-spacing: -0.2px;
+        /* Re-adding your gentle underline here */
+        border-bottom: 1px solid rgba(232, 169, 0, 0.6); 
     }
-    .trust-text a {
+
+    .trust-text strong {
         color: #1c2a44;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(232, 169, 0, 0.4); /* Gentle underline */
-        transition: border-color 0.2s;
-    }
-    .trust-text a:hover {
-        border-bottom-color: #e8a900;
-    }
-    .divider {
-        margin: 0 4px;
-        color: #d1d5db;
-    }
-    .location {
-        color: #6b7280;
-        font-weight: 400;
     }
 </style>
