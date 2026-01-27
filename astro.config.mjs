@@ -46,6 +46,13 @@ export default defineConfig({
       entrypoint: 'astro/assets/services/sharp' 
     }
   },
+  build: {
+    // Force inline for small CSS to break the "Chain"
+    inlineStylesheets: 'always', 
+    
+    // Keeps your file structure clean without the extra prefix mess
+    assets: '_astro'
+  },
   
   compressHTML: true,
 });
