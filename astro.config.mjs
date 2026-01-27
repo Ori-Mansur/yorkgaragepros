@@ -9,9 +9,7 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   site: 'https://yorkgaragepros.com',
   output: "server", // Enables dynamic SSR
-  adapter: cloudflare({
-    imageService: 'passthrough' // Uses Cloudflare's native resizer
-  }),
+  adapter: cloudflare(),
 
   vite: {
     plugins: [tailwindcss()],
@@ -45,7 +43,7 @@ export default defineConfig({
 
   image: {
     service: {
-      entrypoint: 'astro/assets/services/external' 
+      entrypoint: 'astro/assets/services/sharp' 
     }
   },
   
