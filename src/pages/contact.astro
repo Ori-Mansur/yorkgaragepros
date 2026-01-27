@@ -57,7 +57,15 @@ const description =
                 <MapPin />
                 <div>
                     <p>Office Location</p>
-                    <address>Newmarket, ON L3X 2B1</address>
+                    <a
+                        href="https://www.google.com/maps/search/?api=1&query=York+Garage+Pros"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="location-link"
+                    >
+                        <address>Newmarket, ON L3X 2B1</address>
+                    </a>
+                    <p class="service-note">Mobile Service — We come to you!</p>
                 </div>
             </div>
             <div>
@@ -178,6 +186,7 @@ const description =
             max-width: 600px;
             margin: 0 auto;
         }
+      
 
         /* ========== Contact Section ========== */
 
@@ -238,6 +247,12 @@ const description =
             border-top: 1px solid #e5e7eb;
             display: flex;
             gap: 10px;
+        }
+          .service-note {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
         }
         table {
             width: 100%;
