@@ -195,6 +195,14 @@ import { ArrowDown } from "@lucide/astro";
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
         /* Ensure the menu content can scroll if it's long */
         overflow-y: auto;
+        top: 193px;
+        height: calc(-193px + 100vh);
+    }
+     @media (min-width: 640px) {
+        .mobile-menu {
+           top: 153px;
+           height: calc(-153px + 100vh);
+        }
     }
 
     /* ACTIVE STATE (add with JS) */
