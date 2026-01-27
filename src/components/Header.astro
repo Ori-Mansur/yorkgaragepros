@@ -15,11 +15,11 @@ import MobileNav from "./MobileNav.astro";
                     formats={["avif", "webp"]}
                     src={Logo}
                     alt="York Garage Pros Logo"
-                    width={84}
-                    height={81}
-                    sizes="56px"
+                    width={114}
+                    height={110}
                     loading="eager"
                     fetchpriority="high"
+                    decoding="async"
                 />
                 <span>YORK GARAGE PROS</span>
             </div>
@@ -36,7 +36,9 @@ import MobileNav from "./MobileNav.astro";
                     <li>
                         <a href="/garage-door-repair/">Garage Door Repair</a>
                     </li>
-                    <li><a href="/garage-door/">Garage Door Installation</a></li>
+                    <li>
+                        <a href="/garage-door/">Garage Door Installation</a>
+                    </li>
                     <li>
                         <a href="/garage-door-opener/">Garage Door Opener</a>
                     </li>
@@ -166,15 +168,16 @@ import MobileNav from "./MobileNav.astro";
 
     .logo img {
         height: 55px;
-        width: auto; /* ✅ preserve aspect ratio */
+        width: auto;
+        aspect-ratio: 1 / 1; /* ✅ Ensures the "circle" doesn't turn into an oval */
         border-radius: 9999px;
         background-color: #ffffff;
         padding: 1px;
-        contain: paint;
+        object-fit: contain; /* ✅ Keeps the logo centered in the circle */
     }
 
     .logo span {
-        font-family: "Helvetica Neue", sans-serif; /* font-heading */
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
         font-weight: 800; /* font-extrabold */
         font-size: 1.125rem; /* text-lg */
         letter-spacing: 0.05em; /* tracking-wide */
