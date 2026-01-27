@@ -150,11 +150,11 @@ import { ArrowDown } from "@lucide/astro";
         if (!toggle || !parent) return;
 
         const handleToggle = (e) => {
-            if (window.innerWidth <= 768) {
+           
                 e.preventDefault();
                 e.stopPropagation();
                 parent.classList.toggle("active");
-            }
+            
         };
 
         toggle.addEventListener("click", handleToggle);
