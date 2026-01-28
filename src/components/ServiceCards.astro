@@ -11,7 +11,16 @@ import {
 
 <section id="services-home-section" class="services-section">
     <div class="services-container">
-        <h2 class="services-title">Quick Look: Our Core Services</h2>
+        <!-- <h2 class="services-title">Quick Look: </h2> -->
+        <div class="section-intro">
+            <span class="section-subtitle">Local Servises</span>
+            <h2 class="section-title">Our Core Services</h2>
+            <p>
+                Professional garage door service, repair, and installation for
+                York and Simcoe County.
+            </p>
+            <div class="accent-line"></div>
+        </div>
 
         <div class="services-grid">
             <!-- Garage Doors -->
@@ -79,7 +88,7 @@ import {
         /* background: #f8f9fc; */
         /* background: #f8f9fa; */
         background-color: #f4f4f4; /* Subtle contrast */
-    /* padding: 6rem 0;
+        /* padding: 6rem 0;
         clip-path: polygon(0 2%, 100% 0, 100% 98%, 0 100%); */
     }
 
@@ -96,6 +105,37 @@ import {
         color: #1c2a44; /* primary */
         margin-bottom: 40px;
         font-family: Arial, sans-serif;
+    }
+    .section-intro {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+    .section-subtitle {
+        display: block;
+        color: var(--gold);
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 0.5rem;
+    }
+    .section-title {
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        color: var(--navy);
+        font-weight: 900;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        line-height: 1.1;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+    .accent-line {
+        width: 60px;
+        height: 5px;
+        background: var(--gold);
+        margin-top: 1rem;
+        border-radius: 2px;
+        margin: 0 auto;
     }
 
     /* Grid Layout */
