@@ -1,15 +1,15 @@
 <template>
-  <section class="estimator-section" id="estimator">
+  <section class="estimator-section">
     <div class="estimator-container">
-      <h2 class="estimator-title">Labor Estimator</h2>
-      <p class="estimator-subtitle">What you see is what you get.</p>
+      <h2 class="estimator-title">Honest Labor Estimator</h2>
+      <p class="estimator-subtitle">GTA Local • What you see is what you get.</p>
 
       <div class="estimator-card">
         <div class="form-grid">
           <div class="inputs-side">
             <div class="form-group">
-              <label class="form-label">Garage Size</label>
-              <select v-model="size" class="form-select">
+              <label for="garage-size-select" class="form-label">Garage Size</label>
+              <select id="garage-size-select" v-model="size" class="form-select">
                 <option :value="1">1 Car (Single Door)</option>
                 <option :value="2">2 Car (Double Door)</option>
                 <option :value="3">3+ Car / Custom</option>
@@ -17,9 +17,14 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">Select Labor Services</label>
+              <p class="form-label">Select Labor Services</p>
 
-              <div class="checkbox-row" @click="toggleService('repair')">
+              <div
+                class="checkbox-row"
+                @click="toggleService('repair')"
+                role="button"
+                aria-pressed="selectedServices.includes('repair')"
+              >
                 <div
                   class="custom-checkbox"
                   :class="{ checked: selectedServices.includes('repair') }"
@@ -32,7 +37,12 @@
                 </div>
               </div>
 
-              <div class="checkbox-row" @click="toggleService('opener')">
+              <div
+                class="checkbox-row"
+                @click="toggleService('opener')"
+                role="button"
+                aria-pressed="selectedServices.includes('opener')"
+              >
                 <div
                   class="custom-checkbox"
                   :class="{ checked: selectedServices.includes('opener') }"
@@ -45,7 +55,12 @@
                 </div>
               </div>
 
-              <div class="checkbox-row" @click="toggleService('door')">
+              <div
+                class="checkbox-row"
+                @click="toggleService('door')"
+                role="button"
+                aria-pressed="selectedServices.includes('door')"
+              >
                 <div
                   class="custom-checkbox"
                   :class="{ checked: selectedServices.includes('door') }"
@@ -92,10 +107,10 @@
 
         <div class="cta-container">
           <a href="tel:+19059609947" class="cta-link">
-            <button class="cta-button-call">CALL NOW</button>
+            <button class="cta-button-call">CALL LOCAL EXPERT</button>
           </a>
           <a href="/booking/" class="cta-link">
-            <button class="cta-button-book">BOOK ON-SITE</button>
+            <button class="cta-button-book">BOOK ON-SITE VISIT</button>
           </a>
         </div>
       </div>
@@ -139,8 +154,7 @@ const toggleService = (key) => {
 
 <style scoped>
 .estimator-section {
-  /* background: #f8fafc; */
-  background: #e8aa0079; 
+  background: #f8fafc;
   padding: 3rem 1rem;
   font-family: sans-serif;
 }
@@ -167,7 +181,7 @@ const toggleService = (key) => {
 .estimator-card {
   background: white;
   border-radius: 16px;
-  padding: 2rem;
+  padding: 2.5rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
@@ -197,6 +211,7 @@ const toggleService = (key) => {
   border: 2px solid #f1f5f9;
   margin-bottom: 1.5rem;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .checkbox-row {
@@ -241,11 +256,10 @@ const toggleService = (key) => {
   display: block;
 }
 
-/* ESTIMATE BOX & TAGS */
 .estimate-box {
   background: #1c2a44;
   color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 12px;
   text-align: center;
 }
@@ -259,7 +273,7 @@ const toggleService = (key) => {
   font-size: 3.5rem;
   font-weight: 900;
   font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
-  margin: 0.5rem 0;
+  margin: 0.2rem 0;
   color: white;
 }
 
@@ -267,12 +281,12 @@ const toggleService = (key) => {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 1rem;
+  gap: 6px;
+  margin-bottom: 1.2rem;
 }
 .p-tag {
   font-size: 0.7rem;
-  background: rgba(232, 169, 0, 0.2);
+  background: rgba(232, 169, 0, 0.15);
   color: #e8a900;
   padding: 4px 8px;
   border-radius: 4px;
@@ -284,7 +298,7 @@ const toggleService = (key) => {
 .value-breakdown {
   text-align: left;
   background: rgba(255, 255, 255, 0.05);
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 8px;
   margin-bottom: 1rem;
 }
@@ -292,8 +306,11 @@ const toggleService = (key) => {
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #cbd5e1;
+}
+.breakdown-list li {
+  margin-bottom: 4px;
 }
 .breakdown-list li::before {
   content: "•";
@@ -302,12 +319,11 @@ const toggleService = (key) => {
 }
 
 .transparency-note {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #94a3b8;
   font-style: italic;
 }
 
-/* CTAs */
 .cta-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -333,7 +349,6 @@ const toggleService = (key) => {
   font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
   cursor: pointer;
   transition: 0.3s;
-  text-align: center;
 }
 .cta-button-book {
   width: 100%;
@@ -346,11 +361,9 @@ const toggleService = (key) => {
   font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
   cursor: pointer;
   transition: 0.3s;
-  text-align: center;
 }
 .cta-button-call:hover,
 .cta-button-book:hover {
-  transform: translateY(-2px);
   filter: brightness(1.1);
 }
 </style>
