@@ -143,28 +143,39 @@ import { ArrowDown } from "@lucide/astro";
     }
 </script> -->
 <script type="module">
-    // Refactored: One function to handle all mobile toggles
     function setupMobileToggle(toggleId, parentId) {
         const toggle = document.getElementById(toggleId);
         const parent = document.getElementById(parentId);
-
         if (!toggle || !parent) return;
 
         const handleToggle = (e) => {
-           
-                e.preventDefault();
-                e.stopPropagation();
-                parent.classList.toggle("active");
-            
+            e.preventDefault();
+            e.stopPropagation();
+            parent.classList.toggle("active");
         };
 
         toggle.addEventListener("click", handleToggle);
         toggle.addEventListener("touchstart", handleToggle, { passive: false });
     }
 
+    // --- NEW FUNCTION TO CLOSE MENU ---
+    function setupMenuCloser() {
+        const menu = document.getElementById("mobileMenu");
+        // Select all links with the data-close attribute
+        const closeLinks = document.querySelectorAll('[data-close]');
+
+        closeLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                // Remove the 'open' class that shows the menu
+                menu.classList.remove("open");
+            });
+        });
+    }
+
     function init() {
         setupMobileToggle("mobile-service-toggle", "dropdown-service-mobile");
         setupMobileToggle("mobile-area-toggle", "dropdown-area-mobile");
+        setupMenuCloser(); // Initialize the closer
     }
 
     if (document.readyState === "loading") {

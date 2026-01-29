@@ -1,11 +1,11 @@
 ---
-
 import "../styles/global.css";
-import ClaudeHero from "../components/ClaudeHero.astro";
+// import ClaudeHero from "../components/ClaudeHero.astro";
 import Hero0401 from "../components/Hero0401.astro";
 import ROIAnalysis from "../components/ROIAnalysis.astro";
 import RecentWorkSnippet from "../components/RecentWorkSnippet.astro";
-import Estimator from "../components/Estimator.astro";
+// import Estimator from "../components/Estimator.astro";
+import Estimator from "../components/vue/Estimator.vue";
 import ServiceCards from "../components/ServiceCards.astro";
 import Layout from "../layouts/Layout.astro";
 import SubLayout from "../layouts/SubLayout.astro";
@@ -20,14 +20,14 @@ import GarageSafety from "../components/GarageSafety.astro";
 <Layout>
 	<SubLayout>
 		<!-- <Banner /> -->
-		 <!-- <ClaudeHero/> -->
+		<!-- <ClaudeHero/> -->
 		<Hero0401 />
 		<ServiceCards />
 		<LocalReviews />
-		 <RecentWorkSnippet />
-		 <ROIAnalysis />
+		<RecentWorkSnippet />
+		<ROIAnalysis />
 		<GarageSafety />
-		
-		<Estimator />
+
+		<Estimator client:load />
 	</SubLayout>
 </Layout>
