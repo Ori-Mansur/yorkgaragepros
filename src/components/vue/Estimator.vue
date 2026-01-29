@@ -23,7 +23,9 @@
                 class="checkbox-row"
                 @click="toggleService('repair')"
                 role="button"
-                aria-pressed="selectedServices.includes('repair')"
+                :aria-pressed="selectedServices.includes('repair')"
+                tabindex="0"
+                @keyup.enter="toggleService('repair')"
               >
                 <div
                   class="custom-checkbox"
@@ -41,7 +43,9 @@
                 class="checkbox-row"
                 @click="toggleService('opener')"
                 role="button"
-                aria-pressed="selectedServices.includes('opener')"
+                :aria-pressed="selectedServices.includes('opener')"
+                tabindex="0"
+                @keyup.enter="toggleService('opener')"
               >
                 <div
                   class="custom-checkbox"
@@ -59,7 +63,9 @@
                 class="checkbox-row"
                 @click="toggleService('door')"
                 role="button"
-                aria-pressed="selectedServices.includes('door')"
+                :aria-pressed="selectedServices.includes('door')"
+                tabindex="0"
+                @keyup.enter="toggleService('door')"
               >
                 <div
                   class="custom-checkbox"
@@ -107,10 +113,10 @@
 
         <div class="cta-container">
           <a href="tel:+19059609947" class="cta-link">
-            <button class="cta-button-call">CALL LOCAL EXPERT</button>
+            <button class="cta-button-call">Call Now</button>
           </a>
           <a href="/booking/" class="cta-link">
-            <button class="cta-button-book">BOOK ON-SITE VISIT</button>
+            <button class="cta-button-book">Get Quote</button>
           </a>
         </div>
       </div>
@@ -122,6 +128,7 @@
 import { ref, computed } from "vue";
 
 const size = ref(1);
+// Defaults to repair selected
 const selectedServices = ref(["repair"]);
 
 const PRICING = {
@@ -153,16 +160,18 @@ const toggleService = (key) => {
 </script>
 
 <style scoped>
+/* Base Styles */
 .estimator-section {
   background: #f8fafc;
   padding: 3rem 1rem;
-  font-family: sans-serif;
+  font-family: "Inter", sans-serif;
 }
 .estimator-container {
   max-width: 950px;
   margin: 0 auto;
 }
 
+/* Typography Improvements */
 .estimator-title {
   text-align: center;
   font-size: 2rem;
@@ -212,8 +221,13 @@ const toggleService = (key) => {
   margin-bottom: 1.5rem;
   font-size: 1rem;
   cursor: pointer;
+  outline: none;
+}
+.form-select:focus {
+  border-color: #1c2a44;
 }
 
+/* Interactive Checkbox Rows */
 .checkbox-row {
   display: flex;
   align-items: center;
@@ -222,10 +236,12 @@ const toggleService = (key) => {
   border-radius: 10px;
   margin-bottom: 0.5rem;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  outline: none;
 }
-.checkbox-row:hover {
+.checkbox-row:hover, .checkbox-row:focus {
   border-color: #e8a900;
+  background: #fffdf5;
 }
 
 .custom-checkbox {
@@ -238,6 +254,7 @@ const toggleService = (key) => {
   align-items: center;
   justify-content: center;
   color: white;
+  flex-shrink: 0;
 }
 .custom-checkbox.checked {
   background: #1c2a44;
@@ -256,6 +273,7 @@ const toggleService = (key) => {
   display: block;
 }
 
+/* Results Display */
 .estimate-box {
   background: #1c2a44;
   color: white;
@@ -277,6 +295,7 @@ const toggleService = (key) => {
   color: white;
 }
 
+/* Value Tags */
 .price-tags {
   display: flex;
   flex-wrap: wrap;
@@ -324,6 +343,7 @@ const toggleService = (key) => {
   font-style: italic;
 }
 
+/* CTA Buttons */
 .cta-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -349,6 +369,7 @@ const toggleService = (key) => {
   font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
   cursor: pointer;
   transition: 0.3s;
+  text-align: center;
 }
 .cta-button-book {
   width: 100%;
@@ -361,9 +382,11 @@ const toggleService = (key) => {
   font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
   cursor: pointer;
   transition: 0.3s;
+  text-align: center;
 }
 .cta-button-call:hover,
 .cta-button-book:hover {
   filter: brightness(1.1);
+  transform: translateY(-1px);
 }
 </style>
