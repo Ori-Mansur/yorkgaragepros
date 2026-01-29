@@ -83,7 +83,7 @@
               <div class="price-tags">
                 <span class="p-tag">✓ 1-Year Warranty</span>
                 <span class="p-tag">✓ No "Bait & Switch"</span>
-                <span class="p-tag">✓ GTA Local Pro</span>
+                <span class="p-tag">✓ Family Business</span>
               </div>
 
               <div class="value-breakdown">
