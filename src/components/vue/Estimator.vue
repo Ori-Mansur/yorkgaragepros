@@ -1,8 +1,8 @@
 <template>
   <section class="estimator-section">
     <div class="estimator-container">
-      <h2 class="estimator-title">Honest Labor Estimator</h2>
-      <p class="estimator-subtitle">GTA Local • What you see is what you get.</p>
+      <h2 class="estimator-title">Labor Estimator</h2>
+      <p class="estimator-subtitle">What you see is what you get.</p>
 
       <div class="estimator-card">
         <div class="form-grid">
