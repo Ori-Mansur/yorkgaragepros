@@ -35,11 +35,9 @@ const {
 
 const serviceName = capitalizeWords(service.replace(/-/g, " "));
 const typeName = capitalizeWords(type.replace(/-/g, " "));
-
 ---
 
-<Layout title={title} description={metaDescription}>
-  
+<Layout title={title} description={metaDescription} serviceName={serviceName}>
   <UtilityNav />
   <Header />
 
@@ -47,16 +45,16 @@ const typeName = capitalizeWords(type.replace(/-/g, " "));
     <header class="product-hero">
       <div class="container hero-wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a> / <a href={`/${service}/`}>{serviceName}</a> / <span
-            class="active">{typeName}</span
-          >
+          <a href="/">Home</a> / <a href={`/${service}/`}>{serviceName}</a> /
+          <span class="active">{typeName} </span>
         </nav>
         <h1 class="hero-title">{h1}</h1>
         <div class="trust-bar">
           <div class="stars">★★★★★</div>
           <span class="rating-text">
-          {rating || "5.0"} Rating from our local {reviewCount || "5"} Recent Ontario Customers
-            </span>
+            {rating || "5.0"} Rating from our local {reviewCount || "5"} Recent Ontario
+            Customers
+          </span>
         </div>
       </div>
     </header>
@@ -86,58 +84,56 @@ const typeName = capitalizeWords(type.replace(/-/g, " "));
             )
           }
 
-          { (windowStyles || colors) && <section class="options-container">
-            <h2 class="section-heading">Finish & Style Options</h2>
+          {
+            (windowStyles || colors) && (
+              <section class="options-container">
+                <h2 class="section-heading">Finish & Style Options</h2>
 
-            <div class="options-grid">
-              {
-                colors && (
+                <div class="options-grid">
+                  {colors && (
+                    <div class="option-card">
+                      <h3>Available Colors</h3>
+                      <div class="swatch-grid">
+                        {colors.map((c) => (
+                          <div class="swatch-item" title={c.name}>
+                            <div
+                              class="swatch-circle"
+                              style={`background-color: ${c.color}`}
+                            />
+                            <span class="swatch-name">{c.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div class="option-card">
-                    <h3>Available Colors</h3>
-                    <div class="swatch-grid">
-                      {colors.map((c) => (
-                        <div class="swatch-item" title={c.name}>
-                          <div
-                            class="swatch-circle"
-                            style={`background-color: ${c.color}`}
-                          />
-                          <span class="swatch-name">{c.name}</span>
-                        </div>
-                      ))}
-                    </div>
+                    <h3>Glass & Windows</h3>
+                    {windowStyles && (
+                      <div class="sub-option">
+                        <span class="sub-label">Panel Designs:</span>
+                        <ul class="pill-list">
+                          {windowStyles.map((style) => (
+                            <li>{style}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {glassStyles && (
+                      <div class="sub-option">
+                        <span class="sub-label">Glass Privacy:</span>
+                        <ul class="pill-list">
+                          {glassStyles.map((glass) => (
+                            <li>{glass}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
-                )
-              }
-
-              <div class="option-card">
-                <h3>Glass & Windows</h3>
-                {
-                  windowStyles && (
-                    <div class="sub-option">
-                      <span class="sub-label">Panel Designs:</span>
-                      <ul class="pill-list">
-                        {windowStyles.map((style) => (
-                          <li>{style}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )
-                }
-                {
-                  glassStyles && (
-                    <div class="sub-option">
-                      <span class="sub-label">Glass Privacy:</span>
-                      <ul class="pill-list">
-                        {glassStyles.map((glass) => (
-                          <li>{glass}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )
-                }
-              </div>
-            </div>
-          </section> }
+                </div>
+              </section>
+            )
+          }
         </section>
 
         <aside class="sidebar-column">
