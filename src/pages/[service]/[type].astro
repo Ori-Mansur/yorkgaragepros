@@ -36,23 +36,10 @@ const {
 const serviceName = capitalizeWords(service.replace(/-/g, " "));
 const typeName = capitalizeWords(type.replace(/-/g, " "));
 
-// SEO Schema
-const productSchema = {
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  name: h1,
-  description: metaDescription,
-  brand: { "@type": "Brand", name: "York Garage Pros" },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: rating || "5.0",
-    reviewCount: reviewCount || "100",
-  },
-};
 ---
 
 <Layout title={title} description={metaDescription}>
-  <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  
   <UtilityNav />
   <Header />
 
@@ -60,17 +47,16 @@ const productSchema = {
     <header class="product-hero">
       <div class="container hero-wrapper">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
-          <a href="/">Home</a> / <a href={`/${service}`}>{serviceName}</a> / <span
+          <a href="/">Home</a> / <a href={`/${service}/`}>{serviceName}</a> / <span
             class="active">{typeName}</span
           >
         </nav>
         <h1 class="hero-title">{h1}</h1>
         <div class="trust-bar">
           <div class="stars">★★★★★</div>
-          <span class="rating-text"
-            >{rating || "5.0"} Rating based on {reviewCount || "100"}+ GTA
-            Installations</span
-          >
+          <span class="rating-text">
+          {rating || "5.0"} Rating from our local {reviewCount || "5"} Recent Ontario Customers
+            </span>
         </div>
       </div>
     </header>

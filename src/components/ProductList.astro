@@ -9,14 +9,13 @@ const products = (await getCollection("openers")).filter((op) => {
     return op.data.tags.includes(type);
 });
 
-console.log(products);
 ---
 
 <div class="product-grid">
     {
         products.map((product) => (
             <ProductCard
-                url={`/garage-door-opener/${product.id}`}
+                url={`/garage-door-opener/${product.id}/`}
                 title={product.id}
                 alt={product.id}
                 image={getOpenerImage(product.id)}

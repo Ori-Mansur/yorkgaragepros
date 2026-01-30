@@ -26,7 +26,6 @@ const cityName = capitalizeWords(city);
 // 1. Get the primary content for THIS city from service-areas
 const allServiceAreas = await getCollection("service-areas");
 const cityContent = allServiceAreas.find((p) => p.data.city === city && p.data.service == 'garage-door-repair');
-console.log(cityContent);
 
 
 // 2. Get the catalog links for the sitemap/menu
