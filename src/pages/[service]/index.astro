@@ -111,7 +111,7 @@ const metaDescription = `Professional ${serviceName} in York Region & Simcoe Cou
                         {
                             relatedCatalogs.map((entry) => (
                                 <a
-                                    href={`/${service}/${entry.data.type}`}
+                                    href={`/${service}/${entry.data.type}/`}
                                     class="product-card"
                                 >
                                     <div class="card-image-box">
@@ -153,7 +153,7 @@ const metaDescription = `Professional ${serviceName} in York Region & Simcoe Cou
                             {
                                 relatedAreas.map((page) => (
                                     <a
-                                        href={`/${page.data.service}/${page.data.city}`}
+                                        href={`/${page.data.service}/${page.data.city}/`}
                                         class="area-tag"
                                     >
                                         {page.data.cityName}
@@ -191,7 +191,7 @@ const metaDescription = `Professional ${serviceName} in York Region & Simcoe Cou
                                 <a href="tel:+19059609947" class="btn-call">
                                     <Phone size={20} /> (905) 960-9947
                                 </a>
-                                <a href="/booking" class="btn-book">
+                                <a href="/booking/" class="btn-book">
                                     <ClipboardList size={20} />
                                     {
                                         isRepair

@@ -51,7 +51,7 @@ const description =
                 <div class="posts-grid">
                     {
                         sortedPosts.map((post) => (
-                            <a href={`/blog/${post.slug}`} class="post-card">
+                            <a href={`/blog/${post.slug}/`} class="post-card">
                                 <div class="image-wrapper">
                                     {/* Check if there are 2 or more images for BeforeAfter, otherwise show a single image */}
                                     {post.data.images.length >= 2 ? (

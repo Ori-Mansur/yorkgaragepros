@@ -28,7 +28,7 @@ const relatedCatalogs = allCatalogs
   .filter((entry) => entry.data.service === serviceSlug)
   .map((entry) => ({
     name: capitalizeWords(entry.data.type.replace(/-/g, " ")),
-    url: `/${serviceSlug}/${entry.data.type}`,
+    url: `/${serviceSlug}/${entry.data.type}/`,
     // Determine if this is the active page (for styling)
     isActive: entry.data.type === typeSlug,
   }));
@@ -38,7 +38,7 @@ const relatedServiceAreas = allServiceAreas
   .filter((entry) => entry.data.service === serviceSlug)
   .map((entry) => ({
     name: entry.data.cityName, // Use the proper city name
-    url: `/${serviceSlug}/${entry.data.city}`,
+    url: `/${serviceSlug}/${entry.data.city}/`,
     // Determine if this is the active page
     isActive: entry.data.city === citySlug,
   }));

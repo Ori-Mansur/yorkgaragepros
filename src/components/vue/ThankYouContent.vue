@@ -21,7 +21,7 @@
                 View Our Garage Transformation Gallery
             </a> -->
             
-            <a href="/services" class="cta-button secondary">
+            <a href="/services/" class="cta-button secondary">
                 Explore More Services
             </a>
 

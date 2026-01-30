@@ -29,7 +29,7 @@ const recentPosts = (
             {
                 recentPosts.map((post) => (
                     <article class="card-wrapper">
-                        <a href={`/blog/${post.slug}`} class="mini-card">
+                        <a href={`/blog/${post.slug}/`} class="mini-card">
                             <div class="img-container">
                                 {/* FIX: Ensure your schema allows the Image component to resolve the URL */}
                                 <Image
