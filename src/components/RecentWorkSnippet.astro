@@ -4,56 +4,63 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import { MapPin, ArrowRight } from "@lucide/astro";
 
-const recentPosts = (await getCollection("blog", ({ data }) => {
-    return data.draft !== true;
-}))
-.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-.slice(0, 3);
+const recentPosts = (
+    await getCollection("blog", ({ data }) => {
+        return data.draft !== true;
+    })
+)
+    .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+    .slice(0, 3);
 ---
 
 <section class="home-work-snippet">
     <div class="container">
         <div class="section-intro">
-             <span class="section-subtitle">Experts Sharing</span>
+            <span class="section-subtitle">Experts Sharing</span>
             <h2 class="section-title">Local Garage Updates</h2>
-            <p>Pro tips, recent work, and deals for York Region and Simcoe County.</p>
+            <p>
+                Pro tips, recent work, and deals for York Region and Simcoe
+                County.
+            </p>
             <div class="accent-line"></div>
         </div>
 
         <div class="snippet-grid">
-            {recentPosts.map((post) => (
-                <article class="card-wrapper">
-                    <a href={`/blog/${post.slug}`} class="mini-card">
-                        <div class="img-container">
-                            {/* FIX: Ensure your schema allows the Image component to resolve the URL */}
-                            <Image 
-                                src={post.data.images[0].url} 
-                                alt={post.data.images[0].alt}
-                                width={600} 
-                                height={400}
-                                format="webp"
-                                loading="lazy"
-                                class="project-image"
-                            />
-                            <span class="category-tag">
-                                {post.data.category}
-                            </span>
-                        </div>
-                        
-                        <div class="txt-content">
-                            <div class="location-row">
-                                <MapPin size={16} />
-                                <span>{post.data.location}</span>
+            {
+                recentPosts.map((post) => (
+                    <article class="card-wrapper">
+                        <a href={`/blog/${post.slug}`} class="mini-card">
+                            <div class="img-container">
+                                {/* FIX: Ensure your schema allows the Image component to resolve the URL */}
+                                <Image
+                                    src={post.data.images[0].url}
+                                    alt={post.data.images[0].alt}
+                                    width={600}
+                                    height={400}
+                                    format="webp"
+                                    loading="lazy"
+                                    class="project-image"
+                                />
+                                <span class="category-tag">
+                                    {post.data.category}
+                                </span>
                             </div>
-                            <h3>{post.data.title}</h3>
-                            <div class="card-footer">
-                                <span class="view-link">View Post</span>
-                                <ArrowRight size={18} />
+
+                            <div class="txt-content">
+                                <div class="location-row">
+                                    <MapPin size={16} />
+                                    <span>{post.data.location}</span>
+                                </div>
+                                <h3>{post.data.title}</h3>
+                                <div class="card-footer">
+                                    <span class="view-link">View Post</span>
+                                    <ArrowRight size={18} />
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </article>
-            ))}
+                        </a>
+                    </article>
+                ))
+            }
         </div>
     </div>
 </section>
@@ -65,23 +72,17 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         padding: 0 1.5rem;
     }
 
-    .home-work-snippet { 
-        padding: 5rem 0; 
-        background: #f4f4f4; 
+    .home-work-snippet {
+        padding: 5rem 0;
+        background: #f4f4f4;
     }
 
-    .section-intro { 
+    .section-intro {
         text-align: center;
-        margin-bottom: 3.5rem; 
+        margin-bottom: 3.5rem;
     }
 
-    /* .section-intro h2 { 
-        color: #001f3f; 
-        font-size: clamp(2rem, 5vw, 2.5rem);
-        font-family: "Montserrat-Bold", sans-serif; 
-        margin-bottom: 0.75rem;
-    } */
-       .section-subtitle {
+    .section-subtitle {
         display: block;
         color: var(--gold);
         font-weight: 800;
@@ -109,11 +110,11 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         margin: 0 auto;
     }
 
-    .snippet-grid { 
-        display: grid; 
+    .snippet-grid {
+        display: grid;
         /* UI FIX: auto-fill keeps cards at a set width even if there are only 2 */
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
-        gap: 2.5rem; 
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 2.5rem;
         justify-content: center;
         max-width: 1200px;
         margin: 0 auto;
@@ -125,7 +126,7 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         width: 100%;
     }
 
-    .mini-card { 
+    .mini-card {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -139,20 +140,20 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
 
-    .mini-card:hover { 
-        transform: translateY(-10px); 
+    .mini-card:hover {
+        transform: translateY(-10px);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
     }
 
-    .img-container { 
-        position: relative; 
+    .img-container {
+        position: relative;
         height: 240px;
-        overflow: hidden; 
+        overflow: hidden;
     }
 
-    .project-image { 
-        width: 100%; 
-        height: 100%; 
+    .project-image {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         transition: transform 0.6s ease;
     }
@@ -160,25 +161,25 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
     .mini-card:hover .project-image {
         transform: scale(1.08);
     }
-    
-    .category-tag { 
-        position: absolute; 
-        top: 1.25rem; 
-        right: 1.25rem; 
+
+    .category-tag {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
         background: rgba(255, 255, 255, 0.95);
-        color: var(--primary-color); 
-        padding: 0.4rem 0.8rem; 
-        font-size: 0.7rem; 
-        font-weight: 800; 
+        color: var(--primary-color);
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+        font-weight: 800;
         font-family: "Montserrat-ExtraBold", sans-serif;
         border-radius: 30px;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .txt-content { 
-        padding: 1.75rem; 
+    .txt-content {
+        padding: 1.75rem;
         display: flex;
         flex-direction: column;
         gap: 0.75rem;
@@ -194,18 +195,18 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         font-size: 0.9rem;
     }
 
-    .txt-content h3 { 
-        font-size: 1.25rem; 
-        color: var(--primary-color); 
-        line-height: 1.4; 
+    .txt-content h3 {
+        font-size: 1.25rem;
+        color: var(--primary-color);
+        line-height: 1.4;
         font-family: "Montserrat-Bold", sans-serif;
         margin: 0;
 
         /* THE FIX: Fixed height + Line Clamping */
-        height: 4.2em;          /* Approx 2.5 lines of text */
+        height: 4.2em; /* Approx 2.5 lines of text */
         display: -webkit-box;
-        -webkit-line-clamp: 2;  /* Limits to 2 lines */
-        -webkit-box-orient: vertical;  
+        -webkit-line-clamp: 2; /* Limits to 2 lines */
+        -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -218,7 +219,7 @@ const recentPosts = (await getCollection("blog", ({ data }) => {
         color: var(--primary-color);
     }
 
-    .view-link { 
+    .view-link {
         font-weight: 800;
         font-family: "Montserrat-ExtraBold", sans-serif;
         font-size: 0.85rem;
