@@ -12,9 +12,32 @@ import SubLayout from "../layouts/SubLayout.astro";
 // import Banner from "../components/Banner.astro";
 import LocalReviews from "../components/LocalReviews.astro";
 import GarageSafety from "../components/GarageSafety.astro";
+import FAQ from "../components/FAQ.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const garageFaqs = [
+  {
+    question: "My garage door won't open. What should I do first?",
+    answer: `First, check if your opener has power and that the wall button isn't on "Lock" mode. If you hear the motor running but the door isn't moving, you likely have a broken spring or snapped cable. For safety, do not attempt to lift the door manually. At York Garage Pros, we offer a diagnostic visit where we identify the fault and provide a clear repair plan—no work is forced; we only proceed if invited.`
+  },
+  {
+    question: "How much does a typical garage door repair cost in York Region or Simcoe County?",
+    answer: `Small repairs like sensor alignments or lubrication can be low-cost, while major parts like torsion spring or openers range from $250 to $600+. Beware of "hidden fees" from competitors. Our policy is "Upfront Pricing"—we show you the exact part and price upfront. If you don't agree it's the best path forward, you are under no obligation to proceed.`
+  },
+  {
+    question: "Do you offer 24/7 emergency garage door service?",
+    answer: `Yes. Garage doors don't break on a schedule, often leaving your car trapped or your home insecure. We provide same-day emergency repairs across York Region and Simcoe County. We arrive as invited specialists to secure your home immediately, adhering to our strict professional code of transparency.`
+  },
+  {
+	question:"Which type of garage door is best for the Ontario climate?",
+	answer: `In the York Region, we recommend Insulated Steel doors (Polyurethane) with a high R-value. Our cold winters and humid summers can warp wood or make non-insulated doors brittle. An energy-efficient door keeps your garage temperate and protects your opener’s motor from extreme temperature strain.`
+  },
+  {
+	question:"Is it safe to repair my own garage door spring?",
+	answer: `We strongly advise against DIY spring replacement. Torsion springs are under extreme tension and can cause severe injury if they snap during installation. Professional technicians use specialized winding bars and safety equipment. Part of our mission is ensuring homeowners stay safe while we handle the high-risk mechanical work.`
+  }
+];
 ---
 
 <Layout>
@@ -29,5 +52,6 @@ import GarageSafety from "../components/GarageSafety.astro";
 		<GarageSafety />
 
 		<Estimator client:load />
+		<FAQ faqs={garageFaqs}/>
 	</SubLayout>
 </Layout>
