@@ -42,7 +42,7 @@ const doorTypeImage = {
     'flush-panels': flush_panels,
     'carriage-house-panels': carriage_house_panels,
     'ribbed-panels': ribbed_panels,
-    'broken-springs': broken_spring,
+    'broken-spring': broken_spring,
     'lift-cables': broken_lift_cable,
     'off-track-door': door_off_track,
     'worn-rollers': roller,
