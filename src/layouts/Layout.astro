@@ -35,21 +35,21 @@ const companyRating = {
 	bestRating: "5",
 };
 function getschema() {
-	const schema = {
+	return {
 		"@context": "https://schema.org",
 		"@type": "Service",
-		name: serviceName,
-		description: `Professional ${serviceName} in York Region & Simcoe County by York Garage Pros.`,
-		provider: {
+		"name": serviceName,
+		"description": `Professional ${serviceName} in York Region & Simcoe County by York Garage Pros.`,
+		"provider": {
 			"@id": "https://yorkgaragepros.com/#organization",
 		},
-		aggregateRating: {
+		"aggregateRating": {
 			"@type": "AggregateRating",
-			ratingValue: "5.0",
-			reviewCount: "5",
+			"ratingValue": "5.0",
+			"reviewCount": "5",
 		},
 	};
-	return schema;
+
 }
 ---
 
@@ -330,14 +330,14 @@ function getschema() {
 				"description": "York Garage Pros offers professional 24/7 garage door repair, spring replacement, and opener installation in Newmarket and the York Region. Licensed and insured experts."
 			}
 		</script>
-		{
+		<!-- {
 			serviceName && (
 				<script
 					type="application/ld+json"
 					set:html={JSON.stringify(getschema())}
 				/>
 			)
-		}
+		} -->
 	</head>
 
 	<body>
