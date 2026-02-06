@@ -29,11 +29,28 @@ const {
 } = Astro.props;
 
 const companyRating = {
-    "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "5",
-    "bestRating": "5"
+	"@type": "AggregateRating",
+	ratingValue: "5.0",
+	reviewCount: "5",
+	bestRating: "5",
 };
+function getschema() {
+	const schema = {
+		"@context": "https://schema.org",
+		"@type": "Service",
+		name: serviceName,
+		description: `Professional ${serviceName} in York Region & Simcoe County by York Garage Pros.`,
+		provider: {
+			"@id": "https://yorkgaragepros.com/#organization",
+		},
+		aggregateRating: {
+			"@type": "AggregateRating",
+			ratingValue: "5.0",
+			reviewCount: "5",
+		},
+	};
+	return schema;
+}
 ---
 
 <!doctype html>
@@ -50,7 +67,7 @@ const companyRating = {
 		<link rel="preconnect" href="https://www.googletagmanager.com" />
 		<link rel="preconnect" href="https://www.google.com" />
 		<link rel="dns-prefetch" href="https://maps.googleapis.com" />
-				<!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
+		<!-- <link rel="preconnect" href="https://fonts.googleapis.com" /> -->
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 		<!-- Fonts -->
@@ -157,7 +174,6 @@ const companyRating = {
 		<meta name="apple-mobile-web-app-title" content="York Garage Pros" />
 		<link rel="manifest" href="/site.webmanifest" />
 
-
 		<!-- Local Business Schema -->
 		<script type="application/ld+json">
 			{
@@ -185,7 +201,7 @@ const companyRating = {
 				},
 				"address": {
 					"@type": "PostalAddress",
-					"streetAddress":"Walpole Crescent",
+					"streetAddress": "Walpole Crescent",
 					"addressLocality": "Newmarket",
 					"addressRegion": "ON",
 					"postalCode": "L3X 2B1",
@@ -197,16 +213,56 @@ const companyRating = {
 					"longitude": -79.4613
 				},
 				"areaServed": [
-					{ "@type": "City", "name": "Newmarket" ,"sameAs": "https://www.wikidata.org/wiki/Q52999"},
-					{ "@type": "City", "name": "Aurora" ,"sameAs": "https://www.wikidata.org/wiki/Q266438"},
-					{ "@type": "City", "name": "Richmond Hill","sameAs": "https://www.wikidata.org/wiki/Q52998" },
-					{ "@type": "City", "name": "Vaughan" ,"sameAs": "https://www.wikidata.org/wiki/Q44013"},
-					{ "@type": "City", "name": "Markham" ,"sameAs": "https://www.wikidata.org/wiki/Q44016"},
-					{ "@type": "City", "name": "Bradford" ,"sameAs": "https://www.wikidata.org/wiki/Q3492517"},
-					{ "@type": "City", "name": "Barrie" ,"sameAs": "https://www.wikidata.org/wiki/Q34183"},
-					{ "@type": "City", "name": "King" ,"sameAs": "https://www.wikidata.org/wiki/Q483483"},
-					{ "@type": "AdministrativeArea", "name": "York Region" ,"sameAs": "https://www.wikidata.org/wiki/Q18458" },
-					{ "@type": "AdministrativeArea", "name": "Simcoe County" ,"sameAs": "https://www.wikidata.org/wiki/Q1437636" }
+					{
+						"@type": "City",
+						"name": "Newmarket",
+						"sameAs": "https://www.wikidata.org/wiki/Q52999"
+					},
+					{
+						"@type": "City",
+						"name": "Aurora",
+						"sameAs": "https://www.wikidata.org/wiki/Q266438"
+					},
+					{
+						"@type": "City",
+						"name": "Richmond Hill",
+						"sameAs": "https://www.wikidata.org/wiki/Q52998"
+					},
+					{
+						"@type": "City",
+						"name": "Vaughan",
+						"sameAs": "https://www.wikidata.org/wiki/Q44013"
+					},
+					{
+						"@type": "City",
+						"name": "Markham",
+						"sameAs": "https://www.wikidata.org/wiki/Q44016"
+					},
+					{
+						"@type": "City",
+						"name": "Bradford",
+						"sameAs": "https://www.wikidata.org/wiki/Q3492517"
+					},
+					{
+						"@type": "City",
+						"name": "Barrie",
+						"sameAs": "https://www.wikidata.org/wiki/Q34183"
+					},
+					{
+						"@type": "City",
+						"name": "King",
+						"sameAs": "https://www.wikidata.org/wiki/Q483483"
+					},
+					{
+						"@type": "AdministrativeArea",
+						"name": "York Region",
+						"sameAs": "https://www.wikidata.org/wiki/Q18458"
+					},
+					{
+						"@type": "AdministrativeArea",
+						"name": "Simcoe County",
+						"sameAs": "https://www.wikidata.org/wiki/Q1437636"
+					}
 				],
 				"serviceArea": {
 					"@type": "GeoCircle",
@@ -274,24 +330,14 @@ const companyRating = {
 				"description": "York Garage Pros offers professional 24/7 garage door repair, spring replacement, and opener installation in Newmarket and the York Region. Licensed and insured experts."
 			}
 		</script>
-		{serviceName && (
-  		<script type="application/ld+json">
-  			{
-    			"@context": "https://schema.org",
-    			"@type": "Service",
-    			"name": serviceName,
-				"description": `Professional ${serviceName} in York Region & Simcoe County by York Garage Pros.`,
-    			"provider": { 
-        			"@id": "https://yorkgaragepros.com/#organization" 
-    			},
-    			"aggregateRating": {
-        			"@type": "AggregateRating",
-        			"ratingValue": "5.0",
-        			"reviewCount": "5"
-    			}	
- 	 		}	
-  		</script>
-		)}
+		{
+			serviceName && (
+				<script
+					type="application/ld+json"
+					set:html={JSON.stringify(getschema())}
+				/>
+			)
+		}
 	</head>
 
 	<body>
