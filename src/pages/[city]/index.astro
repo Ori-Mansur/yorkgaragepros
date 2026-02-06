@@ -35,17 +35,80 @@ const catalogLinks = await getCollection("service-catalogs");
 const RenderedContent = cityContent ? await cityContent.render() : null;
 const Content = RenderedContent ? RenderedContent.Content : null;
 
-// SEO Metadata
-const title =
-  cityContent?.data.title ||
-  `Best Garage Door Repair in ${cityName} | York Garage Pros`;
-const h1 = cityContent?.data.h1 || `Garage Door Services in ${cityName}`;
-const metaDescription =
-  cityContent?.data.metaDescription ||
-  `Professional garage door repair in ${cityName}. Same-day service and 24/7 emergency support.`;
+const services: string[] = [
+  "Spring Replacement",
+  "Opener Repair",
+  "Cable Fix & Repair",
+  "Emergency Service",
+  "Broken Spring Fix",
+  "Remote & Sensor Fix",
+  "Track Realignment",
+  "New Door Estimates",
+  "Weather Stripping",
+  "Panel Replacement"
+];
+
+interface CityPageData {
+  title: string;
+  description: string;
+  h1: string;
+  schema: object;
+}
+
+function getCityPageData(cityName: string): CityPageData {
+  const charSum = cityName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const serviceIndex = charSum % services.length;
+  const rotatedService = services[serviceIndex];
+
+  const title = `${cityName} Garage Door Repair & Install | Same Day ${rotatedService}`;
+  const description = `Need a fix? We invite you to experience our local, same-day service in ${cityName}. Specialized in ${rotatedService.toLowerCase()} and professional garage door installation.`;
+  const h1 = `Reliable Garage Door Repair and Installation in ${cityName}`;
+
+  // Structured Data for AI Agents
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "GarageDoorControl",
+    "name": `Your Business - ${cityName}`,
+    "description": description,
+    "areaServed": {
+      "@type": "City",
+      "name": cityName
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Garage Door Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": rotatedService }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Garage Door Installation" }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "New Garage Door Sales" }
+        }
+      ]
+    }
+  };
+
+  return { title, description, h1, schema };
+}
+
+
+// Usage
+const citySEO = getCityPageData(cityName);
+ 
+// "Newmarket Garage Door Repair & Install | Same Day Spring Replacement"
 ---
 
-<Layout title={title} description={metaDescription}>
+<Layout title={citySEO.title} description={citySEO.description}>
+  <script 
+        type="application/ld+json" 
+        set:html={JSON.stringify(citySEO.schema)} 
+      />
   <UtilityNav />
   <Header />
 
@@ -53,7 +116,7 @@ const metaDescription =
     <div class="container hero-grid">
       <div class="hero-text">
         <div class="hero-badge">📍 Local Service in {cityName}</div>
-        <h1 class="page-title">{h1}</h1>
+        <h1 class="page-title">{citySEO.h1}</h1>
         <p class="hero-subtitle">
           Professional, same-day garage door solutions for homeowners in <strong
             >{cityName}</strong
