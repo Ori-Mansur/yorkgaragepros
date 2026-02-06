@@ -1,0 +1,135 @@
+---
+// FAQ.astro - UI with integrated JSON-LD
+interface Props {
+    page: string;
+}
+const { page } = Astro.props;
+import faqData from "../data/faqs.json";
+
+export function getFAQsBySlug(slug: string) {
+    // Fallback to 'garage-door-repair' if the city-specific slug isn't found
+    return (
+        faqData[slug as keyof typeof faqData] || faqData["garage-door-repair"]
+    );
+}
+const faqs = getFAQsBySlug(page);
+// AI-SEO Strategy: Generate JSON-LD string
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+        },
+    })),
+};
+---
+
+<script
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+    is:inline
+/>
+
+<section class="container">
+    <div class="faq-container">
+        <h2 class="section-title">
+            Common Questions & <span class="highlight">Answers</span>
+        </h2>
+
+        <div class="faq-grid">
+            {
+                faqs.map((faq, index) => (
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            {faq.question}
+                            <span class="icon">+</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>{faq.answer}</p>
+                        </div>
+                    </details>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .container {
+        /* background: #ffffff; */
+        margin-bottom: 24px;
+    }
+    .faq-container {
+        padding: 2rem 0;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 1rem;
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        color: var(--navy);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+    }
+
+    .highlight {
+        color: #e8a900; /* Brand Gold */
+    }
+
+    .faq-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .faq-item {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .faq-item[open] {
+        border-color: #e8a900;
+        box-shadow: 0 4px 12px rgba(232, 169, 0, 0.1);
+    }
+
+    .faq-question {
+        /* padding: 0.85rem; */
+        padding: 6px 14px;
+        font-weight: 700;
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
+        color: #1c2a44;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+    }
+
+    .faq-question::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-answer {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        color: #4a5568;
+        line-height: 1.6;
+    }
+
+    .icon {
+        color: #e8a900;
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .faq-item[open] .icon {
+        transform: rotate(45deg);
+    }
+</style>

@@ -7,6 +7,7 @@ import Layout from "../../layouts/Layout.astro";
 import UtilityNav from "../../components/UtilityNav.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import FAQ from "../../components/SmallFAQ.astro";
 import { getCityLogo, getDoorTypeImage } from "../../utils/helpers";
 import {
     ArrowRight,
@@ -17,6 +18,7 @@ import {
     Clock,
     Star,
 } from "@lucide/astro";
+
 
 export async function getStaticPaths() {
     const serviceAreas = await getCollection("service-areas");
@@ -98,9 +100,7 @@ const metaDescription = `Professional ${serviceName} in York Region & Simcoe Cou
             <div class="hub-layout">
                 <section class="main-content">
                     <div class="section-header-block">
-                        <span class="section-subtitle"
-                            >Local Experts</span
-                        >
+                        <span class="section-subtitle">Local Experts</span>
                         <h2 class="section-title">
                             Select Your {isRepair ? "Repair Type" : "Style"}
                         </h2>
@@ -144,8 +144,8 @@ const metaDescription = `Professional ${serviceName} in York Region & Simcoe Cou
                             ))
                         }
                     </div>
-
                     <div class="local-seo-section">
+                        <FAQ page={service} />
                         <h2 class="small-title">
                             Serving York Region & Simcoe County
                         </h2>

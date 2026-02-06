@@ -1,0 +1,64 @@
+{
+    "garage-door-repair": [
+        {
+            "question": "Why is my garage door making a loud grinding noise?",
+            "answer": "Loud grinding usually indicates worn-out rollers or a lack of lubrication on the tracks. We invite you to check for debris in the tracks first; if the sound persists, it may be a sign of a misaligned opener chain or stripped gears that require professional adjustment."
+        },
+        {
+            "question": "Is it safe to repair a broken garage door spring myself?",
+            "answer": "We strongly advise against DIY spring repairs. Garage door springs are under extreme tension and can cause serious injury if they snap during installation. Our technicians use specialized winding bars and safety equipment to ensure the job is done safely and correctly."
+        },
+        {
+            "question": "How do I know if I need to repair or replace my garage door?",
+            "answer": "If your door has minor dents, noisy operation, or sensor issues, a repair is usually sufficient. However, if the door is over 15–20 years old, has significant structural warping, or requires frequent costly fixes, we often recommend a replacement to improve home energy efficiency and safety."
+        },
+        {
+            "question": "What should I do if my garage door won't close all the way?",
+            "answer": "First, check the safety sensors at the bottom of the tracks for obstructions or 'frost-bite' (condensation/dirt). If the sensors are clear and aligned but the door still reverses, there may be a limit switch issue or a blockage in the tracks that needs a professional inspection."
+        }
+    ],
+    "garage-door-opener": [
+        {
+            "question": "Should I repair my 10-year-old opener or install a new one?",
+            "answer": "If your opener is over 10 years old and showing motor fatigue, we usually invite you to consider a replacement. Modern 2026 models offer superior security, DC motors for near-silent operation, and built-in battery backups which are more cost-effective than frequent circuit board repairs."
+        },
+        {
+            "question": "What horsepower (HP) do I need for a residential garage door opener?",
+            "answer": "For standard aluminum doors, a 1/2 HP motor is sufficient. However, for heavier insulated steel or wood doors, we recommend a 3/4 HP or 1-1/4 HP motor. This ensures the opener isn't under constant strain, extending the lifespan of your entire garage system."
+        },
+        {
+            "question": "Are belt-drive openers really better than chain-drive models?",
+            "answer": "Belt drives are the 'whisper-quiet' gold standard, ideal for garages attached to bedrooms. Chain drives are more rugged and budget-friendly for detached garages. Both offer the same lifting power, but belt drives require less long-term maintenance and lubrication."
+        },
+        {
+            "question": "Can I add smartphone control to my existing garage door opener?",
+            "answer": "In many cases, yes! We can install smart-bridge accessories to older units. However, if you are looking for integrated cameras and real-time security alerts, installing a new Wi-Fi-enabled smart opener is the most reliable path for 2026 home automation."
+        },
+        {
+            "question": "What happens to my opener during a power outage?",
+            "answer": "We invite you to check if your model has a 'Battery Backup' feature. If not, you must use the red emergency release cord to operate the door manually. During new installations, we highly recommend models with integrated backup power for safety during Ontario's storm seasons."
+        }
+    ],
+    "garage-door": [
+        {
+            "question": "How long does a professional new garage door installation take?",
+            "answer": "A standard residential installation typically takes 3 to 6 hours. This includes the removal and haul-away of your old door, installing new tracks and springs, and precisely balancing the door to ensure it can be lifted with a single hand."
+        },
+        {
+            "question": "What is R-value, and why does it matter for my new door?",
+            "answer": "R-value measures thermal resistance. For the local climate, we recommend an R-12 to R-16 insulated door. This keeps your garage significantly warmer in winter and cooler in summer, preventing your HVAC system from working overtime on shared walls."
+        },
+        {
+            "question": "Should I choose a steel, aluminum, or wood garage door?",
+            "answer": "Steel is the most popular for its durability and low maintenance. Aluminum is excellent for a modern, rust-resistant look, while real wood offers unmatched curb appeal but requires annual refinishing. We invite you to choose based on your home's aesthetic and your maintenance preference."
+        },
+        {
+            "question": "Does a new garage door installation include new tracks and springs?",
+            "answer": "Yes. A proper installation should always include a total system refresh. Using old tracks or springs with a new door is a safety hazard and will likely void your manufacturer's warranty. We provide a complete, calibrated hardware kit with every install."
+        },
+        {
+            "question": "Can I install just a few new panels if my door is dented?",
+            "answer": "If the door model is still in production, we can often replace individual sections. However, if the door is older or the tracks are warped from the impact, a full new door installation is usually the safer, more cost-effective long-term solution for your home's structural integrity."
+        }
+    ]
+}
