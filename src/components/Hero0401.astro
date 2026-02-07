@@ -110,8 +110,136 @@ const displayCity = detectedCity
                 class="hero-img"
             />
         </div>
+        <section class="value-strip-container" aria-label="Company Guarantees">
+            <div class="value-grid">
+                <div class="value-box">
+                    <div class="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><line x1="12" y1="1" x2="12" y2="23"></line><path
+                                d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                            ></path></svg
+                        >
+                    </div>
+                    <h3>Best Price</h3>
+                    <p>Competitive pricing with a price-match guarantee.</p>
+                </div>
 
-        <div class="value-strip">
+                <div class="value-box">
+                    <div class="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"
+                            ></path><polyline points="22 4 12 14.01 9 11.01"
+                            ></polyline></svg
+                        >
+                    </div>
+                    <h3>No Hidden Fees</h3>
+                    <p>Transparent quotes. You pay what we estimate.</p>
+                </div>
+
+                <div class="value-box">
+                    <div class="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+                            ></path></svg
+                        >
+                    </div>
+                    <h3>Expert Techs</h3>
+                    <p>Licensed pros serving York Region & Simcoe County.</p>
+                </div>
+
+                <div class="value-box">
+                    <div class="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><circle cx="12" cy="12" r="10"></circle><polyline
+                                points="12 6 12 12 16 14"></polyline></svg
+                        >
+                    </div>
+                    <h3>Same-Day Service</h3>
+                    <p>Fast emergency repairs when you need them most.</p>
+                </div>
+
+                <div class="value-box">
+                    <div class="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M20.42 4.58a5 5 0 0 1 0 7.07l-7.07 7.07a1 1 0 0 1-1.41 0L4.87 11.65a5 5 0 0 1 7.07-7.07l.35.35.35-.35a5 5 0 0 1 7.78 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <h3>10% Off</h3>
+                    <p>Special pricing for our seniors.</p>
+                </div>
+
+                <div class="value-box">
+                    <div class="icon-wrapper">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"
+                            ></path><circle cx="12" cy="10" r="3"></circle></svg
+                        >
+                    </div>
+                    <h3>Only $27</h3>
+                    <p>The best local rate for a professional service call.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- <div class="value-strip">
             <div class="value-box">
                 <div class="value-box-inner">
                     <div class="icon-circle"><Clock size={24} /></div>
@@ -139,7 +267,7 @@ const displayCity = detectedCity
                     </p>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </section>
 
@@ -343,5 +471,57 @@ const displayCity = detectedCity
             object-fit: cover;
             object-position: center; /* default for mobile */
         }
+    }
+    .value-strip-container {
+        max-width: 1200px;
+        /* margin: 40px auto; */
+        margin-top: -1.5rem;
+        /* position: relative;
+        z-index: 10; */
+        font-family: "Montserrat", "Inter", sans-serif;
+    }
+
+    .value-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 16px;
+    }
+
+    .value-box {
+        background: #ffffff;
+        border: 1px solid #f0f0f0;
+        /* border-top: 4px solid #e8a900; */
+        pointer-events: auto;
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .value-box:hover {
+        border-color: var(--secondary-color);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* SVG Icon Styling */
+    .icon-wrapper {
+        color: var(--secondary-color);
+        margin-bottom: 15px;
+        display: inline-block;
+    }
+
+    .value-box h3 {
+        margin: 10px 0 8px;
+        font-size: 1.15rem;
+        /* min-height: 46px; */
+        font-family: "Montserrat-Bold", "Inter", sans-serif;
+        color: #222;
+    }
+
+    .value-box p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.4;
     }
 </style>
