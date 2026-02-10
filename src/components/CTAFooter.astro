@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { Phone, CalendarCheck } from "@lucide/astro";
 const {
     title = "Ready to Start Your Project?",
     desc = "Let's discuss how we can transform your garage space. Free, no-obligation consultations available.",
@@ -12,7 +13,7 @@ const {
         <p>
             {desc}
         </p>
-        <div class="cta-actions">
+        <!-- <div class="cta-actions">
             <a class="btn-gold" href="/booking/">Book a Service Now</a>
             <a
                 class="btn-white"
@@ -20,6 +21,21 @@ const {
                 aria-label="Call York Garage Pros at 905-960-9947"
                 >Call Us Today</a
             >
+        </div> -->
+        <div class="cta-actions">
+            <a
+                class="btn-gold-call"
+                href="tel:+19059609947"
+                aria-label="Call Now"
+            >
+                <Phone size={22} />
+                <span class="call-mobile">Call Now</span>
+                <span class="call-text-desktop">905-960-9947</span>
+            </a>
+            <a class="btn-white-quote" href="/booking/">
+                <CalendarCheck size={22} />
+                <span>Get Quote</span>
+            </a>
         </div>
     </div>
 </section>
@@ -72,5 +88,60 @@ const {
         border-radius: 10px;
         text-decoration: none;
         font-family: "Montserrat-Bold", sans-serif;
+    }
+    /* CTA BOXES */
+    .cta-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-gold-call,
+    .btn-white-quote {
+        flex: 1;
+        min-width: 155px;
+        padding: 16px 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 1.1rem;
+    }
+
+    .btn-gold-call {
+        background: #e8a900;
+        color: #1c2a44;
+        box-shadow: 0 4px 12px rgba(232, 169, 0, 0.3);
+    }
+    .btn-white-quote {
+        background: #1c2a44;
+        color: #ffffff;
+    }
+    .call-text-desktop {
+        display: none;
+    }
+    .call-mobile {
+        display: inline;
+    }
+
+    @media (min-width: 768px) {
+        .call-text-desktop {
+            display: inline;
+        }
+        .call-mobile {
+            display: none;
+        }
+
+        .btn-gold-call,
+        .btn-white-quote {
+            max-width: 280px;
+            font-size: 1.25rem;
+        }
     }
 </style>
