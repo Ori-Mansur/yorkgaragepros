@@ -1,4 +1,5 @@
 ---
+import Schema from "../components/Schema.astro";
 import Call from "../components/Call.astro";
 export interface Props {
 	title?: string;
@@ -27,30 +28,6 @@ const {
 	hasFirebase = false,
 	serviceName,
 } = Astro.props;
-
-const companyRating = {
-	"@type": "AggregateRating",
-	ratingValue: "5.0",
-	reviewCount: "5",
-	bestRating: "5",
-};
-function getschema() {
-	return {
-		"@context": "https://schema.org",
-		"@type": "Service",
-		"name": serviceName,
-		"description": `Professional ${serviceName} in York Region & Simcoe County by York Garage Pros.`,
-		"provider": {
-			"@id": "https://yorkgaragepros.com/#organization",
-		},
-		"aggregateRating": {
-			"@type": "AggregateRating",
-			"ratingValue": "5.0",
-			"reviewCount": "5",
-		},
-	};
-
-}
 ---
 
 <!doctype html>
@@ -168,169 +145,7 @@ function getschema() {
 		<link rel="manifest" href="/site.webmanifest" />
 
 		<!-- Local Business Schema -->
-		<script type="application/ld+json">
-			{
-				"@context": "https://schema.org",
-				"@id": "https://yorkgaragepros.com/#organization",
-				"@type": "HomeAndConstructionBusiness",
-				"name": "York Garage Pros",
-				"url": "https://yorkgaragepros.com",
-				"hasMap": "https://maps.app.goo.gl/XnHLJuW9Y2hTz9GF7",
-				"sameAs": [
-					"https://g.page/r/CUzO9_99F8FREBM/review",
-					"https://www.facebook.com/people/York-Garage-Pros/61584685029221/",
-					"https://www.instagram.com/york_garage_pros/#"
-				],
-				"logo": "https://yorkgaragepros.com/_astro/logoonly.CmaTywu-_ZzH0jk.avif",
-				"image": "https://yorkgaragepros.com/_astro/heropagemobile.pCMy9GB0_Z2adhm.avif",
-				"telephone": "+1-905-960-9947",
-				"priceRange": "$$",
-				"email": "info@yorkgaragepros.com",
-				"aggregateRating": {
-					"@type": "AggregateRating",
-					"ratingValue": "5.0",
-					"reviewCount": "5",
-					"bestRating": "5"
-				},
-				"address": {
-					"@type": "PostalAddress",
-					"streetAddress": "Walpole Crescent",
-					"addressLocality": "Newmarket",
-					"addressRegion": "ON",
-					"postalCode": "L3X 2B1",
-					"addressCountry": "CA"
-				},
-				"geo": {
-					"@type": "GeoCoordinates",
-					"latitude": 44.0592,
-					"longitude": -79.4613
-				},
-				"areaServed": [
-					{
-						"@type": "City",
-						"name": "Newmarket",
-						"sameAs": "https://www.wikidata.org/wiki/Q52999"
-					},
-					{
-						"@type": "City",
-						"name": "Aurora",
-						"sameAs": "https://www.wikidata.org/wiki/Q266438"
-					},
-					{
-						"@type": "City",
-						"name": "Richmond Hill",
-						"sameAs": "https://www.wikidata.org/wiki/Q52998"
-					},
-					{
-						"@type": "City",
-						"name": "Vaughan",
-						"sameAs": "https://www.wikidata.org/wiki/Q44013"
-					},
-					{
-						"@type": "City",
-						"name": "Markham",
-						"sameAs": "https://www.wikidata.org/wiki/Q44016"
-					},
-					{
-						"@type": "City",
-						"name": "Bradford",
-						"sameAs": "https://www.wikidata.org/wiki/Q3492517"
-					},
-					{
-						"@type": "City",
-						"name": "Barrie",
-						"sameAs": "https://www.wikidata.org/wiki/Q34183"
-					},
-					{
-						"@type": "City",
-						"name": "King",
-						"sameAs": "https://www.wikidata.org/wiki/Q483483"
-					},
-					{
-						"@type": "AdministrativeArea",
-						"name": "York Region",
-						"sameAs": "https://www.wikidata.org/wiki/Q18458"
-					},
-					{
-						"@type": "AdministrativeArea",
-						"name": "Simcoe County",
-						"sameAs": "https://www.wikidata.org/wiki/Q1437636"
-					}
-				],
-				"serviceArea": {
-					"@type": "GeoCircle",
-					"geoMidpoint": {
-						"@type": "GeoCoordinates",
-						"latitude": 44.0592,
-						"longitude": -79.4613
-					},
-					"geoRadius": "50000"
-				},
-				"openingHoursSpecification": [
-					{
-						"@type": "OpeningHoursSpecification",
-						"dayOfWeek": [
-							"Monday",
-							"Tuesday",
-							"Wednesday",
-							"Thursday",
-							"Friday",
-							"Saturday",
-							"Sunday"
-						],
-						"opens": "00:00",
-						"closes": "23:59"
-					}
-				],
-				"hasOfferCatalog": {
-					"@type": "OfferCatalog",
-					"name": "Garage Door Repair & Installation Services",
-					"itemListElement": [
-						{
-							"@type": "Offer",
-							"itemOffered": {
-								"@type": "Service",
-								"name": "Garage Door Spring Replacement",
-								"description": "Expert replacement of high-tension torsion and extension springs for all garage door models."
-							}
-						},
-						{
-							"@type": "Offer",
-							"itemOffered": {
-								"@type": "Service",
-								"name": "Garage Door Repair",
-								"description": "Expert Garage Door Repair of all garage door models."
-							}
-						},
-						{
-							"@type": "Offer",
-							"itemOffered": {
-								"@type": "Service",
-								"name": "Garage Door Opener Repair",
-								"description": "Troubleshooting and repair for LiftMaster, Chamberlain, and Genie openers."
-							}
-						},
-						{
-							"@type": "Offer",
-							"itemOffered": {
-								"@type": "Service",
-								"name": "Emergency Garage Door Repair",
-								"description": "24/7 emergency service for doors that are off-track, stuck, or won't close securely."
-							}
-						}
-					]
-				},
-				"description": "York Garage Pros offers professional 24/7 garage door repair, spring replacement, and opener installation in Newmarket and the York Region. Licensed and insured experts."
-			}
-		</script>
-		<!-- {
-			serviceName && (
-				<script
-					type="application/ld+json"
-					set:html={JSON.stringify(getschema())}
-				/>
-			)
-		} -->
+		<Schema serviceName={serviceName} />
 	</head>
 
 	<body>
@@ -339,27 +154,6 @@ function getschema() {
 		<main id="main-content">
 			<slot />
 		</main>
-		<!-- Google Tag Manager -->
-		<!-- <script is:inline src="/scripts/gtm.js" defer></script> -->
-		<!-- <script is:inline>
-			window.addEventListener("load", function () {
-				setTimeout(function () {
-					var script = document.createElement("script");
-					script.src = "/scripts/gtm.js";
-					script.async = true;
-					document.body.appendChild(script);
-				}, 2000);
-			});
-		</script> -->
-		<!-- End Google Tag Manager -->
-		<!-- ✅ GTM noscript fallback -->
-		<!-- <noscript>
-			<iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-KQCW8CN6"
-				height="0"
-				width="0"
-				style="display:none;visibility:hidden"></iframe>
-		</noscript> -->
-	</body>
-	<style></style>
+
+	</body><style></style>
 </html>

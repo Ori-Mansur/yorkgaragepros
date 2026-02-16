@@ -1,0 +1,214 @@
+---
+// src/components/Schema.astro
+export interface Props {
+    serviceName?: string;
+}
+
+const { serviceName } = Astro.props;
+
+const businessData = {
+    name: "York Garage Pros",
+    url: "https://yorkgaragepros.com",
+    logo: "https://yorkgaragepros.com/_astro/logoonly.CmaTywu-_ZzH0jk.avif",
+    image: "https://yorkgaragepros.com/_astro/heropagemobile.pCMy9GB0_Z2adhm.avif",
+    telephone: "+1-905-960-9947",
+    email: "info@yorkgaragepros.com",
+    rating: {
+        value: "5.0",
+        count: "5",
+    },
+};
+
+// 1. Primary Organization / LocalBusiness Schema
+const organizationSchema = {
+    "@context": "https://schema.org",
+    "@id": `${businessData.url}/#organization`,
+    "@type": "HomeAndConstructionBusiness",
+    name: businessData.name,
+    url: businessData.url,
+    logo: businessData.logo,
+    image: businessData.image,
+    telephone: businessData.telephone,
+    hasMap: "https://maps.app.goo.gl/XnHLJuW9Y2hTz9GF7",
+    sameAs: [
+        "https://g.page/r/CUzO9_99F8FREBM/review",
+        "https://www.facebook.com/people/York-Garage-Pros/61584685029221/",
+        "https://www.instagram.com/york_garage_pros/#",
+    ],
+    priceRange: "$$",
+    email: businessData.email,
+    aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: businessData.rating.value,
+        reviewCount: businessData.rating.count,
+        bestRating: "5",
+    },
+    address: {
+        "@type": "PostalAddress",
+        streetAddress: "Walpole Crescent",
+        addressLocality: "Newmarket",
+        addressRegion: "ON",
+        postalCode: "L3X 2B1",
+        addressCountry: "CA",
+    },
+    geo: {
+        "@type": "GeoCoordinates",
+        latitude: 44.0592,
+        longitude: -79.4613,
+    },
+    areaServed: [
+        {
+            "@type": "City",
+            name: "Newmarket",
+            sameAs: "https://www.wikidata.org/wiki/Q52999",
+        },
+        {
+            "@type": "City",
+            name: "Aurora",
+            sameAs: "https://www.wikidata.org/wiki/Q266438",
+        },
+        {
+            "@type": "City",
+            name: "Richmond Hill",
+            sameAs: "https://www.wikidata.org/wiki/Q52998",
+        },
+        {
+            "@type": "City",
+            name: "Vaughan",
+            sameAs: "https://www.wikidata.org/wiki/Q44013",
+        },
+        {
+            "@type": "City",
+            name: "Markham",
+            sameAs: "https://www.wikidata.org/wiki/Q44016",
+        },
+        {
+            "@type": "City",
+            name: "Bradford",
+            sameAs: "https://www.wikidata.org/wiki/Q3492517",
+        },
+        {
+            "@type": "City",
+            name: "Barrie",
+            sameAs: "https://www.wikidata.org/wiki/Q34183",
+        },
+        {
+            "@type": "City",
+            name: "King",
+            sameAs: "https://www.wikidata.org/wiki/Q483483",
+        },
+        {
+            "@type": "AdministrativeArea",
+            name: "York Region",
+            sameAs: "https://www.wikidata.org/wiki/Q18458",
+        },
+        {
+            "@type": "AdministrativeArea",
+            name: "Simcoe County",
+            sameAs: "https://www.wikidata.org/wiki/Q1437636",
+        },
+    ],
+    serviceArea: {
+        "@type": "GeoCircle",
+        geoMidpoint: {
+            "@type": "GeoCoordinates",
+            latitude: 44.0592,
+            longitude: -79.4613,
+        },
+        geoRadius: "50000",
+    },
+    openingHoursSpecification: [
+        {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+            ],
+            opens: "00:00",
+            closes: "23:59",
+        },
+    ],
+    hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Garage Door Repair & Installation Services",
+        itemListElement: [
+            {
+                "@type": "Offer",
+                itemOffered: {
+                    "@type": "Service",
+                    name: "Garage Door Spring Replacement",
+                    description:
+                        "Expert replacement of high-tension torsion and extension springs for all garage door models.",
+                },
+            },
+            {
+                "@type": "Offer",
+                itemOffered: {
+                    "@type": "Service",
+                    name: "Garage Door Repair",
+                    description:
+                        "Expert Garage Door Repair of all garage door models.",
+                },
+            },
+            {
+                "@type": "Offer",
+                itemOffered: {
+                    "@type": "Service",
+                    name: "Garage Door Opener Repair",
+                    description:
+                        "Troubleshooting and repair for LiftMaster, Chamberlain, and Genie openers.",
+                },
+            },
+            {
+                "@type": "Offer",
+                itemOffered: {
+                    "@type": "Service",
+                    name: "Emergency Garage Door Repair",
+                    description:
+                        "24/7 emergency service for doors that are off-track, stuck, or won't close securely.",
+                },
+            },
+        ],
+    },
+    description:
+        "York Garage Pros offers professional 24/7 garage door repair, spring replacement, and opener installation in Newmarket and the York Region. Licensed and insured experts.",
+};
+
+// 2. Conditional Service Schema
+let serviceSchema = null;
+if (serviceName) {
+    serviceSchema = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: serviceName,
+        description: `Professional ${serviceName} in York Region & Simcoe County by ${businessData.name}.`,
+        provider: {
+            "@id": `${businessData.url}/#organization`,
+        },
+        aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: businessData.rating.value,
+            reviewCount: businessData.rating.count,
+        },
+    };
+}
+---
+
+<script
+    type="application/ld+json"
+    set:html={JSON.stringify(organizationSchema)}
+/>
+
+{
+    serviceSchema && (
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify(serviceSchema)}
+        />
+    )
+}
