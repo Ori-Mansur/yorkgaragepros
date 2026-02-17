@@ -2,8 +2,12 @@
 // FAQ.astro - UI with integrated JSON-LD
 interface Props {
     page: string;
+    faqs: {
+        question: string;
+        answer: string;
+    }[];
 }
-const { page } = Astro.props;
+const { page , faqs } = Astro.props;
 import faqData from "../data/faqs.json";
 
 export function getFAQsBySlug(slug: string) {
@@ -12,12 +16,12 @@ export function getFAQsBySlug(slug: string) {
         faqData[slug as keyof typeof faqData] || faqData["garage-door-repair"]
     );
 }
-const faqs = getFAQsBySlug(page);
+const faqArr = faqs || getFAQsBySlug(page);
 // AI-SEO Strategy: Generate JSON-LD string
 const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
+    mainEntity: faqArr.map((faq) => ({
         "@type": "Question",
         name: faq.question,
         acceptedAnswer: {

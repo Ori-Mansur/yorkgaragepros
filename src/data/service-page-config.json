@@ -1,0 +1,330 @@
+{
+  "garage-door-repair": {
+    "serviceName": "Garage Door Repair",
+    "hero": {
+      "title": "Garage Door Repair in York Region & Simcoe County",
+      "subtitle": "Broken spring or door off-track? Get fast, same-day repairs with upfront pricing. Our licensed technicians arrive fully stocked to complete most repairs in a single visit.",
+      "trustBadges": [
+        "Same-Day Service",
+        "Upfront Pricing",
+        "Licensed Technicians"
+      ]
+    },
+    "seo": {
+      "metaDescription": "Same-day garage door repair in York Region & Simcoe County. Upfront pricing on springs, cables & openers. Licensed techs. Call (905) 960-9947 now!"
+    },
+    "introContent": {
+      "paragraphs": [
+        "When your garage door breaks in York Region or Simcoe County, you need fast, reliable service—not hidden fees or surprise charges. York Garage Pros provides same-day garage door repair with upfront pricing on all spring replacements, cable repairs, off-track doors, and roller upgrades.",
+        "Our licensed technicians arrive fully stocked and ready to complete most repairs in a single visit. Serving Newmarket, Aurora, Richmond Hill, Vaughan, Markham, Barrie, and surrounding areas. Call (905) 960-9947 for emergency service or get an instant quote online."
+      ]
+    },
+    "emergencyBanner": {
+      "show": true,
+      "title": "24/7 Emergency Garage Door Repair",
+      "text": "Door stuck open? Car trapped inside? We understand garage door emergencies don't wait for business hours. York Garage Pros offers 24/7 emergency repair service throughout York Region and Simcoe County with response times under 2 hours.",
+      "ctaText": "Call Now: (905) 960-9947",
+      "ctaPhone": "+19059609947"
+    },
+    "signsList": {
+      "show": true,
+      "title": "Common Signs Your Garage Door Needs Repair",
+      "items": [
+        "Door won't open or close completely",
+        "Loud grinding, squeaking, or banging noises",
+        "Door is crooked or hangs unevenly",
+        "Visible broken spring or frayed cable",
+        "Door reverses when trying to close",
+        "Slow or jerky operation",
+        "Remote control not responding",
+        "Gap in torsion spring above door"
+      ]
+    },
+    "sectionTitle": "Select Your Repair Type",
+    "sidebar": {
+      "badge": "York & Simcoe Pros",
+      "title": "Get a Guaranteed Quote",
+      "description": "Know your issue? Get a firm price. Not sure why it's stuck? We'll identify the cause and give you a fixed quote before any work begins.",
+      "ctaPhone": "Call Now: (905) 960-9947",
+      "ctaBook": "Get Quick Quote",
+      "benefits": [
+        "No Surprise Hidden Fees",
+        "5-Star Local Reputation",
+        "Real Licensed Technicians"
+      ],
+      "testimonial": {
+        "text": "Got a quote within 10 minutes by sending a photo. They fixed my off-track door same-day.",
+        "author": "Dave, Newmarket"
+      }
+    },
+    "faq": {
+      "show": true,
+      "questions": [
+        {
+          "question": "How much does garage door spring replacement cost in York Region?",
+          "answer": "Spring replacement typically costs $250-$400 depending on door size and spring type. We provide upfront pricing before starting any work—no hidden fees."
+        },
+        {
+          "question": "How long does a typical garage door repair take?",
+          "answer": "Most repairs are completed in 1-2 hours. Spring replacements, cable repairs, and roller upgrades are usually done in a single visit. We arrive with fully stocked trucks to minimize delays."
+        },
+        {
+          "question": "Do you offer same-day garage door repair?",
+          "answer": "Yes! We provide same-day service across York Region and Simcoe County, with most repairs completed within 24 hours of your call. Emergency service is available 24/7."
+        },
+        {
+          "question": "What areas do you serve in York Region and Simcoe County?",
+          "answer": "We serve all of York Region (Newmarket, Aurora, Richmond Hill, Vaughan, Markham, Stouffville, King City, North York) and Simcoe County (Barrie, Bradford, Innisfil)."
+        },
+        {
+          "question": "Are your garage door technicians licensed and insured?",
+          "answer": "Yes, all our technicians are fully licensed and insured. We're a locally-owned, family-operated business with professional training and industry certifications."
+        },
+        {
+          "question": "How long do garage door springs last?",
+          "answer": "Standard springs last 7-10 years or 10,000 cycles. High-cycle springs can last 15-20 years or 25,000+ cycles. We use premium high-cycle springs for all replacements to ensure longevity."
+        },
+        {
+          "question": "Can you repair garage doors in winter?",
+          "answer": "Absolutely! We work year-round in all weather conditions. Ontario winters can be hard on garage doors—we're equipped to handle emergency repairs even in extreme cold and snow."
+        },
+        {
+          "question": "What payment methods do you accept?",
+          "answer": "We accept cash, all major credit cards (Visa, Mastercard, Amex), debit, e-transfer, and offer financing options for larger projects through our partners."
+        },
+        {
+          "question": "Do you offer a warranty on garage door repairs?",
+          "answer": "Yes, all repairs include a 1-year warranty on parts and labor. Premium parts may include extended manufacturer warranties up to lifetime on certain components."
+        },
+        {
+          "question": "How do I know if my garage door spring is broken?",
+          "answer": "Signs include: door won't open, door feels very heavy when lifting manually, visible gap in the torsion spring above the door, loud bang when it broke, or door only opens a few inches before stopping."
+        },
+        {
+          "question": "Why is my garage door making a loud grinding noise?",
+          "answer": "Loud grinding usually indicates worn-out rollers or lack of lubrication on the tracks. Check for debris in the tracks first; if the sound persists, it may be a misaligned opener chain or stripped gears requiring professional adjustment."
+        },
+        {
+          "question": "Is it safe to repair a broken garage door spring myself?",
+          "answer": "We strongly advise against DIY spring repairs. Garage door springs are under extreme tension (200+ pounds) and can cause serious injury if they snap during installation. Our technicians use specialized winding bars and safety equipment."
+        }
+      ]
+    }
+  },
+  "garage-door": {
+    "serviceName": "Garage Door Installation",
+    "hero": {
+      "title": "New Garage Door Installation | York Region & Simcoe County",
+      "subtitle": "Upgrade your home with premium garage doors. Professional installation of insulated steel doors, custom designs, and energy-efficient solutions built for Ontario's climate.",
+      "trustBadges": [
+        "Premium Quality",
+        "Expert Installation",
+        "Local Warranty Support"
+      ]
+    },
+    "seo": {
+      "metaDescription": "Professional garage door installation in York Region & Simcoe County. Premium insulated doors, expert installation, transparent pricing. Get a free quote today!"
+    },
+    "introContent": {
+      "paragraphs": [
+        "Upgrade your home's curb appeal and energy efficiency with professional garage door installation from York Garage Pros. We specialize in insulated steel doors, custom designs, and premium materials built to withstand Ontario's harsh winters and humid summers.",
+        "From modern flush panels to classic carriage house styles, our expert installers ensure perfect fit, smooth operation, and lasting quality. Transparent pricing, local warranty support, and same-week installation available across York Region and Simcoe County."
+      ]
+    },
+    "emergencyBanner": {
+      "show": false
+    },
+    "signsList": {
+      "show": true,
+      "title": "Signs It's Time for a New Garage Door",
+      "items": [
+        "Door is 15+ years old and showing wear",
+        "Frequent repairs becoming costly",
+        "Visible rust, dents, or warping",
+        "Poor insulation driving up energy bills",
+        "Outdated design hurting curb appeal",
+        "Noisy operation disrupting household",
+        "Safety concerns with old opener system",
+        "Preparing home for resale"
+      ]
+    },
+    "sectionTitle": "Select Your Door Style",
+    "sidebar": {
+      "badge": "York & Simcoe Pros",
+      "title": "Get a Free Estimate",
+      "description": "Looking for an upgrade? Tell us what you're looking for and we'll provide a transparent, all-inclusive quote for your new installation.",
+      "ctaPhone": "Call Now: (905) 960-9947",
+      "ctaBook": "Request Pricing",
+      "benefits": [
+        "All-Inclusive Pricing",
+        "Professional Installation",
+        "Local Warranty Support"
+      ],
+      "testimonial": {
+        "text": "The price they quoted was exactly what I paid. The new door looks amazing and is so quiet.",
+        "author": "Sarah, Aurora"
+      }
+    },
+    "faq": {
+      "show": true,
+      "questions": [
+        {
+          "question": "How much does a new garage door cost in York Region?",
+          "answer": "New garage door installation ranges from $1,200-$3,500+ depending on size, material, insulation, and features. Single doors are less expensive than double doors. We provide detailed, itemized quotes with no hidden fees."
+        },
+        {
+          "question": "How long does garage door installation take?",
+          "answer": "Most installations are completed in 4-6 hours for a single door, 6-8 hours for a double door. This includes removal of the old door, installation of the new door, opener connection, and cleanup."
+        },
+        {
+          "question": "What type of garage door is best for Ontario's climate?",
+          "answer": "We recommend insulated steel doors with polyurethane foam core (R-16 to R-18.4 rating). These withstand cold winters, prevent ice buildup, reduce energy loss, and resist warping from humidity better than wood or non-insulated options."
+        },
+        {
+          "question": "Do you remove and dispose of my old garage door?",
+          "answer": "Yes! All installations include removal and proper disposal of your old door, tracks, and hardware. We leave your garage clean and ready to use."
+        },
+        {
+          "question": "Can I keep my existing garage door opener?",
+          "answer": "In most cases, yes—if your opener is less than 10 years old and in good working condition. We'll inspect it and let you know if it's compatible with your new door. Older openers may lack modern safety features."
+        },
+        {
+          "question": "What's the difference between steel and wood garage doors?",
+          "answer": "Steel doors are more durable, require less maintenance, better insulation options, and cost less. Wood doors offer classic aesthetics but need regular painting/staining, are heavier, and can warp in Ontario's climate. Most homeowners choose steel."
+        },
+        {
+          "question": "How do I choose the right garage door style?",
+          "answer": "Consider your home's architecture (modern vs traditional), desired insulation level, maintenance commitment, and budget. Our team provides free consultations with samples to help you visualize options that complement your home."
+        },
+        {
+          "question": "What warranty comes with a new garage door?",
+          "answer": "Most manufacturers offer 5-10 year warranties on sections, 1-3 years on springs/hardware, and lifetime on rust-through (steel doors). We provide 1-year labor warranty on installation. Extended warranties available on premium models."
+        },
+        {
+          "question": "Will a new garage door increase my home value?",
+          "answer": "Yes! Garage door replacement has one of the highest ROI of any home improvement—typically 94-97% cost recovery. It dramatically improves curb appeal and is noticed by potential buyers immediately."
+        },
+        {
+          "question": "Do you offer financing for new garage door installation?",
+          "answer": "Yes, we offer financing options through our partners with approved credit. Monthly payment plans available for installations over $2,000. Ask about current promotions and 0% financing offers."
+        },
+        {
+          "question": "Can you match my new door to my home's color scheme?",
+          "answer": "Absolutely! Garage doors come in dozens of colors and finishes. We offer wood-grain steel doors, custom paint options, and decorative hardware to perfectly complement your home's exterior."
+        },
+        {
+          "question": "How long will my new garage door last?",
+          "answer": "Quality insulated steel doors typically last 20-30 years with proper maintenance. Springs last 10,000-25,000 cycles (7-20 years depending on quality). We use premium components to maximize lifespan."
+        }
+      ]
+    }
+  },
+  "garage-door-opener": {
+    "serviceName": "Garage Door Opener Service",
+    "hero": {
+      "title": "Garage Door Opener Installation & Repair | York Region",
+      "subtitle": "Smart, ultra-quiet Wi-Fi openers with professional installation. Expert service for LiftMaster, Chamberlain, and Genie systems. Upgrade to modern convenience and security.",
+      "trustBadges": [
+        "Smart Wi-Fi Openers",
+        "Same-Day Installation",
+        "All Major Brands"
+      ]
+    },
+    "seo": {
+      "metaDescription": "Garage door opener installation & repair in York Region. Wi-Fi smart openers, LiftMaster, Chamberlain, Genie. Expert service. Call (905) 960-9947!"
+    },
+    "introContent": {
+      "paragraphs": [
+        "Upgrade to a modern, ultra-quiet garage door opener with smart Wi-Fi connectivity and advanced safety features. York Garage Pros specializes in LiftMaster, Chamberlain, and Genie opener installation, repair, and replacement throughout York Region and Simcoe County.",
+        "Whether you need a new opener installation, repair of an existing system, or upgrade to smart home integration, our certified technicians provide same-day service with professional results. Control your garage from anywhere with MyQ or smartphone apps."
+      ]
+    },
+    "emergencyBanner": {
+      "show": false
+    },
+    "signsList": {
+      "show": true,
+      "title": "Signs You Need Opener Service or Replacement",
+      "items": [
+        "Opener is 10+ years old and outdated",
+        "Loud grinding or chain noise",
+        "Door reverses or won't close fully",
+        "Remote controls stop working",
+        "Slow or jerky door operation",
+        "Want smart home integration (Wi-Fi)",
+        "Safety sensors not aligned or faulty",
+        "Opener motor straining or overheating"
+      ]
+    },
+    "sectionTitle": "Select Your Opener Type",
+    "sidebar": {
+      "badge": "York & Simcoe Pros",
+      "title": "Get Expert Advice",
+      "description": "Not sure which opener is right for your door? We'll recommend the perfect model based on your door size, usage, and smart home needs.",
+      "ctaPhone": "Call Now: (905) 960-9947",
+      "ctaBook": "Request Quote",
+      "benefits": [
+        "Wi-Fi Smart Openers",
+        "Professional Setup",
+        "MyQ App Integration"
+      ],
+      "testimonial": {
+        "text": "They helped me pick the perfect opener from Costco and installed it perfectly. Love controlling it from my phone!",
+        "author": "Jason, Richmond Hill"
+      }
+    },
+    "faq": {
+      "show": true,
+      "questions": [
+        {
+          "question": "How much does garage door opener installation cost?",
+          "answer": "Professional installation costs $300-$500 for labor, plus the cost of the opener unit ($200-$600 depending on features). We can install openers you purchase from Costco, Home Depot, or provide premium units ourselves."
+        },
+        {
+          "question": "What's the best garage door opener brand?",
+          "answer": "LiftMaster is the industry gold standard for reliability and features. Chamberlain (same parent company) offers excellent value. Genie is a solid budget option. We service and install all major brands."
+        },
+        {
+          "question": "Belt drive vs chain drive—which is better?",
+          "answer": "Belt drives are quieter (ideal if bedroom is above garage) but cost $50-100 more. Chain drives are durable and economical but louder. Both are reliable—choice depends on noise tolerance and budget."
+        },
+        {
+          "question": "What is a smart Wi-Fi garage door opener?",
+          "answer": "Wi-Fi openers connect to your home network, allowing you to control and monitor your garage door from anywhere using a smartphone app (MyQ, Google Home, Alexa). Receive alerts when door opens/closes and grant access remotely."
+        },
+        {
+          "question": "Can you install an opener I bought from Costco?",
+          "answer": "Absolutely! We frequently install Craftsman, Chamberlain, and LiftMaster openers purchased from Costco. Many customers take advantage of Costco sales then hire us for professional installation. See our blog for Costco opener guides."
+        },
+        {
+          "question": "How long does opener installation take?",
+          "answer": "New opener installation typically takes 2-3 hours including removing the old unit (if applicable), mounting the new motor, connecting the rail system, programming remotes, and safety testing."
+        },
+        {
+          "question": "Do I need to replace my opener if it still works?",
+          "answer": "Not necessarily—if it's under 10 years old and working properly. However, openers older than 15 years lack modern safety features (auto-reverse, rolling codes) and should be upgraded for safety and convenience."
+        },
+        {
+          "question": "What horsepower opener do I need?",
+          "answer": "Single doors: 1/2 HP. Double doors (insulated): 3/4 HP or 1 HP. Heavy wood or oversized doors: 1 HP+. Modern openers use DC motors which are more efficient and quieter than older AC motors."
+        },
+        {
+          "question": "Can you program my car's HomeLink to the new opener?",
+          "answer": "Yes! We program all remote controls and vehicle HomeLink systems as part of our installation service at no extra charge. We'll ensure everything is working before we leave."
+        },
+        {
+          "question": "What if my opener motor runs but door doesn't move?",
+          "answer": "This usually indicates a broken trolley carriage, stripped gears, or disconnected chain/belt. These are common repairs we handle. Sometimes it's more cost-effective to replace an old opener than repair it."
+        },
+        {
+          "question": "Are garage door openers universal?",
+          "answer": "Most modern openers fit standard residential doors, but you need to ensure proper horsepower for door weight/size. Wall-mount (jackshaft) openers are different—they're ideal for garages with low ceilings or obstructions."
+        },
+        {
+          "question": "What's included in opener installation?",
+          "answer": "Installation includes: mounting motor unit, assembling rail system, connecting door arm, installing safety sensors, programming remotes, testing auto-reverse, HomeLink programming, and cleanup. Old opener removal included if needed."
+        }
+      ]
+    }
+  }
+}
