@@ -22,7 +22,7 @@ const { Content } = await entry.render();
 
 <BlogPostLayout frontmatter={entry.data}>
     <section class="post-container">
-        <header class="post-header">
+        <!-- <header class="post-header">
             <div class="meta-info">
                 <span class="category-tag">{entry.data.category}</span>
                 <time datetime={entry.data.publishDate.toISOString()}>
@@ -38,9 +38,9 @@ const { Content } = await entry.render();
 
             <h1>{entry.data.title}</h1>
             <p class="location-badge">📍 Service Area: {entry.data.location}</p>
-        </header>
+        </header> -->
 
-        <hr />
+        <!-- <hr /> -->
 
         <div class="prose-content">
             <Content />

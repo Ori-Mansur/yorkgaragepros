@@ -122,7 +122,7 @@ const blog = defineCollection({
       })
     ).min(1),
 
-    category: z.enum(['Repair', 'Installation', 'Maintenance', 'Safety', 'Deal Alert']),
+    category: z.enum(['Repair', 'Installation', 'Maintenance', 'Safety', 'Deal Alert','Troubleshooting']),
     location: z.string(),
     serviceType: z.string(),
     tags: z.array(z.string()).optional(),
