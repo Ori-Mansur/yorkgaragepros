@@ -181,22 +181,22 @@ const organizationSchema = {
 
 // 2. Conditional Service Schema
 let serviceSchema = null;
-if (serviceName) {
-    serviceSchema = {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        name: serviceName,
-        description: `Professional ${serviceName} in York Region & Simcoe County by ${businessData.name}.`,
-        provider: {
-            "@id": `${businessData.url}/#organization`,
-        },
-        aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: businessData.rating.value,
-            reviewCount: businessData.rating.count,
-        },
-    };
-}
+// if (serviceName) {
+//     serviceSchema = {
+//         "@context": "https://schema.org",
+//         "@type": "Service",
+//         name: serviceName,
+//         description: `Professional ${serviceName} in York Region & Simcoe County by ${businessData.name}.`,
+//         provider: {
+//             "@id": `${businessData.url}/#organization`,
+//         },
+//         aggregateRating: {
+//             "@type": "AggregateRating",
+//             ratingValue: businessData.rating.value,
+//             reviewCount: businessData.rating.count,
+//         },
+//     };
+// }
 ---
 
 <script
