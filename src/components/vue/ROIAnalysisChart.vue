@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="chart-container" style="height: 400px; width: 100%">
+    <div class="chart-container" style="height: 480px; width: 100%">
       <canvas ref="roiChartCanvas"></canvas>
     </div>
     <p class="source-note">
@@ -31,19 +31,29 @@ onMounted(() => {
       type: "bar",
       data: {
         labels: [
-          "Garage Door Replacement",
+          "🥇 Garage Door Replacement",
           "Steel Entry Door",
           "Manufactured Stone Veneer",
+          "Fiber-Cement Siding",
           "Minor Kitchen Remodel",
-          "Midrange Bath Remodel",
+          "Vinyl Siding Replacement",
+          "Backup Power Generator",
+          "Wood Deck Addition",
+          "Composite Deck Addition",
+          "Fiberglass Grand Entrance",
         ],
         datasets: [
           {
             label: "Return on Investment at Resale (%)",
-            // 2025 Cost vs. Value Report — Zonda / Remodeling Magazine
-            data: [268, 216, 208, 113, 80],
+            // Source: Zonda 2025 Cost vs. Value Report — National Averages
+            data: [267.7, 216.4, 207.9, 113.7, 112.9, 96.5, 95.3, 94.9, 88.5, 84.7],
             backgroundColor: [
-              "#E8A900", // Gold — your brand highlight for garage door
+              "#E8A900", // Gold — #1 Garage Door (your service)
+              "#E5E7EB",
+              "#E5E7EB",
+              "#E5E7EB",
+              "#E5E7EB",
+              "#E5E7EB",
               "#E5E7EB",
               "#E5E7EB",
               "#E5E7EB",
@@ -54,18 +64,19 @@ onMounted(() => {
         ],
       },
       options: {
+        indexAxis: "y", // Horizontal bars — much more readable for 10 items
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: (context) => ` ${context.parsed.y}% ROI`,
+              label: (context) => ` ${context.parsed.x}% ROI`,
             },
           },
         },
         scales: {
-          y: {
+          x: {
             beginAtZero: true,
             max: 300,
             grid: { color: "#f3f4f6" },
@@ -77,8 +88,11 @@ onMounted(() => {
               text: "Return on Investment at Resale (%)",
             },
           },
-          x: {
+          y: {
             grid: { display: false },
+            ticks: {
+              font: { size: 13 },
+            },
           },
         },
       },
