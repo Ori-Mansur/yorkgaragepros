@@ -1,16 +1,21 @@
 ---
-import ROIAnalysisChart from './vue/ROIAnalysisChart.vue';
+import ROIAnalysisChart from "./vue/ROIAnalysisChart.vue";
 ---
 
 <section id="roi-analysis">
     <div class="roi-container">
-        <div class="roi-header">
-            <h2>Why the Garage Matters</h2>
+        <div class="section-intro">
+            <span class="section-subtitle">Data & Insights</span>
+            <h2 class="section-title">
+                Your Garage Door Is Your Best Investment
+            </h2>
             <p>
-                Comparative Return on Investment (ROI) for common home projects in the Mid-Atlantic region.
+                Garage door replacement ranks #1 out of 28 home improvement
+                projects for ROI at resale — outperforming kitchens, bathrooms,
+                and stone veneers by a wide margin.
             </p>
+            <div class="accent-line"></div>
         </div>
-
         <div class="roi-card">
             <ROIAnalysisChart client:visible />
 
@@ -24,7 +29,7 @@ import ROIAnalysisChart from './vue/ROIAnalysisChart.vue';
 <style>
     /* ROI Analysis Section */
     #roi-analysis {
-        background-color: #001f3f; 
+        background-color: #001f3f;
         padding-top: 4rem; /* py-16 */
         padding-bottom: 4rem;
         padding-left: 1rem; /* px-4 */
@@ -43,6 +48,41 @@ import ROIAnalysisChart from './vue/ROIAnalysisChart.vue';
         margin-bottom: 2.5rem; /* mb-10 */
         text-align: center;
     }
+    .section-intro {
+        text-align: center;
+        margin-bottom: 3.5rem;
+    }
+    .section-subtitle {
+        display: block;
+        color: var(--gold);
+        font-weight: 800;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 0.5rem;
+    }
+    .section-title {
+        font-size: clamp(1.8rem, 4vw, 2.4rem);
+        color: #ffffff;
+        font-weight: 900;
+        font-family: "Montserrat-ExtraBold", "Inter", sans-serif;
+        line-height: 1.1;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+    .section-intro p {
+        color: #ffffff; /* text-gray-600 */
+        opacity: 0.7;
+    }
+    .accent-line {
+        width: 60px;
+        height: 5px;
+        background: var(--gold);
+        margin-top: 1rem;
+        border-radius: 2px;
+        margin: 0 auto;
+    }
 
     @media (min-width: 768px) {
         .roi-header {
@@ -55,11 +95,6 @@ import ROIAnalysisChart from './vue/ROIAnalysisChart.vue';
         font-size: 1.875rem; /* text-3xl */
         color: #ffffff; /* text-primary */
         margin-bottom: 0.75rem; /* mb-3 */
-    }
-
-    .roi-header p {
-        color: #ffffff; /* text-gray-600 */
-        opacity: 0.7;
     }
 
     /* Card */
