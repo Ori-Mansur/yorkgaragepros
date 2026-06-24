@@ -45,6 +45,10 @@
               <option value="Debit">Debit</option>
             </select>
           </div>
+          <div class="input-wrapper" v-if="form.type === 'INVOICE'">
+            <span class="field-hint">DEPOSIT / PAID</span>
+            <input v-model.number="form.deposit" type="number" placeholder="0.00" min="0" />
+          </div>
         </div>
       </section>
 
@@ -126,9 +130,24 @@
             <span>Subtotal</span>
             <span>CA${{ subtotal.toFixed(2) }}</span>
           </div>
+          <div class="summary-row" v-if="calculatedDiscount > 0">
+            <span>Discount</span>
+            <span>-CA${{ calculatedDiscount.toFixed(2) }}</span>
+          </div>
+          <div class="summary-row tax-row">
+            <label class="tax-toggle">
+              <input type="checkbox" v-model="form.taxEnabled" />
+              HST (13%)
+            </label>
+            <span>CA${{ taxAmount.toFixed(2) }}</span>
+          </div>
+          <div class="summary-row" v-if="form.type === 'INVOICE' && form.deposit > 0">
+            <span>Less Deposit</span>
+            <span class="deposit-amount">-CA${{ form.deposit.toFixed(2) }}</span>
+          </div>
           <div class="summary-row total-row">
-            <span>{{ form.type === "RECEIPT" ? "Total Paid" : "Grand Total" }}</span>
-            <span class="total-amount">CA${{ grandTotal.toFixed(2) }}</span>
+            <span>{{ form.type === "RECEIPT" ? "Total Paid" : form.type === "INVOICE" && form.deposit > 0 ? "Balance Due" : "Grand Total" }}</span>
+            <span class="total-amount">CA${{ (form.type === "INVOICE" ? balanceDue : grandTotal).toFixed(2) }}</span>
           </div>
         </div>
 
@@ -215,8 +234,10 @@ const uploadPdfToFirebase = async (pdfDoc) => {
 
     // 3. Collect the data from the form state
     const dbData = {
-      ...form, // All form fields
+      ...form,
       grandTotal: grandTotal.value,
+      taxAmount: taxAmount.value,
+      balanceDue: balanceDue.value,
       discountValue: calculatedDiscount.value,
     };
 
@@ -241,15 +262,17 @@ const form = reactive({
   issueDate: new Date().toISOString().substr(0, 10),
   dueDate: "",
   paymentMethod: "Cash",
-  clientName: "John Dear",
-  address: "123 Main st, Newmarket",
-  email: "ddd@gg.v",
-  phone: "123456789",
-  notes: "6 Months",
-  promoLabel: "Boxing Day",
+  clientName: "",
+  address: "",
+  email: "",
+  phone: "",
+  notes: "1-year warranty on parts and labour",
+  promoLabel: "",
   discountType: "fixed",
-  discountValue: 100,
-  items: [{ desc: "Torsion Spring", qty: 1, price: 325 }],
+  discountValue: 0,
+  taxEnabled: true,
+  deposit: 0,
+  items: [{ desc: "Spring", qty: 1, price: 325 }],
 });
 // Email: Standard alphanumeric with @ and domain
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -306,7 +329,10 @@ const calculatedDiscount = computed(() => {
   if (form.discountType === "percent") return subtotal.value * (form.discountValue / 100);
   return form.discountValue || 0;
 });
-const grandTotal = computed(() => Math.max(0, subtotal.value - calculatedDiscount.value));
+const afterDiscount = computed(() => Math.max(0, subtotal.value - calculatedDiscount.value));
+const taxAmount = computed(() => form.taxEnabled ? afterDiscount.value * 0.13 : 0);
+const grandTotal = computed(() => afterDiscount.value + taxAmount.value);
+const balanceDue = computed(() => Math.max(0, grandTotal.value - (form.deposit || 0)));
 
 const addItem = () => form.items.push({ desc: "", qty: 1, price: 0 });
 const removeItem = (index) => form.items.length > 1 && form.items.splice(index, 1);
@@ -462,18 +488,20 @@ const generateAndSave = async () => {
 
   doc.setFont("Montserrat-Bold", "bold").setFontSize(10).setTextColor(80);
   doc.text(`Discount (${form.promoLabel || "Promo"}):`, 365, finalY + 25);
-  doc.text(`-$${calculatedDiscount.value.toFixed(2)}`, 550, finalY + 25, {
-    align: "right",
-  });
+  doc.text(`-$${calculatedDiscount.value.toFixed(2)}`, 550, finalY + 25, { align: "right" });
 
-  /* FUTURE HST LINE - Commented out for now
-  doc.text("HST (13%):", 400, finalY + 40);
-  doc.text(`$${(grandTotal.value * 0.13).toFixed(2)}`, 550, finalY + 40, { align: 'right' });
-  */
+  if (form.taxEnabled) {
+    doc.setFont("Montserrat", "normal").setFontSize(10).setTextColor(80);
+    doc.text("HST (13%):", 365, finalY + 40);
+    doc.text(`$${taxAmount.value.toFixed(2)}`, 550, finalY + 40, { align: "right" });
+    doc.setFont("Montserrat", "normal").setFontSize(7).setTextColor(150);
+    doc.text("HST #: 72148 0762 RT0001", 365, finalY + 49);
+  }
 
   // Total Box
+  const boxStart = finalY + 60;
   doc.setFillColor(primaryAmber[0], primaryAmber[1], primaryAmber[2]);
-  doc.roundedRect(350, finalY + 45, 210, 45, 8, 8, "F");
+  doc.roundedRect(350, boxStart, 210, 40, 8, 8, "F");
   doc
     .setFont("Montserrat-Bold", "bold")
     .setFontSize(12)
@@ -484,12 +512,31 @@ const generateAndSave = async () => {
       : form.type === "QUOTE"
       ? "ESTIMATED TOTAL"
       : "TOTAL DUE";
-  doc.text(totalLabel, 365, finalY + 73);
-  doc.text(`$${grandTotal.value.toFixed(2)}`, 550, finalY + 73, { align: "right" });
+  doc.text(totalLabel, 365, boxStart + 26);
+  doc.text(`$${grandTotal.value.toFixed(2)}`, 550, boxStart + 26, { align: "right" });
+
+  // Deposit & Balance Due (INVOICE only)
+  let lastSectionY = boxStart + 40;
+  if (form.type === "INVOICE" && form.deposit > 0) {
+    const depY = boxStart + 55;
+    doc.setFont("Montserrat", "normal").setFontSize(10).setTextColor(80);
+    doc.text("Less Deposit:", 365, depY);
+    doc.text(`-$${Number(form.deposit).toFixed(2)}`, 550, depY, { align: "right" });
+
+    doc.setFillColor(deepSlate[0], deepSlate[1], deepSlate[2]);
+    doc.roundedRect(350, depY + 10, 210, 40, 8, 8, "F");
+    doc
+      .setFont("Montserrat-Bold", "bold")
+      .setFontSize(12)
+      .setTextColor(primaryAmber[0], primaryAmber[1], primaryAmber[2]);
+    doc.text("BALANCE DUE", 365, depY + 35);
+    doc.text(`$${balanceDue.value.toFixed(2)}`, 550, depY + 35, { align: "right" });
+    lastSectionY = depY + 50;
+  }
 
   // 6. NOTES SECTION
   if (form.notes) {
-    const notesY = finalY + 180;
+    const notesY = Math.max(finalY + 180, lastSectionY + 30);
     doc.setFont("Montserrat-Bold", "bold").setFontSize(10).setTextColor(deepSlate[0]);
     doc.text("NOTES & REMARKS:", 40, notesY);
     doc.setFont("Montserrat", "normal").setFontSize(9).setTextColor(80);
@@ -738,6 +785,30 @@ textarea:focus {
   color: #22c55e;
   font-size: 24px;
   font-weight: 900;
+}
+
+.tax-row {
+  align-items: center;
+}
+
+.tax-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.tax-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #f59e0b;
+  cursor: pointer;
+}
+
+.deposit-amount {
+  color: #60a5fa;
 }
 
 .generate-btn {
