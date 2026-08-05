@@ -9,7 +9,17 @@ function getTimeAgo(dateString: string) {
     const diffInTime = postDate.getTime() - now.getTime();
     const diffInDays = Math.round(diffInTime / (1000 * 3600 * 24));
 
-    return diffInDays === 0 ? "Today" : rtf.format(diffInDays, "day");
+    if (diffInDays === 0) return "Today";
+    if (Math.abs(diffInDays) < 7) return rtf.format(diffInDays, "day");
+
+    const diffInWeeks = Math.round(diffInDays / 7);
+    if (Math.abs(diffInDays) < 30) return rtf.format(diffInWeeks, "week");
+
+    const diffInMonths = Math.round(diffInDays / 30);
+    if (Math.abs(diffInDays) < 365) return rtf.format(diffInMonths, "month");
+
+    const diffInYears = Math.round(diffInDays / 365);
+    return rtf.format(diffInYears, "year");
 }
 
 // The direct review invitation link
