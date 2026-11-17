@@ -35,7 +35,6 @@
           <option value="" disabled>Select Service Interest...</option>
           <option value="Door_Repair">24/7 Door Repair / Broken Spring</option>
           <option value="Door_Installation">New Garage Door Installation</option>
-          <option value="Epoxy_Floor">Epoxy Floor Coating / Sealing</option>
           <option value="Opener_Service">Garage Door Opener Service</option>
           <option value="General_Inquiry">General Inquiry / Quote</option>
         </select>

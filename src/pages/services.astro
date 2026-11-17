@@ -7,8 +7,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Door from "../assets/newdoor.webp";
 import Opener from "../assets/opener.webp";
-import Epoxy from "../assets/epoxy.webp";
-import { DoorOpen, Wrench, Cog, Layers, ArrowRight } from "@lucide/astro";
+import { DoorOpen, Wrench, Cog, ArrowRight } from "@lucide/astro";
 const title =
     "York Garage Pros | Professional Garage Door Services | Repair, Sales & Installation";
 const description =
@@ -112,41 +111,6 @@ const description =
                         </div>
                     </a>
 
-                    <!-- CARD 3 -->
-                    <a href="#" class="service-card">
-                        <div class="service-image">
-                            <img src={Epoxy.src} alt="Epoxy floor" />
-                        </div>
-
-                        <div class="service-content">
-                            <div class="service-header">
-                                <Layers class="icon-lg gold" />
-                                <h3>Industrial Epoxy Coatings</h3>
-                            </div>
-
-                            <p>
-                                Polyaspartic and epoxy floor systems for
-                                permanent slab protection.
-                            </p>
-
-                            <ul>
-                                <li>
-                                    <strong>Protection:</strong> Salt, oil, chemical
-                                    resistance.
-                                </li>
-                                <li>
-                                    <strong>Prep:</strong> Diamond grinding, vapor
-                                    barrier.
-                                </li>
-                                <li>
-                                    <strong>Aesthetics:</strong> Many styles & finishes.
-                                </li>
-                            </ul>
-                            <span class="read-more"
-                                >Read More<ArrowRight /></span
-                            >
-                        </div>
-                    </a>
                 </div>
 
                 <div class="section-divider"></div>
@@ -385,7 +349,7 @@ const description =
         /* Large Screens */
         @media (min-width: 1000px) {
             .services-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
