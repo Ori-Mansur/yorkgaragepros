@@ -29,8 +29,6 @@ const {
   colors,
   glassStyles,
   windowStyles,
-  rating,
-  reviewCount,
 } = entry.data;
 
 const serviceName = capitalizeWords(service.replace(/-/g, " "));
@@ -49,13 +47,6 @@ const typeName = capitalizeWords(type.replace(/-/g, " "));
           <span class="active">{typeName} </span>
         </nav>
         <h1 class="hero-title">{h1}</h1>
-        <div class="trust-bar">
-          <div class="stars">★★★★★</div>
-          <span class="rating-text">
-            {rating || "5.0"} Rating from our local {reviewCount || "5"} Recent Ontario
-            Customers
-          </span>
-        </div>
       </div>
     </header>
 

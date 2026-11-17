@@ -3,26 +3,26 @@
     "serviceName": "Garage Door Repair",
     "hero": {
       "title": "Garage Door Repair in York Region & Simcoe County",
-      "subtitle": "Broken spring or door off-track? Get fast, same-day repairs with upfront pricing. Our licensed technicians arrive fully stocked to complete most repairs in a single visit.",
+      "subtitle": "Broken spring or door off-track? Same-day repair when available, with a fixed-price quote. Our insured technicians arrive fully stocked to complete most repairs in a single visit.",
       "trustBadges": [
         "Same-Day Service",
-        "Upfront Pricing",
-        "Licensed Technicians"
+        "Fixed-Price Guarantee",
+        "Insured Technicians"
       ]
     },
     "seo": {
-      "metaDescription": "Same-day garage door repair in York Region & Simcoe County. Upfront pricing on springs, cables & openers. Licensed techs. Call (905) 960-9947 now!"
+      "metaDescription": "Newmarket-based garage door repair for York Region & south Simcoe County. Fixed-price quotes on springs, cables & openers. Call (905) 960-9947 now!"
     },
     "introContent": {
       "paragraphs": [
         "When your garage door breaks in York Region or Simcoe County, you need fast, reliable service—not hidden fees or surprise charges. York Garage Pros provides same-day garage door repair with upfront pricing on all spring replacements, cable repairs, off-track doors, and roller upgrades.",
-        "Our licensed technicians arrive fully stocked and ready to complete most repairs in a single visit. Serving Newmarket, Aurora, Richmond Hill, Vaughan, Markham, Barrie, and surrounding areas. Call (905) 960-9947 for emergency service or get an instant quote online."
+        "Our insured technicians arrive fully stocked and ready to complete most repairs in a single visit. We're based in Newmarket and serve <a href=\"/service-areas/\">towns within about 40 km</a>. Call (905) 960-9947 for emergency service or get an instant quote online."
       ]
     },
     "emergencyBanner": {
       "show": true,
       "title": "24/7 Emergency Garage Door Repair",
-      "text": "Door stuck open? Car trapped inside? We understand garage door emergencies don't wait for business hours. York Garage Pros offers 24/7 emergency repair service throughout York Region and Simcoe County with response times under 2 hours.",
+      "text": "Door stuck open? Car trapped inside? We understand garage door emergencies don't wait for business hours. York Garage Pros offers 24/7 emergency repair service throughout York Region and Simcoe County.",
       "ctaText": "Call Now: (905) 960-9947",
       "ctaPhone": "+19059609947"
     },
@@ -48,13 +48,14 @@
       "ctaPhone": "Call Now: (905) 960-9947",
       "ctaBook": "Get Quick Quote",
       "benefits": [
-        "No Surprise Hidden Fees",
-        "5-Star Local Reputation",
-        "Real Licensed Technicians"
+        "Fixed-Price Guarantee",
+        "1-Year Parts & Labour Warranty",
+        "Insured Technicians"
       ],
       "testimonial": {
-        "text": "Got a quote within 10 minutes by sending a photo. They fixed my off-track door same-day.",
-        "author": "Dave, Newmarket"
+        "text": "A technician came within 2 hours. So kind and professional, they had everything repaired and working the same day.",
+        "author": "George, Google review",
+        "link": "https://share.google/LvTYZJ1h8ZNEywvYL"
       }
     },
     "faq": {
@@ -70,11 +71,11 @@
         },
         {
           "question": "Is same-day garage door repair available?",
-          "answer": "Same-day service may be available from local providers depending on scheduling and part availability. Contact the service provider for current availability."
+          "answer": "Yes, when our schedule and parts allow. Call (905) 960-9947 and we'll tell you honestly whether we can come today."
         },
         {
-          "question": "What areas are typically served in York Region and Simcoe County?",
-          "answer": "Service coverage commonly includes cities such as Newmarket, Aurora, Richmond Hill, Vaughan, Markham, Barrie, Bradford, and Innisfil. Coverage may vary by provider."
+          "question": "Which areas do you serve?",
+          "answer": "We're based in Newmarket and serve towns within about 40 km, including Aurora, East Gwillimbury, Richmond Hill, King, Bradford and Markham. See our service areas page for the full list."
         },
         {
           "question": "How can I confirm a technician is licensed and insured?",
@@ -94,7 +95,7 @@
         },
         {
           "question": "Are repairs typically covered by a warranty?",
-          "answer": "Many repair providers offer a limited warranty on parts and labor; warranty length and terms vary so confirm details before hiring."
+          "answer": "Yes. Our work comes with a 1-year parts & labour warranty, plus a 10-year manufacturer warranty."
         },
         {
           "question": "How can I tell if a garage door spring is broken?",
@@ -159,11 +160,7 @@
         "All-Inclusive Pricing",
         "Professional Installation",
         "Local Warranty Support"
-      ],
-      "testimonial": {
-        "text": "The price they quoted was exactly what I paid. The new door looks amazing and is so quiet.",
-        "author": "Sarah, Aurora"
-      }
+      ]
     },
     "faq": {
       "show": true,
@@ -236,7 +233,7 @@
     "introContent": {
       "paragraphs": [
         "Upgrade to a modern, ultra-quiet garage door opener with smart Wi-Fi connectivity and advanced safety features. York Garage Pros specializes in LiftMaster, Chamberlain, and Genie opener installation, repair, and replacement throughout York Region and Simcoe County.",
-        "Whether you need a new opener installation, repair of an existing system, or upgrade to smart home integration, our certified technicians provide same-day service with professional results. Control your garage from anywhere with MyQ or smartphone apps."
+        "Whether you need a new opener installation, repair of an existing system, or upgrade to smart home integration, our insured technicians offer same-day service when available. Control your garage from anywhere with MyQ or smartphone apps."
       ]
     },
     "emergencyBanner": {
@@ -269,8 +266,9 @@
         "MyQ App Integration"
       ],
       "testimonial": {
-        "text": "They helped me pick the perfect opener from Costco and installed it perfectly. Love controlling it from my phone!",
-        "author": "Jason, Richmond Hill"
+        "text": "Recommended a great deal from Costco for my garage door opener, did great work on the installation, and even showed me how to set up the software on my phone.",
+        "author": "Jason P., Google review",
+        "link": "https://share.google/gg2e1AUQ9uaK4E1wE"
       }
     },
     "faq": {

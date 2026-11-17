@@ -41,7 +41,7 @@
         <span>✓</span> <strong>Parts:</strong> High-Cycle Torsion Springs
       </div>
       <div class="detail-item">
-        <span>✓</span> <strong>Reliability:</strong> 5-Star Rated Local Tech
+        <span>✓</span> <strong>Warranty:</strong> 1-year parts & labour
       </div>
     </div>
     <div class="info-wrapper" v-if="currentOffer.hasCode">

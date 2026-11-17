@@ -57,6 +57,7 @@ const relatedCatalogs = (await getCollection("service-catalogs"))
     .filter((entry) => entry.data.service == service)
     .sort((a, b) => a.data.title.localeCompare(b.data.title));
 
+const testimonial = config.sidebar.testimonial;
 const title = `${config.serviceName} | York Garage Pros | Upfront Pricing`;
 const metaDescription = config.seo.metaDescription;
 ---
@@ -253,19 +254,34 @@ const metaDescription = config.seo.metaDescription;
                             </ul>
                         </div>
 
-                        <div class="review-mini-card">
-                            <div class="stars">
-                                <Star size={14} fill="currentColor" />
-                                <Star size={14} fill="currentColor" />
-                                <Star size={14} fill="currentColor" />
-                                <Star size={14} fill="currentColor" />
-                                <Star size={14} fill="currentColor" />
-                            </div>
-                            <p>"{config.sidebar.testimonial.text}"</p>
-                            <span class="reviewer">
-                                - {config.sidebar.testimonial.author}
-                            </span>
-                        </div>
+                        {
+                            testimonial && (
+                                <div class="review-mini-card">
+                                    <div class="stars">
+                                        <Star size={14} fill="currentColor" />
+                                        <Star size={14} fill="currentColor" />
+                                        <Star size={14} fill="currentColor" />
+                                        <Star size={14} fill="currentColor" />
+                                        <Star size={14} fill="currentColor" />
+                                    </div>
+                                    <p>"{testimonial.text}"</p>
+                                    {testimonial.link ? (
+                                        <a
+                                            class="reviewer"
+                                            href={testimonial.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            - {testimonial.author}
+                                        </a>
+                                    ) : (
+                                        <span class="reviewer">
+                                            - {testimonial.author}
+                                        </span>
+                                    )}
+                                </div>
+                            )
+                        }
                     </div>
                 </aside>
             </div>

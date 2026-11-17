@@ -33,9 +33,11 @@ export interface ServicePageConfig {
     ctaPhone: string;
     ctaBook: string;
     benefits: string[];
-    testimonial: {
+    // Only real, verifiable customer reviews (see src/data/reviews.json).
+    testimonial?: {
       text: string;
       author: string;
+      link?: string;
     };
   };
   faq: {
