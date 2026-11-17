@@ -120,3 +120,6 @@
 /garage-door-opener/liftmaster-87504-267/ /garage-door-opener/ 301
 /garage-door-opener/liftmaster-98022  /garage-door-opener/ 301
 /garage-door-opener/liftmaster-98022/ /garage-door-opener/ 301
+
+# Some tools and old Search Console submissions look for /sitemap.xml
+/sitemap.xml                          /sitemap-index.xml 301
