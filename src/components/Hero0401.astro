@@ -35,19 +35,19 @@ const cities = [
     "vaughan",
     "richmond hill",
     "markham",
-    "barrie",
+    "east gwillimbury",
     "bradford",
 ];
 const detectedCity = cities.find((city) => utmTerm.includes(city));
 const displayCity = detectedCity
-    ? detectedCity.charAt(0).toUpperCase() + detectedCity.slice(1)
+    ? detectedCity.replace(/\b\w/g, (c) => c.toUpperCase())
     : "York Region & Simcoe County";
 ---
 
 <section class="section-garage">
     <div class="container">
         <div class="location-badge">
-            <MapPin size={12} /> YORK REGION & SIMCOE COUNTY
+            <MapPin size={12} /> BASED IN NEWMARKET, ON
         </div>
 
         <h1>
@@ -57,7 +57,7 @@ const displayCity = detectedCity
             {
                 detectedCity
                     ? `Your local garage door specialists, serving ${displayCity} and the surrounding area`
-                    : "Newmarket, Aurora, Bradford, Vaughan, Richmond Hill, Markham & Barrie"
+                    : "Based in Newmarket, serving York Region & south Simcoe County"
             }
         </h2>
 
