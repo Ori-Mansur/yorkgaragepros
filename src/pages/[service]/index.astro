@@ -8,6 +8,7 @@ import UtilityNav from "../../components/UtilityNav.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQ from "../../components/SmallFAQ.astro";
+import OpenersWeInstall from "../../components/OpenersWeInstall.astro";
 import { getDoorTypeImage } from "../../utils/helpers";
 import {
     ArrowRight,
@@ -139,6 +140,8 @@ const metaDescription = config.seo.metaDescription;
                             </section>
                         )
                     }
+
+                    {service === "garage-door-opener" && <OpenersWeInstall />}
 
                     <!-- Product Grid -->
                     <div class="section-header-block">

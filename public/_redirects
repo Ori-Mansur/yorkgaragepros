@@ -104,3 +104,19 @@
 # Older moves
 /posts                               /blog/ 301
 /posts/                              /blog/ 301
+
+# Old LiftMaster product pages -> merged into the opener hub
+/garage-door-opener/liftmaster-81550  /garage-door-opener/ 301
+/garage-door-opener/liftmaster-81550/ /garage-door-opener/ 301
+/garage-door-opener/liftmaster-81600  /garage-door-opener/ 301
+/garage-door-opener/liftmaster-81600/ /garage-door-opener/ 301
+/garage-door-opener/liftmaster-81650  /garage-door-opener/ 301
+/garage-door-opener/liftmaster-81650/ /garage-door-opener/ 301
+/garage-door-opener/liftmaster-83650-267 /garage-door-opener/ 301
+/garage-door-opener/liftmaster-83650-267/ /garage-door-opener/ 301
+/garage-door-opener/liftmaster-84505R /garage-door-opener/ 301
+/garage-door-opener/liftmaster-84505R/ /garage-door-opener/ 301
+/garage-door-opener/liftmaster-87504-267 /garage-door-opener/ 301
+/garage-door-opener/liftmaster-87504-267/ /garage-door-opener/ 301
+/garage-door-opener/liftmaster-98022  /garage-door-opener/ 301
+/garage-door-opener/liftmaster-98022/ /garage-door-opener/ 301

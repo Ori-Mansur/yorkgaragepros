@@ -47,61 +47,6 @@ const serviceCatalogsCollection = defineCollection({
     windowStyles: z.array(z.string()).optional(),
   }),
 });
-const openersCollection = defineCollection({
-  type: 'content', // Required for MDX files with frontmatter
-  schema: z.object({
-    title: z.string(),
-    opener: z.string(),
-    brand: z.string(),
-    type: z.enum(['belt-drive', 'chain-drive', 'wall-mount']), // Add more types if needed
-    inStock: z.boolean(),
-    priceRange: z.string().optional(),
-    price: z.number().optional(), // Use if you have a single price instead of range
-    sku: z.string().optional(),
-    categories: z.array(z.string()).optional(),
-    description: z.string(),
-    features: z.array(z.string()),
-    image: z.string().optional(), // Path to hero image
-  }),
-});
-const openers = defineCollection({
-  type: 'data', // Important: tells Astro this collection uses JSON/YAML, not Markdown
-  schema: z.object({
-    model: z.string(),
-    name: z.string(),
-    brand: z.string(),
-    description: z.string(),
-    shortDescription: z.string(),
-    features: z.array(z.string()),
-    specifications: z.object({
-      motor: z.string(),
-      mechanics: z.string(),
-      power: z.string(),
-      speed: z.string(),
-      lighting: z.string(),
-      railOptions: z.array(z.object({
-        height: z.string(),
-        installedLength: z.string(),
-        maxOpening: z.string(),
-      })).optional(),
-      headroomRequired: z.string().optional(),
-      warranties: z.object({
-        motor: z.string().optional(),
-        parts: z.string().optional(),
-      }),
-    }),
-    inTheBox: z.array(z.string()),
-    images: z.array(z.object({
-      url: z.string(),
-      alt: z.string(),
-      type: z.string(),
-    })),
-    pdfGuide: z.string(),
-    category: z.string(),
-    tags: z.array(z.string()),
-    available: z.boolean(),
-  }),
-});
 const blog = defineCollection({
   type: 'content',
   schema: ({ image }) => z.object({
@@ -129,7 +74,6 @@ const blog = defineCollection({
 
 // 3. Export both collections
 export const collections = {
-  openers: openers,
   towns,
   'service-catalogs': serviceCatalogsCollection,
   blog

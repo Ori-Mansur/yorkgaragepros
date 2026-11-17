@@ -3,7 +3,6 @@ import carriage_house_panels from '../assets/doorTypes/carriage-house-panels.web
 import flush_panels from '../assets/doorTypes/flush-panels.webp'
 import long_ranch_panels from '../assets/doorTypes/long-ranch-panels.webp'
 import ribbed_panels from '../assets/doorTypes/ribbed-panels.webp'
-import liftmaster_87504_267 from '../assets/openers/x83650267_Hero_1.png'
 import broken_spring from '../assets/doorTypes/broken-spring.webp'
 import broken_lift_cable from '../assets/doorTypes/broken-lift-cable.webp'
 import door_off_track from '../assets/doorTypes/door-off-track.webp'
@@ -26,13 +25,6 @@ const doorTypeImage = {
     'wall-mount': wall_mount,
     'default': ribbed_panels
 }
-const openerImage = {
-    'liftmaster-87504-267': liftmaster_87504_267,
-    'flush-panels': flush_panels,
-    'carriage-house-panels': carriage_house_panels,
-    'ribbed-panels': ribbed_panels,
-    'default': ribbed_panels
-}
 
 
 
@@ -42,9 +34,5 @@ export function capitalizeWords(str: string): string {
 
 export function getDoorTypeImage(type: string) {
     const imageUrl = doorTypeImage[type as keyof typeof doorTypeImage] || doorTypeImage.default;
-    return imageUrl;
-}
-export function getOpenerImage(type: string) {
-    const imageUrl = openerImage[type as keyof typeof openerImage] || openerImage.default;
     return imageUrl;
 }
