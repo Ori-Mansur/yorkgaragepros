@@ -219,28 +219,21 @@
   "garage-door-opener": {
     "serviceName": "Garage Door Opener Service",
     "hero": {
-      "title": "Garage Door Opener Installation & Repair | York Region",
-      "subtitle": "Smart, ultra-quiet Wi-Fi openers with professional installation. Expert service for LiftMaster, Chamberlain, and Genie systems. Upgrade to modern convenience and security.",
-      "trustBadges": [
-        "Smart Wi-Fi Openers",
-        "Same-Day Installation",
-        "All Major Brands"
-      ]
+      "title": "Garage Door Openers",
+      "subtitle": "Your opener is the part of your garage door you use the most and think about the least, until it stops working. We install, replace and repair openers across York Region, and we'll help you pick the right one for your garage, not the most expensive one.",
+      "trustBadges": []
     },
     "seo": {
-      "metaDescription": "Garage door opener installation & repair in York Region. Wi-Fi smart openers, LiftMaster, Chamberlain, Genie. Expert service. Call (905) 960-9947!"
+      "metaDescription": "Garage door opener installation, replacement and repair in York Region. Chain, belt and wall mount openers. LiftMaster and Skylink supplied, or we install the one you bought. Call (905) 960-9947."
     },
     "introContent": {
-      "paragraphs": [
-        "Upgrade to a modern, ultra-quiet garage door opener with smart Wi-Fi connectivity and advanced safety features. York Garage Pros specializes in LiftMaster, Chamberlain, and Genie opener installation, repair, and replacement throughout York Region and Simcoe County.",
-        "Whether you need a new opener installation, repair of an existing system, or upgrade to smart home integration, our insured technicians offer same-day service when available. Control your garage from anywhere with MyQ or smartphone apps."
-      ]
+      "paragraphs": []
     },
     "emergencyBanner": {
       "show": false
     },
     "signsList": {
-      "show": true,
+      "show": false,
       "title": "Signs You Need Opener Service or Replacement",
       "items": [
         "Opener is 10+ years old and outdated",
@@ -280,7 +273,7 @@
         },
         {
           "question": "Which garage door opener brands are common?",
-          "answer": "Popular brands include LiftMaster, Chamberlain, Genie, and Craftsman; choice depends on desired features, warranty, and budget."
+          "answer": "Popular brands include LiftMaster, Chamberlain and Craftsman; choice depends on desired features, warranty, and budget."
         },
         {
           "question": "Belt drive vs chain drive—what are the differences?",

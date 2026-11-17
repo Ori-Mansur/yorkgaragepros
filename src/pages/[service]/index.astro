@@ -8,7 +8,7 @@ import UtilityNav from "../../components/UtilityNav.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import FAQ from "../../components/SmallFAQ.astro";
-import OpenersWeInstall from "../../components/OpenersWeInstall.astro";
+import GarageDoorOpenerHub from "../../components/hubs/GarageDoorOpenerHub.mdx";
 import { getDoorTypeImage } from "../../utils/helpers";
 import {
     ArrowRight,
@@ -57,6 +57,11 @@ const relatedCatalogs = (await getCollection("service-catalogs"))
     .sort((a, b) => a.data.title.localeCompare(b.data.title));
 
 const testimonial = config.sidebar.testimonial;
+// Hubs with owner-written body copy (MDX). Others use introContent.paragraphs.
+const hubBodies: Record<string, any> = {
+    "garage-door-opener": GarageDoorOpenerHub,
+};
+const HubBody = hubBodies[service];
 const title = `${config.serviceName} | York Garage Pros | Upfront Pricing`;
 const metaDescription = config.seo.metaDescription;
 ---
@@ -89,16 +94,24 @@ const metaDescription = config.seo.metaDescription;
         <div class="container content-wrapper">
             <div class="hub-layout">
                 <section class="main-content">
-                    <!-- Intro Content -->
-                    <section class="intro-content">
-                        <div class="intro-text">
-                            {
-                                config.introContent.paragraphs.map(
-                                    (paragraph) => <p set:html={paragraph} />,
-                                )
-                            }
-                        </div>
-                    </section>
+                    <!-- Intro Content: owner-written MDX body if the hub has one -->
+                    {
+                        HubBody ? (
+                            <section class="intro-content">
+                                <div class="intro-text hub-prose">
+                                    <HubBody />
+                                </div>
+                            </section>
+                        ) : config.introContent.paragraphs.length > 0 && (
+                            <section class="intro-content">
+                                <div class="intro-text">
+                                    {config.introContent.paragraphs.map(
+                                        (paragraph) => <p set:html={paragraph} />,
+                                    )}
+                                </div>
+                            </section>
+                        )
+                    }
 
                     <!-- Emergency Banner (conditional) -->
                     {
@@ -140,8 +153,6 @@ const metaDescription = config.seo.metaDescription;
                             </section>
                         )
                     }
-
-                    {service === "garage-door-opener" && <OpenersWeInstall />}
 
                     <!-- Product Grid -->
                     <div class="section-header-block">
@@ -388,6 +399,30 @@ const metaDescription = config.seo.metaDescription;
         line-height: 1.7;
         color: var(--text-main);
         margin-bottom: 1rem;
+    }
+    .hub-prose :global(h2) {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--navy);
+        margin: 2rem 0 0.75rem;
+    }
+    .hub-prose :global(h2:first-child) {
+        margin-top: 0;
+    }
+    .hub-prose :global(ul) {
+        list-style: disc;
+        padding-left: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    .hub-prose :global(li) {
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 0.4rem;
+    }
+    .hub-prose :global(a) {
+        color: var(--navy);
+        text-decoration: underline;
+        text-decoration-color: var(--gold);
     }
     .intro-text p:last-child {
         margin-bottom: 0;
