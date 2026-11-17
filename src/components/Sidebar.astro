@@ -19,7 +19,7 @@ const { serviceSlug, citySlug, typeSlug } = Astro.props;
 
 // --- 1. Fetch all collections ---
 const allCatalogs = await getCollection("service-catalogs");
-const allServiceAreas = await getCollection("service-areas");
+const allTowns = await getCollection("towns");
 
 // --- 2. Filter for Contextual Links ---
 
@@ -33,15 +33,13 @@ const relatedCatalogs = allCatalogs
     isActive: entry.data.type === typeSlug,
   }));
 
-// B. Filter Service Areas for the current service
-const relatedServiceAreas = allServiceAreas
-  .filter((entry) => entry.data.service === serviceSlug)
-  .map((entry) => ({
-    name: entry.data.cityName, // Use the proper city name
-    url: `/${serviceSlug}/${entry.data.city}/`,
-    // Determine if this is the active page
-    isActive: entry.data.city === citySlug,
-  }));
+// B. Town pages + the full service-area list
+const relatedServiceAreas = [
+  ...allTowns
+    .sort((a, b) => a.data.name.localeCompare(b.data.name))
+    .map((town) => ({ name: town.data.name, url: `/${town.slug}/` })),
+  { name: "All service areas", url: "/service-areas/" },
+];
 // Determine which header to show
 const isLocalPage = !!citySlug;
 const isProductPage = !!typeSlug;
@@ -77,28 +75,13 @@ const serviceTitle = serviceSlug
 
     <ul class="sidebar-list">
       {
-        relatedServiceAreas.length ? (
-          relatedServiceAreas.map((page) => (
-            <li>
-              <a href={page.url} class="sidebar-link">
-                {page.name}
-              </a>
-            </li>
-          ))
-        ) : (
+        relatedServiceAreas.map((page) => (
           <li>
-            <span class="sidebar-link">York Region</span>
+            <a href={page.url} class="sidebar-link">
+              {page.name}
+            </a>
           </li>
-          <li>
-            <span class="sidebar-link">Peel Region</span>
-          </li>
-          <li>
-            <span class="sidebar-link">Durham Region</span>
-          </li>
-          <li>
-            <span class="sidebar-link">Simcoe County</span>
-          </li>
-        )
+        ))
       }
     </ul>
   </div>

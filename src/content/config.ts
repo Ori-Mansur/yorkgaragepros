@@ -2,22 +2,18 @@
 
 import { z, defineCollection } from 'astro:content';
 
-// 1. Service Areas Collection (Existing)
-const serviceAreaCollection = defineCollection({
+// 1. Town pages (/{town}/). One file per town we have real jobs to show for.
+// The file name is the URL slug, e.g. richmond-hill.mdx -> /richmond-hill/
+const towns = defineCollection({
   type: 'content',
   schema: z.object({
-    city: z.string(),
-    region: z.string(),
-    logo: z.string().optional(),
-    service: z.string(),
-    cityName: z.string(),
-    serviceName: z.string(),
+    name: z.string(),
     title: z.string(),
     h1: z.string(),
     metaDescription: z.string(),
-    coordinates: z.object({
-      lat: z.number(), lng: z.number()
-    })
+    // Keep false until real job details/photos are added. While false the page
+    // is noindex and excluded from the sitemap (see astro.config.mjs).
+    published: z.boolean(),
   }),
 });
 
@@ -134,7 +130,7 @@ const blog = defineCollection({
 // 3. Export both collections
 export const collections = {
   openers: openers,
-  'service-areas': serviceAreaCollection,
+  towns,
   'service-catalogs': serviceCatalogsCollection,
   blog
 };

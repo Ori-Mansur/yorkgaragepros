@@ -1,0 +1,234 @@
+---
+export const prerender = true;
+import "../../styles/global.css";
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import UtilityNav from "../../components/UtilityNav.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import QuickQuote from "../../components/vue/QuickQuote.vue";
+
+// One page per file in src/content/towns/ (e.g. richmond-hill.mdx -> /richmond-hill/).
+export async function getStaticPaths() {
+  const towns = await getCollection("towns");
+  return towns.map((town) => ({
+    params: { town: town.slug },
+    props: { town },
+  }));
+}
+
+const { town } = Astro.props as { town: CollectionEntry<"towns"> };
+const { Content } = await town.render();
+const { name, title, h1, metaDescription, published } = town.data;
+---
+
+<Layout title={title} description={metaDescription} noIndex={!published}>
+  <UtilityNav />
+  <Header />
+
+  <section class="city-hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge">📍 Based in Newmarket, serving {name}</div>
+        <h1 class="page-title">{h1}</h1>
+        <p class="hero-subtitle">
+          Garage door repair, new doors and openers for homeowners in
+          <strong>{name}</strong>. Fixed-price quotes: the quote we give you is
+          the price you pay.
+        </p>
+        <div class="hero-actions">
+          <a href="tel:+19059609947" class="btn-call-main">
+            <span class="label">Call for Service</span>
+            <span class="number">(905) 960-9947</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-form">
+        <div class="quote-card">
+          <div class="card-header">
+            <h2>Quick Quote</h2>
+          </div>
+          <QuickQuote client:load city={name} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <div class="container trust-flex">
+      <div class="trust-item">🛡️ Insured</div>
+      <div class="trust-item">✅ Same-day repair when available</div>
+      <div class="trust-item">💲 Fixed-price guarantee</div>
+      <div class="trust-item">🔧 1-year parts & labour warranty</div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="container">
+      <article class="prose-content">
+        <Content />
+      </article>
+      <p class="other-areas">
+        Not in {name}? See all the <a href="/service-areas/">towns we serve</a>.
+      </p>
+    </div>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  :root {
+    --navy: #1c2a44;
+    --navy-dark: #0f172a;
+    --gold: #e8a900;
+    --red: #dc2626;
+    --white: #ffffff;
+    --gray-bg: #f8fafc;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HERO */
+  .city-hero {
+    background:
+      linear-gradient(rgba(28, 42, 68, 0.94), rgba(28, 42, 68, 0.94)),
+      url("../../assets/heropagemobile.webp");
+    background-size: cover;
+    padding: 80px 0;
+    color: white;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .hero-badge {
+    background: var(--gold);
+    color: var(--navy);
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+  }
+  .page-title {
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: #cbd5e1;
+    margin-bottom: 30px;
+  }
+
+  .btn-call-main {
+    display: inline-flex;
+    flex-direction: column;
+    background: var(--red);
+    color: white;
+    padding: 14px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(220, 38, 38, 0.4);
+  }
+  .btn-call-main .label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .btn-call-main .number {
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+
+  /* QUOTE CARD */
+  .quote-card {
+    background: white;
+    padding: 32px;
+    border-radius: 20px;
+    color: var(--navy);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+  .card-header {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 16px;
+  }
+  .card-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0;
+  }
+
+  /* TRUST BAR */
+  .trust-bar {
+    background: var(--navy-dark);
+    padding: 24px 0;
+    border-bottom: 4px solid var(--gold);
+  }
+  .trust-flex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .trust-item {
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  /* CONTENT AREA */
+  .main-content {
+    padding: 80px 0;
+    background: white;
+  }
+  .prose-content :global(h2) {
+    font-size: 2.2rem;
+    color: var(--navy);
+    margin: 40px 0 20px;
+    font-weight: 800;
+  }
+  .prose-content :global(p),
+  .prose-content :global(li) {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #334155;
+  }
+  .prose-content :global(p) {
+    margin-bottom: 24px;
+  }
+  .prose-content :global(ul) {
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-content :global(a),
+  .other-areas a {
+    color: var(--navy);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+  }
+  .other-areas {
+    margin-top: 40px;
+    font-size: 1.05rem;
+    color: #334155;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+  }
+</style>

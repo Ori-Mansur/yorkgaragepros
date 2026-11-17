@@ -26,13 +26,11 @@ import type { ServicePageConfigCollection } from "../../types/service-page-confi
 const serviceConfig = serviceConfigData as ServicePageConfigCollection;
 
 export async function getStaticPaths() {
-    const serviceAreas = await getCollection("service-areas");
     const serviceCatalogs = await getCollection("service-catalogs");
 
-    const uniqueServices = new Set([
-        ...serviceAreas.map((page) => page.data.service),
-        ...serviceCatalogs.map((entry) => entry.data.service),
-    ]);
+    const uniqueServices = new Set(
+        serviceCatalogs.map((entry) => entry.data.service),
+    );
 
     return Array.from(uniqueServices).map((service) => ({
         params: { service },
@@ -49,8 +47,8 @@ if (!config) {
     throw new Error(`No configuration found for service: ${service}`);
 }
 
-const relatedAreas = (await getCollection("service-areas")).filter(
-    (page) => page.data.service === service,
+const towns = (await getCollection("towns")).sort((a, b) =>
+    a.data.name.localeCompare(b.data.name),
 );
 
 const relatedCatalogs = (await getCollection("service-catalogs"))
@@ -199,19 +197,19 @@ const metaDescription = config.seo.metaDescription;
                         }
 
                         <h2 class="small-title">
-                            Serving York Region & Simcoe County
+                            Based in Newmarket, serving York Region & south Simcoe
                         </h2>
                         <div class="area-tags">
                             {
-                                relatedAreas.map((page) => (
-                                    <a
-                                        href={`/${page.data.service}/${page.data.city}/`}
-                                        class="area-tag"
-                                    >
-                                        {page.data.cityName}
+                                towns.map((town) => (
+                                    <a href={`/${town.slug}/`} class="area-tag">
+                                        {town.data.name}
                                     </a>
                                 ))
                             }
+                            <a href="/service-areas/" class="area-tag">
+                                All service areas
+                            </a>
                         </div>
                     </div>
                 </section>

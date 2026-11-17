@@ -1,0 +1,25 @@
+---
+// Marks content the business owner still needs to supply.
+// Visible only in `npm run dev`; renders NOTHING in production builds,
+// so a placeholder can never be published or indexed by accident.
+---
+
+{
+    import.meta.env.DEV && (
+        <div class="owner-todo" role="note">
+            <strong>TODO (owner):</strong> <slot />
+        </div>
+    )
+}
+
+<style>
+    .owner-todo {
+        border: 2px dashed #dc2626;
+        background: #fef2f2;
+        color: #7f1d1d;
+        padding: 16px;
+        border-radius: 8px;
+        margin: 24px 0;
+        font-size: 0.95rem;
+    }
+</style>

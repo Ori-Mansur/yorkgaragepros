@@ -1,0 +1,126 @@
+---
+export const prerender = true;
+import "../styles/global.css";
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import UtilityNav from "../components/UtilityNav.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "Service Areas | York Garage Pros, Newmarket";
+const description =
+    "York Garage Pros is based in Newmarket and serves towns within about 40 km, including Aurora, East Gwillimbury, Richmond Hill, King, Bradford, Markham and Vaughan.";
+
+// Towns that have their own page (src/content/towns/*.mdx) get linked.
+const townPages = new Set((await getCollection("towns")).map((t) => t.slug));
+
+const areas: { name: string; slug?: string; note?: string }[] = [
+    { name: "Newmarket", note: "our home base" },
+    { name: "Aurora" },
+    {
+        name: "East Gwillimbury",
+        slug: "east-gwillimbury",
+        note: "including Mount Albert, Holland Landing, Sharon and Queensville",
+    },
+    { name: "Georgina", note: "including Keswick" },
+    { name: "King" },
+    { name: "Bradford West Gwillimbury" },
+    { name: "Richmond Hill", slug: "richmond-hill" },
+    { name: "Whitchurch-Stouffville" },
+    { name: "Markham" },
+    { name: "Vaughan" },
+    { name: "Innisfil" },
+    { name: "Uxbridge" },
+    { name: "North York", note: "northern part" },
+];
+---
+
+<Layout title={title} description={description}>
+    <UtilityNav />
+    <Header />
+
+    <div class="areas-page">
+        <div class="container">
+            <h1>Service Areas</h1>
+            <p class="intro">
+                York Garage Pros is based in Newmarket, Ontario. We repair and
+                install garage doors and openers for homes within roughly 40 km
+                of Newmarket, including the towns below. Not sure if we cover
+                your street? Call <a href="tel:+19059609947">(905) 960-9947</a> and
+                we'll tell you.
+            </p>
+
+            <ul class="area-list">
+                {
+                    areas.map((area) => (
+                        <li>
+                            {area.slug && townPages.has(area.slug) ? (
+                                <a href={`/${area.slug}/`}>{area.name}</a>
+                            ) : (
+                                <span>{area.name}</span>
+                            )}
+                            {area.note && (
+                                <span class="note"> ({area.note})</span>
+                            )}
+                        </li>
+                    ))
+                }
+            </ul>
+
+            <h2>What we do</h2>
+            <ul class="service-links">
+                <li><a href="/garage-door-repair/">Garage door repair</a></li>
+                <li><a href="/garage-door/">New garage door installation</a></li>
+                <li><a href="/garage-door-opener/">Garage door openers</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <Footer />
+</Layout>
+
+<style>
+    .areas-page {
+        background: #fff;
+        padding: 64px 0 80px;
+        color: #334155;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 16px;
+    }
+    h1 {
+        font-size: clamp(2rem, 5vw, 2.8rem);
+        font-weight: 900;
+        color: #1c2a44;
+        margin-bottom: 20px;
+    }
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #1c2a44;
+        margin: 48px 0 16px;
+    }
+    .intro {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        margin-bottom: 32px;
+    }
+    .area-list,
+    .service-links {
+        list-style: disc;
+        padding-left: 1.25rem;
+        font-size: 1.1rem;
+        line-height: 2;
+    }
+    .note {
+        color: #64748b;
+    }
+    a {
+        color: #1c2a44;
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-color: #e8a900;
+    }
+</style>

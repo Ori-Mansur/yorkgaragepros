@@ -5,6 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
 import vue from '@astrojs/vue';
 import mdx from '@astrojs/mdx';
+import { readdirSync, readFileSync } from 'node:fs';
+
+// Town pages with `published: false` are noindex, so keep them out of the sitemap.
+const unpublishedTownPaths = readdirSync(new URL('./src/content/towns/', import.meta.url))
+  .filter((f) => f.endsWith('.mdx') || f.endsWith('.md'))
+  .filter((f) => /^published:\s*false\s*$/m.test(readFileSync(new URL(`./src/content/towns/${f}`, import.meta.url), 'utf8')))
+  .map((f) => `/${f.replace(/\.mdx?$/, '')}/`);
 
 export default defineConfig({
   site: 'https://yorkgaragepros.com',
@@ -26,6 +33,9 @@ export default defineConfig({
      sitemap({
        filter: (page) => {
        if (page.includes('/booking') || page.includes('/thank-you') || page.includes('/admin')) {
+          return false;
+        }
+       if (unpublishedTownPaths.some((p) => new URL(page).pathname === p)) {
           return false;
         }
         return true;
