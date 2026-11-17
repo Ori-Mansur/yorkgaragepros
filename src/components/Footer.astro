@@ -132,6 +132,26 @@ import {
                                 </svg>
                             </span>
                         </a>
+
+                        <!-- Plain link only: no review/rating markup. Logo file: public/homestars-logo.svg -->
+                        <a
+                            href="https://homestars.com/profile/york-garage-pros"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="social-link"
+                            title="Read our reviews on HomeStars"
+                        >
+                            <span class="icon-box icon-box--wide">
+                                <img
+                                    src="/homestars-logo.svg"
+                                    alt="Read our reviews on HomeStars"
+                                    width="96"
+                                    height="24"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            </span>
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -392,6 +412,16 @@ import {
         font-weight: 800;
         font-size: 0.8rem;
         border: 1px solid #334155;
+    }
+    .icon-box--wide {
+        width: auto;
+        padding: 0 10px;
+    }
+    .icon-box--wide img {
+        display: block;
+        width: 96px;
+        height: 24px;
+        object-fit: contain;
     }
     .social-link:hover .icon-box {
         /* background: #2563eb;
