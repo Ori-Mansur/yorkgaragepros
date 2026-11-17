@@ -52,7 +52,6 @@ interface CityPageData {
   title: string;
   description: string;
   h1: string;
-  schema: object;
 }
 
 function getCityPageData(cityName: string): CityPageData {
@@ -64,37 +63,7 @@ function getCityPageData(cityName: string): CityPageData {
   const description = `Need a fix? We invite you to experience our local, same-day service in ${cityName}. Specialized in ${rotatedService.toLowerCase()} and professional garage door installation.`;
   const h1 = `Reliable Garage Door Repair and Installation in ${cityName}`;
 
-  // Structured Data for AI Agents
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "GarageDoorControl",
-    "name": `Your Business - ${cityName}`,
-    "description": description,
-    "areaServed": {
-      "@type": "City",
-      "name": cityName
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Garage Door Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": { "@type": "Service", "name": rotatedService }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": { "@type": "Service", "name": "Garage Door Installation" }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": { "@type": "Service", "name": "New Garage Door Sales" }
-        }
-      ]
-    }
-  };
-
-  return { title, description, h1, schema };
+  return { title, description, h1 };
 }
 
 
@@ -105,10 +74,6 @@ const citySEO = getCityPageData(cityName);
 ---
 
 <Layout title={citySEO.title} description={citySEO.description}>
-  <script 
-        type="application/ld+json" 
-        set:html={JSON.stringify(citySEO.schema)} 
-      />
   <UtilityNav />
   <Header />
 
