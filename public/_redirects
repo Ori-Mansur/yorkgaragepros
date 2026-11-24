@@ -123,3 +123,6 @@
 
 # Some tools and old Search Console submissions look for /sitemap.xml
 /sitemap.xml                          /sitemap-index.xml 301
+
+# Duplicate homepage URL -> canonical homepage (rule matches /index.html only, so / is never redirected)
+/index.html                           / 301
