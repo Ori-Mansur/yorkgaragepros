@@ -17,12 +17,9 @@ const failedPath = Astro.request.url.replace(Astro.url.origin, "");
 const phoneNumber = "(905) 960-9947";
 const contactLink = "/contact/";
 const serviceAreas = [
-    { name: "Vaughan", href: "/garage-door-repair-vaughan/" },
-    { name: "Markham", href: "/garage-door-repair-markham/" },
-    { name: "Richmond Hill", href: "/garage-door-repair-richmond-hill/" },
-    { name: "Aurora", href: "/garage-door-repair-aurora/" },
-    { name: "Newmarket", href: "/garage-door-repair-newmarket/" },
-    { name: "Stouffville", href: "/garage-door-repair-stouffville/" },
+    { name: "Richmond Hill", href: "/richmond-hill/" },
+    { name: "East Gwillimbury", href: "/east-gwillimbury/" },
+    { name: "All service areas", href: "/service-areas/" },
 ];
 ---
 
@@ -110,14 +107,11 @@ const serviceAreas = [
                 <h3 class="error-city-title">Or Find Your City:</h3>
 
                 <div class="error-city-list">
-                    <!-- AUTO GENERATED LINKS -->
-                    <!-- {
-                        serviceAreas.map(
-                            (area) => `
-                    <a href="${area.href}" class="city-item">${area.name}</a>
-                `,
-                        )
-                    } -->
+                    {
+                        serviceAreas.map((area) => (
+                            <a href={area.href} class="city-item">{area.name}</a>
+                        ))
+                    }
                 </div>
             </div>
         </div>

@@ -6,25 +6,40 @@ metaDescription: 'Garage door repair, spring replacement, new doors and openers 
 # Set to true once the real job details and photos below are filled in.
 published: true
 ---
-import OwnerTodo from '../../components/OwnerTodo.astro';
+import { Image } from 'astro:assets';
+import rhBefore from '../../assets/towns/richmond-hill/richmond-hill-garage-door-before.webp';
+import rhAfter from '../../assets/towns/richmond-hill/richmond-hill-garage-door-after.webp';
 
 York Garage Pros repairs and installs garage doors and openers for homeowners in Richmond Hill. We're based in nearby Newmarket, and the quote we give you is the price you pay.
 
 ## Recent jobs in Richmond Hill
 
-<OwnerTodo>
-  Add 2–4 real Richmond Hill jobs. For each: the area or street (no house numbers),
-  the problem, what you did, parts used, roughly how long it took, and 1–2 of your
-  own photos (put images in <code>src/assets/towns/richmond-hill/</code>).
-  If a customer from this job left a Google or HomeStars review, link it.
-</OwnerTodo>
+### Single garage door replacement in Oak Ridges, Richmond Hill
+
+The homeowners in this Oak Ridges townhouse in Richmond Hill wanted an upgrade: an insulated door that runs quieter and looks more modern. We installed a black textured steel insulated door with frosted windows.
+
+To keep the home's two-tone look, we rebuilt the opening in pressure-treated wood and finished it in white to match the front entrance. The result is a warmer, quieter garage and a clean new look from the street.
+
+<div class="job-photos">
+  <figure>
+    <Image src={rhBefore} alt="Before: old carriage-style garage door on a townhouse in Oak Ridges, Richmond Hill" width={800} />
+    <figcaption><strong>Before:</strong> the old carriage-style door.</figcaption>
+  </figure>
+  <figure>
+    <Image src={rhAfter} alt="After: black textured steel insulated garage door with frosted windows installed by York Garage Pros in Oak Ridges, Richmond Hill" width={800} />
+    <figcaption><strong>After:</strong> the new black textured steel insulated door with frosted windows.</figcaption>
+  </figure>
+</div>
+
+<style>{`
+  .job-photos { display: grid; grid-template-columns: 1fr; gap: 20px; margin: 24px 0 32px; }
+  .job-photos figure { margin: 0; }
+  .job-photos img { width: 100%; height: auto; border-radius: 12px; display: block; }
+  .job-photos figcaption { font-size: 0.95rem; color: #475569; margin-top: 8px; line-height: 1.5; }
+  @media (min-width: 768px) { .job-photos { grid-template-columns: 1fr 1fr; } }
+`}</style>
 
 ## What we fix and install in Richmond Hill
-
-<OwnerTodo>
-  Optional: 2–4 sentences in your own words about the doors you see most in
-  Richmond Hill (age, typical problems, common door styles). Only things you've seen yourself.
-</OwnerTodo>
 
 - [Garage door repair](/garage-door-repair/): broken springs, cables, off-track doors and worn rollers
 - [New garage doors](/garage-door/): supply and installation
